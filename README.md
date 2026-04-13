@@ -1,2 +1,15 @@
-# Security-Learning-Notes
-Network security &amp; information security engineer exam preparation repository. Includes penetration testing notes, Kali Linux commands, and exam review materials. 
+# 72天网安+软考深度学习计划
+> 网络安全与信息安全工程师备考仓库 | 目标：CISP-PTE + 软考一次通过
+
+## 📂 仓库结构
+- `01-软考笔记/`：信息安全工程师教材同步复习笔记
+- `02-卡利实验室/`：Kali Linux 命令集、iptables/openssl 实操记录
+- `03-渗透测试/`：Web安全、漏洞挖掘、CISP-PTE 备考笔记
+
+## 📅 学习进度
+- [ ] 第1-9天：SQL注入进阶+安全综合梳理
+- [ ] 第10-17天：Web漏洞收尾
+- [ ] 第18-32天：中层网络安全技术
+- [ ] 第33-41天：风险评估+主机加固
+- [ ] 第42-48天：综合理论强化+案例题型训练
+- [ ] 第49-60天：真题冲击+作品集+CIPS-PTE前置
