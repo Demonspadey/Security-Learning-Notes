@@ -1,0 +1,55 @@
+1. 基础查看与清空规则
+ 
+1. 查看当前所有 iptables 规则（含行号）：
+ iptables -L -v -n --line-numbers
+ 
+2. 清空 filter 表中所有规则：
+ iptables -F
+
+3. 删除 filter 表中第 3 条 INPUT 链规则：
+ iptables -D INPUT --line-numbers 3 
+ 
+ 
+ 
+2. 常见规则添加（INPUT 链）
+ 
+4. 允许本机回环接口 lo 的所有流量：
+ iptables -A INPUT -i lo -j ACCEPT 
+
+5. 允许所有已建立/相关的连接进入：
+ iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT 
+
+6. 允许外部访问本机的 80 端口（TCP）：
+ iptables -A INPUT -p tcp --dport 80 -j ACCEPT 
+
+7. 拒绝所有其他进入的流量（默认策略设为 DROP）：
+ iptables -P INPUT  DROP 
+ 
+
+3. NAT 与转发（POSTROUTING 链）
+ 
+8. 开启系统内核转发（让机器能当路由器）：
+ echo 1 > /proc/sys/net/ipv4/ip_forward 
+
+9. 配置 SNAT：让内网 192.168.1.0/24 网段的机器通过本机公网 IP 上网：
+ iptables -A POSTROUTING -s 192.168.1.0/24 -t nat -j SNAT --to-source 公网ip
+
+10. 配置 MASQUERADE（动态 IP 环境下的 NAT）：
+ iptables -A POSTROUTING -s 192.168.1.0/24 -t nat -j MASQUERADE 
+ 
+ 
+ 
+4. 端口转发（DNAT 示例）
+ 
+11. 把访问本机公网 IP 8080 端口的流量，转发到内网 192.168.1.100 的 80 端口：
+ iptables -A PREROUTING -t nat -p tcp --dport 8080 -j DNAT --to-destination 192.168.1.100:80 
+ 
+ 
+ 
+5. 保存与恢复规则
+ 
+12. 保存当前 iptables 规则到文件：
+ iptables-save > /etc/iptables.rules 
+
+13. 从文件恢复 iptables 规则：
+ iptables-restore < /etc/iptables.rules
