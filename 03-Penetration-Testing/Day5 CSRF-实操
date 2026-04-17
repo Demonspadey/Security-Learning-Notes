@@ -1,0 +1,62 @@
+# Day5 练习题复盘笔记（CSRF 网安实操）
+
+---
+
+## 一、CSRF漏洞利用实操
+1.  **GET型CSRF利用示例**：
+    - 利用`<img>`/`<iframe>`标签自动发起请求，无需用户点击：
+    ```html
+    < img src="https://bank.com/transfer?to=attacker&amount=1000" width="0" height="0">
+    <iframe src="https://shop.com/address?action=update&addr=attacker_addr" style="display:none;"></iframe>
+    ```
+
+2.  **POST型CSRF利用示例**：
+    - 构造隐藏表单并自动提交，伪造POST请求：
+    ```html
+    <form action="https://bank.com/transfer" method="POST" id="csrfForm">
+        <input type="hidden" name="to" value="attacker_account">
+        <input type="hidden" name="amount" value="10000">
+    </form>
+    <script>
+        window.onload = function() {
+            document.getElementById('csrfForm').submit();
+        }
+    </script>
+    ```
+
+---
+
+## 二、CSRF漏洞检测流程
+1.  抓包分析敏感接口（转账/改密/改地址）的请求方式与参数；
+2.  检查请求中是否携带CSRF Token、Referer头等额外校验；
+3.  构造跨域请求页面，模拟用户登录状态发起请求，验证是否可执行敏感操作。
+
+---
+
+## 三、防御方案实操配置
+1.  **CSRF Token校验（首选方案）**：
+    - 服务器生成随机Token并绑定用户会话；
+    - Token嵌入表单隐藏域或请求头，禁止存放在Cookie中；
+    - 后端校验请求携带的Token与会话Token一致性。
+
+2.  **Cookie SameSite属性配置**：
+    ```http
+    Set-Cookie: sessionid=xxx; HttpOnly; Secure; SameSite=Strict
+    ```
+    - `SameSite=Strict`：完全禁止跨站请求携带Cookie；
+    - `SameSite=Lax`：仅允许导航型GET请求携带Cookie。
+
+3.  **Referer白名单校验**：
+    - 校验请求头Referer是否为本站可信域名；
+    - 注意：Referer可被用户禁用，不能作为唯一防护手段。
+
+4.  **敏感操作二次验证**：
+    - 添加短信验证码、原密码验证、生物识别等用户交互；
+    - 从根源杜绝静默恶意请求的有效性。
+
+---
+
+## 四、防御绕过场景总结
+1.  Token校验绕过：Token与用户会话未绑定、可预测、存放在Cookie中；
+2.  Referer校验绕过：白名单配置宽松（如仅校验域名后缀）；
+3.  SameSite绕过：设置为Lax时，GET跳转类请求仍可携带Cookie。
