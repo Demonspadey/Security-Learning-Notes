@@ -1,0 +1,56 @@
+# iptables NAT配置实战复盘（Day4）
+
+---
+
+## 1. 本次配置核心收获
+- 成功完成**双向NAT（SNAT+DNAT）**完整配置，实现内网主机上网与外网访问内网服务的全流程。
+- 明确本次配置核心类型：**SNAT源地址转换、DNAT目的地址转换、NAPT端口多路复用**。
+- 掌握从「IP转发开启 → 规则编写 → 错误排查」的完整步骤，对iptables的链/表逻辑理解无死角。
+
+---
+
+## 2. 本次遇到的配置错误 & 修正记录
+| 错误类型 | 错误内容 | 修正方法 | 核心原因 |
+| :--- | :--- | :--- | :--- |
+| 链位置错误 | DNAT规则写在`INPUT`链 | 改为`PREROUTING`链 | DNAT必须在路由前修改目的IP，INPUT链仅处理本机数据包 |
+| 参数错误 | DNAT使用`--to-source` | 改为`--to-destination` | `--to-source`是SNAT参数，`--to-destination`才是DNAT参数 |
+| 语法错误 | `-p -tcp`（多写横杠） | 改为`-p tcp` | iptables协议参数直接跟协议名，无需额外横杠 |
+| 前置条件缺失 | 未开启IP转发，NAT规则不生效 | 执行`echo 1 > /proc/sys/net/ipv4/ip_forward` | NAT依赖IP转发功能，必须提前开启 |
+
+---
+
+## 3. 关键命令模板（可直接复用）
+### 3.1 IP转发开启（NAT前置条件）
+```bash
+# 临时开启（重启失效）
+sudo echo 1 > /proc/sys/net/ipv4/ip_forward
+
+# 永久开启（写入配置文件）
+sudo echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+sudo sysctl -p  # 重载配置
+
+#DNAT配置（外网访问内网服务）
+  场景：将访问公网IP 123.123.123.123:80的流量，转发到内网 192.168.1.10:80
+iptables -t nat -A PREROUTING -d 123.123.123.123 -p tcp --dport 80 -j DNAT --to-destination 192.168.1.10:80
+
+#SNAT配置 （内网主机共享公网IP上网）
+  # 静态SNAT（公网IP固定场景）
+iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source 123.123.123.123
+
+  # 动态MASQUERADE（公网IP动态场景，推荐家用环境）
+iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE
+#转发流量方向（FORWARD链补充）
+  # 放行已建立/相关连接（避免拒绝正常响应）
+iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+  # 放行内网服务器响应流量
+iptables -A FORWARD -s 192.168.1.10/32 -p tcp --sport 80 -j ACCEPT
+
+#实战避坑总结
+ 1. 链位置铁律： DNAT必须在PREROUTING链，SNAT必须在POSTROUTING链 ，顺序不能搞反。
+
+ 2. 参数区分： -d 指定目的IP（公网IP）， -s 指定源IP（内网网段）， --dport 指定目的端口。
+
+ 3. 默认策略处理：若FORWARD链默认策略为DROP，必须手动放行转发流量，否则外网访问会超时。
+
+ 4. IP转发持久化：临时开启的IP转发重启后会失效，生产环境建议写入 sysctl.conf 永久生效。
