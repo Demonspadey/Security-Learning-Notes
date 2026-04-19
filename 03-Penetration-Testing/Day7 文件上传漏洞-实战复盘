@@ -1,0 +1,29 @@
+# 文件上传漏洞实战复盘
+
+## 1. 本次漏洞核心收获
+- 已掌握文件上传漏洞的完整攻击链：从绕过校验到 getshell。
+- 明确了本次攻击的核心绕过思路：`修改MIME类型绕过，利用.htaccess解析漏洞`。
+- 掌握了不同中间件（Apache/Nginx/IIS）的解析漏洞利用场景。
+
+## 2. 本次遇到的过滤 & 对应绕过
+| 过滤类型 | 过滤内容 | 我用的绕过方法 | 备注 |
+| --- | --- | --- | --- |
+| 黑名单后缀 | .php/.asp/.jsp | 大小写绕过（.pHp）、特殊后缀（.php3.php5） | 适用于不区分大小写的校验,特殊后缀需要apache开启相关后缀|
+| 双后缀过滤 | 禁止上传带双后缀的文件 | Apache多后缀解析绕过（shell.php.jpg） | 依赖中间件解析规则 |
+| 文件内容校验 | getimagesize()检测图片头 | 文件头伪造（GIF89a） | 直接在恶意文件开头添加图片头 |
+| .htaccess限制 | 禁止上传.htaccess文件 | 利用Apache配置缺陷，上传自定义解析规则文件 | 需目标服务器开启AllowOverride |
+
+## 3. 关键Payload整理
+```bash
+# 1. 文件头伪造绕过
+echo "GIF89a" >> shell.php
+
+# 2. Apache解析漏洞
+# 文件名：shell.php.aaa
+
+# 3. .htaccess解析漏洞
+# .htaccess内容：
+<FilesMatch "123">
+SetHandler application/x-httpd-php
+</FilesMatch>
+# 配合恶意图片文件（shell.jpg）上传
