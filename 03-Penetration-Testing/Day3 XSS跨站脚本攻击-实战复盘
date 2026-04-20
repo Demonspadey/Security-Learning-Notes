@@ -11,14 +11,19 @@
 ## 2. 本次遇到的过滤 & 对应绕过
 | 过滤类型 | 过滤内容 | 我用的绕过方法 | 备注 |
 | :--- | :--- | :--- | :--- |
-| 标签黑名单过滤 | `<script>` 标签被直接删除 | 改用 `< img src=x onerror=alert(1)>` / `<svg onload=alert(1)>` | 利用事件属性执行JS，
+| 标签黑名单过滤 | `<script>` 标签被直接删除 | 改用 `< img src=x onerror=alert(1)>` / `<svg onload=alert(1)>` | 
+利用事件属性执行JS，
 完全避开script标签 |
-| 引号转义过滤 | 单/双引号被转义为 `\'` / `\"` | 直接使用无引号Payload，如 `< img src=x onerror=alert(1)>` | 不依赖引号闭合，直接构造标签执行 |
+| 引号转义过滤 | 单/双引号被转义为 `\'` / `\"` | 直接使用无引号Payload，如 `< img src=x onerror=alert(1)>` | 不依赖引号闭合，
+直接构造标签执行 |
 | 前端长度限制 | 输入框限制10位字符 | Burp抓包修改参数，发送完整Payload | 前端限制为客户端校验，可直接绕过 |
-| 下拉列表闭合限制 | 输入被包裹在 `<option>` 标签内 | 用 `"></option></select>` 闭合原有标签后注入 | 先破坏原有HTML结构，再插入恶意标签 |
-| innerHTML安全限制 | 动态插入的 `<script>` 标签不执行 | 使用 `<img>` / `<svg>` 等带事件属性的标签 | 浏览器限制innerHTML中script标签执行，
+| 下拉列表闭合限制 | 输入被包裹在 `<option>` 标签内 | 用 `"></option></select>` 闭合原有标签后注入 | 先破坏原有HTML结构，
+再插入恶意标签 |
+| innerHTML安全限制 | 动态插入的 `<script>` 标签不执行 | 使用 `<img>` / `<svg>` 等带事件属性的标签 | 
+浏览器限制innerHTML中script标签执行，
 但不限制事件属性 |
-| URL参数解析限制 | 参数拼接导致脚本无法执行 | 使用 `&` 或 `#` 切断参数传递，如 `English&<script>alert(1)</script>` | 让Payload脱离服务器处理，
+| URL参数解析限制 | 参数拼接导致脚本无法执行 | 使用 `&` 或 `#` 切断参数传递，如 `English&<script>alert(1)</script>` | 
+让Payload脱离服务器处理，
 直接被前端解析 |
 
 ## 3. 今日通用Payload合集
