@@ -1,0 +1,99 @@
+# Day1 Python 学习笔记（入门基础）
+
+---
+
+## 一、变量基础
+### 1. 变量命名规则
+- 只能包含：字母、数字、下划线
+- 开头：必须以字母或下划线开头，**不能以数字开头**
+- 不能包含空格，可使用下划线分隔单词（如 `user_name`）
+
+### 2. 常见数据类型
+- 整数：`age = 22`
+- 浮点数：`price = 3.5`
+- 布尔值：`is_single = False`（取值为 `True` / `False`）
+- 字符串：`message = 'Hello World'`
+
+---
+
+## 二、字符串操作
+### 1. 字符串拼接
+```python
+city = '北京市'
+district = '海淀区'
+
+# 方式1：直接拼接
+message = district + '是' + city + '的一个区。'
+print(message)
+
+# 方式2：f-string格式化（推荐）
+msg = f'{district}是{city}的一个区。'
+print(msg)
+2. 字符串常用方法
+ message = 'Hello World'
+
+# 转小写
+print(message.lower())
+
+# 替换字符
+print(message.replace('o', '0'))
+  
+3. 字符串索引与切片
+ message = 'Hello World'
+
+# 取单个字符（索引从0开始）
+print(message[0])   # H
+print(message[4])   # o
+
+# 取最后1个字符
+print(message[-1])  # d
+ 
+三、输入与输出
+ # 获取用户输入
+name = input('请您输入您的用户名：')
+
+# 格式化输出
+print(f'欢迎进入贪吃蛇游戏，{name}。')
+ 
+四、控制流语句
+1. 条件判断  if 
+ 
+-  if  后面必须跟布尔值（判断结果为  True  /  False ）
+- 代码块必须缩进（Python默认4个空格）
+ 
+2.  while  循环
+ i = 1
+while i <= 4:
+    print(i)
+    i = i + 1
+print('循环结束')
+ 
+- 执行逻辑：先判断条件 → 条件为  True  执行循环体 → 条件为  False  退出循环
+
+- 注意：循环内必须有改变条件的语句（如  i = i + 1 ），否则会变成死循环
+ 
+3.  for  循环
+ a = ['Hello', 0, 1, True]
+for item in a:
+  if item ==0
+    print(item)
+ 
+ - 执行逻辑：遍历列表中的每一个元素，依次赋值给变量  item  并执行循环体
+ 
+ 五、循环控制关键字
+ 
+1.  break ：直接结束整个循环
+ i = 1
+while i <= 10:
+    if i == 6:
+        break  # 遇到break，循环立刻终止
+    print(i)
+    i += 1
+
+2.  continue ：跳过当前这一轮循环，直接进入下一轮
+i = 1
+while i <= 10:
+    i += 1
+    if i == 6:
+        continue  # 遇到continue，跳过本次循环剩余代码
+    print(i)
