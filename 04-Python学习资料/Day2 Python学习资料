@@ -1,0 +1,101 @@
+Python
+1，接收用户输入的目标IP，打印一行格式
+ip=input("目标IP")
+print(f"正在扫描:{ip}")                          
+
+-  input() 获取控制台输入
+
+2，if条件判断，接收用户输入端口号，如果端口等于80或443，打印（web端口），否则打印（非WEB端口）
+port = int(input("请输入端口号："))
+
+if port == 80 or port == 443:
+    print("Web端口")
+else:
+    print("非Web端口")
+
+-  int() ：输入默认是字符串，必须转数字才能对比
+
+-  or ：满足一个条件即成立
+
+3，用for循环，批量输出1~50所有端口
+# 遍历 1~50
+for port in range(1, 51):
+    print("当前端口：", port)
+
+ -  range(1,51)  左闭右开，实际：1～50
+
+4，定义常用端口列表： [21,22,80,443,3306] 循环逐个打印每一个端口
+ ports = [21, 22, 80, 443, 3306]
+
+for p in ports:
+    print("开放端口：", p)
+
+ - 列表存放批量数据，后期存放载荷、IP、URL 必备
+
+5，使用 os 模块，实现：输入IP，自动执行 ping 命令
+ import os
+
+ ip = input("请输入Ping的IP：")
+# 直接拼接，不安全（对应今天命令注入漏洞原理）
+ os.system(f"ping {ip}")
+  
+-  os.system  直接调用系统CMD/Linux命令
+
+- 字符串拼接 = 危险写法，极易产生命令注入
+
+6,用 subprocess 列表传参方式，执行一次 ping 127.0.0.1
+import subprocess
+
+# 列表传参，完全防命令注入
+subprocess.run(["ping", "127.0.0.1"])
+
+- 参数分开写进列表，不会被符号截断拼接
+- 软考简答题考点：列表传参防御命令注入
+
+7,写一段简易容错代码：print(10 / 0) 会报错，用 try 捕获异常，不崩溃
+try:
+    res = 10 / 0
+except:
+    print("代码出现异常，已自动捕获")
+
+- 扫描、网络请求必加 try，防止超时/报错直接崩掉程序
+
+8,导入socket，检测 127.0.0.1:80 是否连通（不用写完整扫描器，基础连接测试即可）
+import socket
+
+ip = "127.0.0.1"
+port = 80
+
+try:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(1)
+    res = s.connect_ex((ip, port))
+    if res == 0:
+        print("端口80 开放")
+    s.close()
+except:
+    print("连接失败")
+
+-  AF_INET ：IPv4
+
+-  SOCK_STREAM ：TCP
+
+-  connect_ex ：返回数字，0=通，非0=不通
+
+9,url = "dvwa/index.php?id=1" 把 id=1 替换为 id=10，打印新链接
+
+  url = "dvwa/index.php?id=1"
+  new_url = url.replace("id=1", "id=10")
+  print(new_url)
+
+-  replace(旧内容,新内容) 
+- 渗透批量改参数、改Payload高频用法
+
+10,把字符串 "192.168.1.1 端口80开放"  写入到 result.txt 文件中
+# w 模式：覆盖写入
+with open("result.txt", "w", 
+encoding="utf-8") as f:
+    f.write("192.168.1.1 端口80开放")
+
+-  with open  自动关闭文件，写法最简
+- 后期扫描结果、漏洞记录全部用这种方式保存
