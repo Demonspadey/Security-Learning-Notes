@@ -1,0 +1,57 @@
+1、编写代码，接收用户输入的一个端口号（数字），判断：
+（1）如果端口在1-1023之间，输出公认端口
+（2）1024-49151输出 注册端口
+（3）其余输出 动态/私有端口
+为防止输入abc等情况报错
+try
+  port=int(input("请输入端口号"))
+  if 1<= port <= 1023:
+    print("公认端口")
+  elif 1024<= port <= 49151:
+    print("注册端口")
+  else:
+    print("动态/私有端口")
+except ValueError:
+  print("错误，请重新输入正确端口号!")
+
+2、使用for循环，遍历输出1到20所有端口，格式要求：正在检测端口：XXX
+
+for port in range(1,21):
+  print(f"正在检测端口:{port}")
+
+3、给定用户输入的一段url参数，将所有script关键词替换为*** 实现简单XSS敏感词过滤
+
+url_param=input("请输入url参数:")
+new_param=url_param.replace("script","***")
+print(new_param)
+
+4、新建一个文本文件pass.txt，写入3个常见弱口令:123456,admin123,root
+用python读取这个文件所有内容，逐行打印输出
+
+with open("pass.txt","w",encoding="uft-8") as f:
+  f.write("123456\n")
+  f.write("admin123\n")
+  f.write("root\n")
+with open("pass.txt","r",encoding="uft-8") as f:
+  for line in f:
+    print(line.strip())
+
+5、使用Python内置socket库，编写极简代码：
+ 尝试连接 127.0.0.1:80
+ 连接成功打印：80端口开放
+ 连接失败捕获异常：80端口关闭
+
+#导入内置socket网络库，网络编程，端口扫描必备
+import socket
+#定义目标IP和目标端口
+target_ip="127.0.0.1"
+target_port=80
+try:
+  sk=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+  sk.settimeout(1)
+  sk.connect((target_ip,target_port))
+  print("80端口开放")
+except:
+  print("80端口关闭")
+finally:
+  sk.close()
