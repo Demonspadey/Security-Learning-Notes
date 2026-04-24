@@ -1,0 +1,52 @@
+###反序列化Python语法练习
+
+1，列表存储 反序列化危险特征
+
+#定义列表，存放反序列化特征
+danger_sig=["O:","C:","R:"]
+#定义一段模拟请求数据(对应cookie/参数传入)
+request_data="O:4:"user":0:{}"
+#标记是否检测到风险
+risk_flag=False
+#遍历特征列表，逐一比对
+for sig in danger_sig:
+  if sig in request_data:
+    risk_flag=True
+    break
+#根据判断结果输出
+if risk_flag:
+  print("警告：检测到不安全反序列化特征")
+else:
+  print("请求数据安，无序列化风险")
+
+2，字典模拟Cookie请求参数
+
+#用字典模拟HTTP请求Cookie
+cookie_data={
+      "username":"testuser",
+      "session":"O:5:"Admin":2{}",
+      "sign":""
+}
+#遍历字典，批量检查每一项参数
+for key, value in cookie_data.items():
+  #检查是否存在反序列化高危特征
+  if "O:" in value:
+    print(f"高危警告:{key}字段存在不安全反序列化内容")
+  else:
+    print(f"正常:{key}字段安全")
+
+3，循环+判断 批量检测多条流量数据
+
+#批量模拟多条前段传入的请求内容
+flow_list=[
+    "id=1&name=zhangsan",
+    "data=O:4:"user":1:{test}",
+    "token=MTlzNDU2Nzzg=",
+    "info=C:4:"root""
+]
+#遍历全部流量，批量做安全检测
+for content in flow_list:
+  if "O:" in content or "C:" in content or "R:" in content:
+    print(f"风险流量{content}")
+  else:
+    print(f"正常流量{content}")
