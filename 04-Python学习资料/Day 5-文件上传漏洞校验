@@ -1,0 +1,61 @@
+一、白名单后缀检测
+# 允许的文件后缀白名单
+allowed_extensions = [".jpg", ".png", ".gif"]
+
+# 待检测文件名
+filename = "shell.php"
+
+# 提取文件后缀 + 统一小写
+file_suffix = "." + filename.split(".")[-1].lower()
+
+# 白名单逻辑判断
+if file_suffix in allowed_extensions:
+    print(f"✅ 文件 {filename} 校验通过，允许上传")
+else:
+    print(f"❌ 文件 {filename} 校验失败，禁止上传")
+
+#文件上传防护里，为什么优先使用白名单、不用黑名单？
+
+1. 优先使用白名单原因：
+黑名单仅拦截已知危险文件，覆盖不全易被绕过；白名单只放行合法业务文件，默认拦截所有未知风险，安全性最高。
+
+二、MIME类型校验
+# 允许的MIME类型白名单
+allowed_mime_types = ["image/jpeg", "image/png", "image/gif"]
+
+# 待检测上传文件MIME
+upload_mime = "application/x-php"
+
+# MIME 白名单校验
+if upload_mime in allowed_mime_types:
+    print(f"✅ MIME类型 {upload_mime} 校验通过，允许上传")
+else:
+    print(f"❌ MIME类型 {upload_mime} 校验失败，禁止上传")
+
+#渗透中攻击者为什么要伪造、修改MIME类型绕过上传？
+
+2. 伪造MIME绕过原理：
+部分服务端仅校验请求头MIME字段，攻击者伪装成图片类型即可绕过单一检测，上传恶意脚本。
+
+三、后缀+MIME双重组合校验
+# 双白名单 企业现代化防御写法
+allowed_extensions = [".jpg", ".png", ".gif"]
+allowed_mime_types = ["image/jpeg", "image/png", "image/gif"]
+
+# 待检测文件信息
+filename = "shell.php"
+upload_mime = "application/x-php"
+
+# 提取文件后缀
+file_suffix = "." + filename.split(".")[-1].lower()
+
+# 双重校验：后缀 + MIME 同时满足才放行
+if file_suffix in allowed_extensions and upload_mime in allowed_mime_types:
+    print(f"✅ 文件 {filename} 双重校验通过，允许上传")
+else:
+    print(f"❌ 文件 {filename} 双重校验失败，禁止上传")
+
+#只校验文件后缀存在什么缺陷？为什么要加多重校验？
+
+3. 多重校验必要性：
+仅靠后缀校验极易被MIME伪造、文件头伪装等方式突破，后缀+MIME+文件内容多重校验，是Web上传防护的标准方案。
