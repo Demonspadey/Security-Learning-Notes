@@ -1,0 +1,26 @@
+## Python复盘核心代码（文件上传校验）
+### 4.1 文件上传白名单校验（安全推荐）
+```python
+# 定义文件上传白名单后缀
+allow_suffix = ['jpg', 'gif']
+# 模拟用户上传文件名
+user_filename = 'test.gif'
+# 获取文件后缀并转小写，规避大小写绕过
+file_suffix = user_filename.split('.')[-1].lower()
+# 校验并输出结果
+if file_suffix in allow_suffix:
+    print(f'✅ 文件{user_filename}合法，允许上传')
+else:
+    print(f'❌ 文件{user_filename}非法，禁止上传')
+
+4.2 黑名单校验（不安全，容易绕过）
+# 定义禁止上传的恶意文件后缀
+block_suffix = ['php', 'jsp', 'asp']
+# 模拟恶意上传文件（大小写绕过）
+user_filename = 'hack.PHP'
+file_suffix = user_filename.split('.')[-1].lower()
+# 校验并输出结果
+if file_suffix in block_suffix:
+    print(f'❌ 恶意文件{user_filename}，已拦截')
+else:
+    print(f'✅ 文件{user_filename}校验通过（存在绕过风险）')
