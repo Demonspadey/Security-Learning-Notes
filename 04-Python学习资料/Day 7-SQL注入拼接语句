@@ -1,0 +1,85 @@
+### 题目1：原生字符串拼接 - 简易登录漏洞（字符型注入原型）
+```python
+# 定义合法账号密码（模拟数据库存储数据）
+db_user = "admin"
+db_pwd = "123456"
+
+# 接收用户前端可控输入（高危点：用户可随意输入特殊字符）
+input_user = input("请输入账号：")
+input_pwd = input("请输入密码：")
+
+# 关键高危：直接拼接用户输入到SQL语句
+sql_query = f"SELECT * FROM user WHERE username = '{input_user}' AND password = '{input_pwd}'"
+
+# 打印最终拼接完成的SQL，直观观察注入变形
+print("生成的SQL语句：", sql_query)
+
+# 模拟数据库查询与登录判断
+if "admin" in sql_query and "#" in sql_query:
+    print("✅ 登录成功（已被绕过）")
+else:
+    print("❌ 登录失败")
+
+✅ 核心思考题：为什么直接拼接用户输入，一定会产生SQL注入漏洞？
+1. 拼接注入漏洞根源：
+后端未做任何净化，直接将用户可控输入拼入原生SQL，攻击者可通过单引号闭合原有语句、搭配注释符篡改查询逻辑。
+
+
+###题目2：基础非法字符过滤函数（简易防御雏形）
+
+# 定义SQL注入常见危险字符黑名单
+danger_char = ["'", "\"", "#", "--", "or", "and"]
+
+def filter_safe_content(user_input: str) -> str:
+    """
+    安全过滤函数：替换高危特殊字符
+    :param user_input: 用户原始输入
+    :return: 过滤后的安全字符串
+    """
+    # 循环遍历所有危险字符，逐个替换为空
+    for char in danger_char:
+        user_input = user_input.replace(char, "")
+    # 返回净化后内容
+    return user_input
+
+# 接收用户输入
+input_name = input("请输入查询用户名：")
+# 先净化输入
+safe_name = filter_safe_content(input_name)
+# 过滤后再拼接SQL
+safe_sql = f"SELECT * FROM user WHERE username = '{safe_name}'"
+
+print("原始输入：", input_name)
+print("过滤后输入：", safe_name)
+print("生成的SQL语句：", safe_sql)
+
+✅ 核心思考题：单纯黑名单过滤能不能彻底防御SQL注入？缺点是什么？
+2. 黑名单过滤缺陷：
+危险字符无法穷举，绕过方式多（编码、变形、拆分字符），只能做基础弱防护，不能作为核心防御。
+
+###题目3：过滤后再拼接SQL（对比漏洞前后差异）
+
+# 复用上方安全过滤函数
+danger_char = ["'", "\"", "#", "--", "or", "and"]
+
+def filter_safe_content(user_input: str) -> str:
+    for char in danger_char:
+        user_input = user_input.replace(char, "")
+    return user_input
+
+# 场景：先过滤再拼接 vs 直接拼接 对比测试
+print("=== 场景1：直接拼接（存在漏洞） ===")
+input_user1 = input("请输入账号（直接拼接）：")
+sql1 = f"SELECT * FROM user WHERE username = '{input_user1}'"
+print("生成SQL：", sql1)
+
+print("\n=== 场景2：先过滤再拼接（基础防护） ===")
+input_user2 = input("请输入账号（先过滤再拼接）：")
+safe_user2 = filter_safe_content(input_user2)
+sql2 = f"SELECT * FROM user WHERE username = '{safe_user2}'"
+print("过滤后输入：", safe_user2)
+print("生成SQL：", sql2)
+
+✅ 核心思考题：结合今天网安理论，简单说下「预编译SQL」为什么比字符替换更安全？
+3. 预编译优势：
+SQL结构固定，用户输入仅作为参数值传入，不会被解析为SQL语句，从底层杜绝拼接注入。
