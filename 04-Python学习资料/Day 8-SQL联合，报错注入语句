@@ -1,0 +1,50 @@
+### 练习1：Order By 字段数量探测模拟
+
+# 功能：模拟手工 order by 探测查询字段数量
+def check_column_count():
+    # 模拟后端合法最大字段数
+    max_cols = 4
+    print("【模拟Order By 字段探测】")
+    for num in range(1, 8):
+        payload = f"order by {num}"
+        if num > max_cols:
+            print(f"输入{payload} → 页面异常/报错，字段数不足")
+        else:
+            print(f"输入{payload} → 页面正常，字段合法")
+
+if __name__ == "__main__":
+    check_column_count()
+
+### 练习2：报错注入高危函数检测脚本
+
+# 功能：检测输入中是否包含MySQL报错注入高危函数
+def check_error_inject(input_str):
+    danger_func = ["updatexml", "extractvalue", "floor", "rand"]
+    lower_input = input_str.lower()
+    for func in danger_func:
+        if func in lower_input:
+            return True,f"拦截：存在报错注入高危函数 {func}"
+    return False,"输入合规，无报错注入特征"
+
+# 测试用例
+if __name__ == "__main__":
+    test1 = "admin' and updatexml(1,concat(0x7e,database()),1)#"
+    test2 = "user=test&pwd=123456"
+    print(check_error_inject(test1))
+    print(check_error_inject(test2))
+
+### 练习3：Union 联合注入关键字过滤
+
+# 功能：对Union、Select等联合注入关键字进行过滤替换
+def union_keyword_filter(user_input):
+    danger_keys = ["union","select","order","and","or","#","--"]
+    res = user_input.lower()
+    for key in danger_keys:
+        res = res.replace(key,"")
+    return res
+
+if __name__ == "__main__":
+    attack_payload = "admin' union select 1,database(),3#"
+    safe_result = union_keyword_filter(attack_payload)
+    print("原始注入载荷：",attack_payload)
+    print("过滤后内容：",safe_result)
