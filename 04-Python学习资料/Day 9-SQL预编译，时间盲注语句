@@ -1,0 +1,73 @@
+## 一、核心目标
+通过3道安全编程练习，理解：
+1.  字符串拼接SQL的注入风险根源
+2.  参数化预编译的安全原理
+3.  时间盲注延时逻辑的Python模拟实现
+
+---
+
+## 二、代码实现与逐行解析
+
+### 练习1：字符串拼接风险模拟（理解注入根源）
+```python
+# 模拟存在SQL注入漏洞的代码
+username = input("请输入用户名：")
+password = input("请输入密码：")
+
+# 直接使用字符串拼接构造SQL语句（存在注入风险）
+sql = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
+print("执行的SQL语句：", sql)
+
+# 模拟数据库执行（实际不会真执行，仅观察SQL变化）
+print("数据库查询结果：登录成功" if "OR 1=1" in sql.upper() else "登录失败")
+
+### 练习2：简单参数化预编译基础写法
+
+import sqlite3
+
+# 连接数据库（本地创建一个临时数据库）
+conn = sqlite3.connect("test.db")
+cursor = conn.cursor()
+
+# 创建测试表
+cursor.execute("CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT)")
+cursor.execute("INSERT INTO users VALUES ('admin', '123456')")
+conn.commit()
+
+username = input("请输入用户名：")
+password = input("请输入密码：")
+
+# 使用参数化查询，而非字符串拼接（安全写法）
+sql = "SELECT * FROM users WHERE username = ? AND password = ?"
+cursor.execute(sql, (username, password))
+
+result = cursor.fetchone()
+print("登录成功" if result else "登录失败")
+
+conn.close()
+
+### 练习3：延时函数逻辑模拟（
+
+import time
+
+def check_condition(condition: bool):
+    """模拟时间盲注的延时判断逻辑"""
+    if condition:
+        # 条件为真时，延时3秒再返回
+        time.sleep(3)
+        return True
+    else:
+        # 条件为假时，立即返回
+        return False
+
+# 模拟猜解数据库名的第一个字符是否大于'm'
+guess_char = ord('n')  # 猜解的字符ASCII值
+target_char = ord('m')  # 真实字符ASCII值（模拟）
+
+start_time = time.time()
+result = check_condition(guess_char > target_char)
+end_time = time.time()
+
+print(f"条件判断结果：{result}")
+print(f"响应耗时：{end_time - start_time:.2f} 秒")
+print("若耗时>3秒，说明条件为真，可判断猜解正确（时间盲注核心逻辑）")
