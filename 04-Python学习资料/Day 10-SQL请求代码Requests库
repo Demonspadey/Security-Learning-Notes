@@ -1,0 +1,63 @@
+## 一、核心目标
+1.  掌握Python Requests库的安装与基础调用
+2.  熟练编写GET请求、带参数GET请求代码，理解渗透测试中请求传参逻辑
+3.  学会解析响应状态码、响应内容，为后续SQL注入自动化脚本打基础
+
+---
+
+## 二、代码实现与逐行解析
+### 练习1：Requests库基础GET请求
+```python
+# 导入requests库
+import requests
+
+# 目标URL（可替换为本地靶场注入页面地址）
+url = "http://example.com"
+
+# 发送GET请求
+response = requests.get(url)
+
+# 打印响应状态码和响应内容
+print(f"状态码: {response.status_code}")
+print(f"响应内容: {response.text}")
+
+### 练习2：带参数GET请求（模拟SQL注入传参
+
+import requests
+
+target_url = "http://127.0.0.1/pikachu/"
+
+# 定义GET请求参数（可修改为注入payload）
+params = {
+    "id": "1"
+    "name":"test"
+}
+
+# 发送带参数的GET请求
+response = requests.get(url=target_url, params=params)
+response.encoding = "utf-8"
+
+# 打印完整请求URL和响应状态码,响应内容片段
+print(f"请求URL: {response.url}")
+print(f"状态码: {response.status_code}")
+print(f"内容:{response.text[:200]}")
+
+### 练习3：请求头模拟+响应结果筛选
+
+import requests
+
+target_url = "http://127.0.0.1/pikachu/"
+params = {"id":"1"}
+
+# 自定义请求头，模拟浏览器User-Agent
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+}
+
+# 发送带请求头的GET请求
+response = requests.get(url, params=params, headers=headers)
+response.encoding="utf-8"
+
+# 打印响应状态码和响应头信息
+print(f"状态码: {response.status_code}")
+print(f"响应头: {response.headers}")
