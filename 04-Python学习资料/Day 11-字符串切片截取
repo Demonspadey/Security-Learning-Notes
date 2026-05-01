@@ -1,0 +1,28 @@
+第1题：字符串切片截取
+
+#已知字符串，截取前5个字符，后4个字符
+s="WebSQLInject"
+first=[:5]
+last=[-4:]
+print("前5个字符:",first)
+print("后4个字符:",last)
+
+## 第2题：简易循环生成注入payload
+
+for i in range(1,6):
+  payload=f"?id=1' ordey by {i}-- -"
+  print(payload)
+
+## 第3题：判断字符串是否包含关键字
+
+url=input("请输入待检测URL:")
+key_list=["'","union","select","and","or"]
+has_inject=False
+for key in key_list:
+  if key in url.lower():
+    has_inject=True
+    break
+if has_inject:
+  print("检测到疑似SQL注入特征")
+else:
+  print("无明显注入特征")
