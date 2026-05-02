@@ -1,0 +1,37 @@
+## 一、核心目标
+1.  理解SQL注入字符串拼接的风险；
+2.  模拟关键字大小写绕过的原理；
+3.  实现简单的危险字符检测逻辑。
+
+---
+
+## 二、代码实现与解析
+
+### 第1题：模拟普通字符拼接风险（复习防注入）
+```python
+# 模拟普通字符拼接风险（复习防注入）
+username = input("请输入用户名：")
+sql = f"SELECT * FROM user WHERE name = '{username}'"
+print("生成的SQL语句：")
+print(sql)
+
+第2题：简单模拟关键字大小写绕过思想
+# 简单模拟关键字大小写绕过思想
+keyword = "SeLeCt"
+safe_key = keyword.lower()
+print("原关键字：", keyword)
+print("统一小写后：", safe_key)
+
+第3题：模拟注释符截断 + 危险字符特征检测
+# 模拟注释符截断 + 危险字符特征检测
+user_input = input("请输入用户名：")
+sql = f"SELECT * FROM users WHERE username = '{user_input}' AND active=1"
+print("生成的SQL语句：", sql)
+
+# 危险字符集（对应注释符、堆叠注入分号等危险特征）
+danger_chars = ["--", ";", "/*", "*/"]
+has_danger = any(char in user_input for char in danger_chars)
+if has_danger:
+    print("⚠️ 检测到可疑字符（注释符或分号），可能存在注入风险")
+else:
+    print("✅ 输入未发现明显危险特征")
