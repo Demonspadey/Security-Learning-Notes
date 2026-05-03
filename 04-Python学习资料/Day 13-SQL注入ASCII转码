@@ -1,0 +1,46 @@
+## 一、核心目标
+1.  理解Python字符串切片与SQL `substr()` 函数的对应关系
+2.  掌握字符与ASCII码互转的实现，理解盲注逐位猜解的底层逻辑
+3.  模拟布尔盲注中逐位遍历猜解的核心流程
+
+---
+
+## 二、代码实现与解析
+
+### 第1题：字符串切片（对标SQL substr）
+```python
+# 模拟数据库名
+db_name = "security"
+
+# Python切片[起始:结束] 左闭右开
+# 等价SQL：substr(database(),1,1) 从第1位取1个字符
+char = db_name[0:1]
+print("截取首位字符：", char)
+
+
+第2题：字符与ASCII互转
+ch = "s"
+# 字符转ASCII 对应SQL ascii()
+ascii_num = ord(ch)
+# ASCII还原字符
+origin_ch = chr(ascii_num)
+
+print(f"字符{ch} → ASCII码：{ascii_num}")
+print(f"ASCII码{ascii_num} → 字符：{origin_ch}")
+
+第3题：逐位遍历猜解（模拟盲注流程
+# 模拟真实库名
+target = "testdb"
+# 获取库名长度 对应SQL length()
+str_len = len(target)
+
+# 逐位遍历每一位字符
+for i in range(str_len):
+    guess_char = target[i]
+    code = ord(guess_char)
+    print(f"第{i+1}位：字符={guess_char}，ASCII={code}")
+
+# 布尔盲注核心逻辑补充：
+# 脚本循环枚举ASCII值，和真实字符比对
+# 若页面返回正常(true) → 猜中；页面异常(false) → 继续下一个枚举
+
