@@ -1,0 +1,38 @@
+## 一、核心目标
+1.  实现SQL特殊字符转义，理解输入防护的代码实现
+2.  模拟URL解析，理解HTTP请求的结构
+3.  区分GET与POST请求，为后续requests库学习打基础
+
+---
+
+## 二、代码实现与解析
+
+### 练习1：SQL特殊字符转义
+```python
+# 定义一个函数，对输入的特殊字符进行SQL注入简单转义
+def sql_escape(content):
+    # 将单引号、双引号、反斜杠进行转义
+    content = content.replace("'", "\\'")
+    content = content.replace('"', '\\"')
+    content = content.replace("\\", "\\\\")
+    return content
+自己添加了content = content.replace("--", "\\--")   看输出结果
+
+### 练习2：URL解析提取域名
+# 模拟简单URL解析，提取协议、域名
+url = "https://www.test.com/index.php?id=1"
+# 简单切割思路
+if "https://" in url:
+    domain = url.split("https://")[1].split("/")[0]
+    print("提取域名：", domain)
+自己又尝试了更改domain = url.split("https://")[1].split("/")[0].split(".")[1] 为test去验证，得到test，明白索引位置。
+
+### 练习3：GET/POST请求方式区分
+# 判断请求方式，模拟GET/POST简易区分
+method = input("请输入请求方式(GET/POST)：").upper()
+if method == "GET":
+    print("GET请求：参数在URL中，明文传输，长度有限制")
+elif method == "POST":
+    print("POST请求：参数在请求体，相对隐蔽，无严格长度限制")
+else:
+    print("未知请求方式")
