@@ -1,0 +1,49 @@
+## 一、今日核心目标
+1.  掌握requests库基础安装与GET请求用法
+2.  熟悉响应对象核心属性
+3.  用requests实现极简SQL注入请求模拟
+
+---
+
+## 二、核心知识点
+### 1. 安装命令
+```bash
+pip install requests
+
+### 2. requests.get() 基础用法
+ 
+- 发送GET请求
+
+- 常用响应属性：
+
+-  res.status_code ：响应状态码
+
+-  res.text ：响应文本内容
+
+-  res.content ：响应二进制内容
+
+习题1：基础语法（字符串处理）
+# 练习字符串切片，为后续匹配响应特征打基础
+html = "<script>alert('sql inject')</script>"
+# 截取前30个字符
+short_html = html[:30]
+print(short_html)
+
+习题2：requests基础巩固
+# 导入库 + 发送基础GET请求，查看状态码
+import requests
+
+url = "http://httpbin.org/get"
+res = requests.get(url)
+print("响应状态码：", res.status_code)
+
+习题3：SQL注入请求模拟
+# 用requests带注入参数发起请求，观察响应
+import requests
+
+# 构造带单引号闭合的注入参数
+url = "http://httpbin.org/get?id=1'"
+res = requests.get(url)
+
+# 打印响应长度，简单判断是否异常
+print("响应内容长度：", len(res.text))
