@@ -59,7 +59,7 @@ if (stripos ($default, "<script") !== false）
 
 （High）高级
 高级是白名单机制，default=English&name=<script>中，后端只检查default是否在白名单内，而name参数后端没做任何检查，
-直接传给前端，
+直接传给前端，用&绕过。
 default=English&<script>alert(1)</script>
 default=English&<img src=x onerror=alert(1)>      #onerror 事件（配合<img>）
 default=English&<body onload=alert(1)>    #页面完全加载触发
