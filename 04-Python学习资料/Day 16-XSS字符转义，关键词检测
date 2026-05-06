@@ -1,0 +1,58 @@
+## 一、核心目标
+1.  实现XSS基础字符转义，理解输入防护的代码实现
+2.  编写危险关键词检测脚本，掌握简单输入校验逻辑
+3.  使用requests库模拟发送XSS Payload，理解反射型XSS的攻击流程
+
+---
+## 二、代码实现与解析
+
+### 习题1：字符替换（防XSS基础逻辑）
+```python
+# 简单实现特殊字符转义
+def xss_basic_filter(text):
+    text = text.replace("<", "&lt;")
+    text = text.replace(">", "&gt;")
+    text = text.replace("'", "&#39;")
+    text = text.replace('"', "&quot;")
+    return text
+# 测试恶意输入
+payload = "<script>alert('XSS')</script>"
+res = xss_basic_filter(payload)
+print("原内容：", payload)
+print("过滤后：", res)
+
+### 习题2：危险关键词检测
+# 匹配常见XSS危险关键词
+danger_list = ["script", "alert", "onload", "onclick"]
+user_input = input("请输入页面内容：")
+
+flag = False
+for word in danger_list:
+    if word in user_input.lower():
+        flag = True
+        break
+if flag:
+    print("检测到恶意脚本，禁止提交")
+else:
+    print("内容提交成功")
+
+### 习题3：Requests模拟发送XSS Payload
+mport requests
+
+# DVWA反射型XSS地址，自行替换为本地靶场IP
+url = "http://localhost/dvwa/vulnerabilities/xss_r/"
+# 构造XSS测试payload
+params = {
+    "name": "<script>alert(1)</script>"
+}
+# 发送请求
+resp = requests.get(url, params=params)
+
+# 打印关键信息，手工判断是否存在XSS风险
+print("状态码：", resp.status_code)
+print("响应长度：", len(resp.text))
+# 检测响应是否存在脚本标签
+if "<script>" in resp.text:
+    print("页面回显恶意标签，存在XSS风险")
+else:
+    print("无明显恶意标签回显")
