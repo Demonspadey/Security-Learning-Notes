@@ -1,0 +1,82 @@
+## 一、核心目标
+1.  实现XSS特殊字符HTML转义函数，理解输出层防护逻辑
+2.  编写黑名单关键字检测脚本，掌握输入层过滤的局限性
+3.  使用requests库模拟绕过基础防护，自动化测试站点XSS防护强度
+---
+## 二、代码实现与逐行解析
+
+### 第1题：自制XSS特殊字符转义工具
+```python
+# 定义函数实现基础HTML特殊字符转义，模拟服务端防护逻辑
+def xss_escape(payload):
+    # 建立特殊字符与实体编码的映射关系
+    escape_map = {
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;",
+        "&": "&amp;"
+    }
+    # 遍历映射表，依次替换所有高危字符
+    for char, entity in escape_map.items():
+        payload = payload.replace(char, entity)
+    return payload
+
+# 测试恶意XSS载荷
+raw_payload = "<script>alert('XSS')</script>"
+# 调用函数完成转义处理
+safe_data = xss_escape(raw_payload)
+
+print("原始载荷：", raw_payload)
+print("转义后内容：", safe_data)
+
+### 第2题：黑名单过滤检测脚本
+# 定义简易黑名单，收纳常见XSS恶意标签
+black_list = ["script", "iframe", "alert", "onclick"]
+
+def black_filter(check_str):
+    # 统一转为小写，规避大小写混淆绕过
+    lower_str = check_str.lower()
+    # 遍历黑名单，检测是否包含恶意关键字
+    for bad_word in black_list:
+        if bad_word in lower_str:
+            return False, "检测到恶意字符，拦截请求"
+    return True, "输入内容合规"
+
+# 构造测试样本
+test1 = "正常搜索内容"
+test2 = "<SCRIPT>alert(123)</SCRIPT>"
+
+print(black_filter(test1))
+print(black_filter(test2))
+
+### 第3题：requests联动模拟XSS防护绕过测试
+#这里修改了一下代码，原本练习的代码没有测试注入漏洞的实际发现情况，然后去测试了弹窗之后，又修改了代码，看起来效果就会比较明显了，
+特别是参数中提交位置的submit参数必须加上，测试的时候发现没有submit参数是没有弹窗反应的，然后加入之后python也能测试出可能包含漏洞。
+import requests
+target_url="http://127.0.0.1:9999/pikachu/vul/xss/xss_01.php"
+xss_payload="<script>alert(1)</script>"
+headers={
+    "user-agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+}
+params_1={"message":xss_payload,
+          "submit":"submit"
+}
+cookies={"PHPSESSID":"---"}
+
+resp1=requests.get(url=target_url,params=params_1,headers=headers,cookies=cookies)
+if xss_payload in resp1.text:
+    print("原始 payload 出现正在响应中，可能存在反射 XSS")
+else:
+    print("payload 被 HTML 转义，无法导致 XSS")
+print("原始payload响应长度:",len(resp1.text[:500]))
+encode_payload=requests.utils.quote(xss_payload)
+params_2={"message":encode_payload,
+          "submit":"submit"   
+}
+resp2=requests.get(url=target_url,params=params_2,headers=headers,cookies=cookies)
+if encode_payload in resp2.text:
+    print("原始 payload 出现正在响应中，可能存在反射 XSS")
+else:
+    print("payload 被 HTML 转义，无法导致 XSS")
+print("URL编码后响应长度:",len(resp2.text[:500]))
