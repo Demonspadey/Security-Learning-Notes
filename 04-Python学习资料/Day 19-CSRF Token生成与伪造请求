@@ -1,0 +1,127 @@
+## 一、核心目标
+1.  实现CSRF Token生成与校验，理解Token防护核心逻辑
+2.  编写Referer来源校验脚本，掌握简易防护的实现方式
+3.  使用requests库模拟CSRF攻击与防护验证，理解攻击与防护的对抗逻辑
+
+---
+
+## 二、代码实现与逐行解析
+
+### 第1题：CSRF Token生成与校验脚本
+```python
+# 导入随机数、字符串模块，用于生成随机Token
+import random
+import string
+
+def generate_csrf_token(length: int = 32) -> str:
+    """
+    生成随机、安全的CSRF Token
+    :param length: Token长度，默认32位
+    :return: 生成的CSRF Token字符串
+    """
+    # 定义Token字符集：大小写字母+数字，保证随机性和复杂度
+    chars = string.ascii_letters + string.digits
+    # 随机选择指定长度字符拼接为Token
+    token = ''.join(random.choice(chars) for _ in range(length))
+    return token
+
+def validate_csrf_token(user_token: str, server_token: str) -> bool:
+    """
+    校验客户端提交的Token与服务端存储的Token是否一致
+    :param user_token: 前端请求携带的Token
+    :param server_token: 服务端会话存储的合法Token
+    :return: 校验结果，True为通过，False为拦截
+    """
+    # 严格比对两个Token字符串，完全一致则校验通过
+    return user_token == server_token
+
+# 脚本测试入口
+if __name__ == "__main__":
+    # 服务端生成合法Token
+    server_token = generate_csrf_token()
+    print(f"服务端生成合法CSRF Token：{server_token}")
+    
+    # 模拟前端提交合法Token
+    valid_token = server_token
+    print(f"合法Token校验结果：{validate_csrf_token(valid_token, server_token)}")
+    
+    # 模拟前端提交伪造Token
+    invalid_token = generate_csrf_token()
+    print(f"伪造Token校验结果：{validate_csrf_token(invalid_token, server_token)}")
+
+### 第2题：请求来源Referer校验脚本
+def check_referer(referer: str, valid_domains: list) -> bool:
+    """
+    校验请求来源Referer是否为合法域名，防御CSRF跨源请求
+    :param referer: 请求头中的Referer字段值
+    :param valid_domains: 合法来源域名列表
+    :return: 校验结果，True为合法来源，False为非法来源
+    """
+    # 处理Referer为空的情况：直接判定为非法请求，拦截处理
+    if not referer:
+        return False
+    
+    # 遍历合法域名列表，判断Referer是否包含合法域名
+    for domain in valid_domains:
+        if domain in referer:
+            return True
+    # 无匹配合法域名，判定为非法跨源请求
+    return False
+
+# 脚本测试入口
+if __name__ == "__main__":
+    # 定义业务合法来源域名
+    valid_domains = ["https://www.target-site.com", "https://m.target-site.com"]
+    
+    # 模拟合法来源Referer
+    valid_referer = "https://www.target-site.com/user/info"
+    print(f"合法来源校验结果：{check_referer(valid_referer, valid_domains)}")
+    
+    # 模拟非法跨源Referer
+    invalid_referer = "https://evil-hacker.com/csrf.html"
+    print(f"非法来源校验结果：{check_referer(invalid_referer, valid_domains)}")
+    
+    # 模拟Referer为空的请求
+    empty_referer = ""
+    print(f"Referer为空校验结果：{check_referer(empty_referer, valid_domains)}")
+
+### 第3题：requests联动模拟CSRF攻击与防护验证
+import requests
+def simulate_csrf_attack(target_url:str,user_cookie:dict,payload:dict) -> requests.Response:
+    """
+    模拟无Token防护的CSRF攻击:携带用户Cookie发送伪造请求
+    :param target_url: 目标站点操作接口地址
+    :param user_cookie: 用户登录后的会话Cookie
+    :param payload: 伪造的操作请求参数
+    :return: 接口响应结果
+    """
+    response=requests.post(url=target_url,cookies=user_cookie,data=payload)
+    return response
+def simulate_csrf_with_token(target_url:str,user_cookie:dict,payload:dict,csrf_token:str) -> requests.Response:
+    """
+    模拟带Token防护的CSRF攻击:携带合法Token才可请求成功
+    :param target_url: 目标站点操作接口地址
+    :param user_cookie: 用户登录后的会话Cookie
+    :param payload: 业务请求参数
+    :param csrf_token: 服务端生成的合法CSRFa Token
+    :return: 接口响应结果
+    """
+    payload["csrf_token"]=csrf_token
+    response=requests.post(url=target_url,cookies=user_cookie,data=payload)
+    return response
+if __name__ =="__main__":
+    target_api="http://127.0.0.1:9999/pikachu/vul/csrf/csrfpost/csrf_post_edit.php"
+    user_session_cookie={"PHPSESSID":"nidv8vmk63l9pvkkvo6kh7jkj8"}
+    csrf_payload={
+        "sex":"boy",
+        "phonenum":"5555555555",
+        "add":"ShangHai",
+        "email":"5555555qq.com",
+        "submit":"submit"
+    }
+    no_token_response=simulate_csrf_attack(target_api,user_session_cookie,csrf_payload)
+    print(f"无Token防护-伪造请求响应状态码: {no_token_response.status_code}")
+    invalid_token_response=simulate_csrf_with_token(target_api,user_session_cookie,csrf_payload,csrf_token="fake_token123")
+    print(f"带Token防护-伪造Token响应状态码: {invalid_token_response.status_code}")
+    valid_token_response=simulate_csrf_with_token(target_api,user_session_cookie,csrf_payload,csrf_token="valid_token985")
+    print(f"带Token防护-合法Token响应状态码: {valid_token_response.status_code}")
