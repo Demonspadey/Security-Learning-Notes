@@ -55,3 +55,4 @@ for url in admin_urls:
         print(f"垂直越权成功:{url}")
     else:
         print(f"无法访问:{url}")
+### （今天代码中学会了哪里修改参数去对比问题，比如删除这里是管理者后台有的特殊字符串，包括params参数要对应准确）
