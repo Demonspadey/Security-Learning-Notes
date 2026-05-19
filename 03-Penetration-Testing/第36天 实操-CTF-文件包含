@@ -1,0 +1,16 @@
+1.### 实操-Pikachu-文件包含
+
+1.这里先选择了一张图片提交，观察到地址为pikachu/vul/fileinclude/fi_local.php?filename=file2.php&submit=提交
+明显能看到有个filename参数在，然后通过../../可以访问到系统其他目录下文件。
+
+2.### 实操-CTF-文件包含
+
+1.源代码接收 file 参数，使用 include 包含该文件。只要文件名不包含字符串 "flag"，就可以被包含执行。
+
+2.网站提供了一个 shell.txt，内容为 <?php eval($_REQUEST['ctfhub']);?>。这是一个典型的一句话木马，利用 eval 函数执行通过 ctfhub 参数传递的任意 PHP 代码。
+
+3.直接包含 shell.txt 不会触发 "flag" 过滤，因此可以包含并执行其中的 PHP 代码，注册后门。
+?file=shell.txt&ctfhub=system('ls -la /');
+
+4.通过 GET 或 POST 方式传递 ctfhub 参数，参数值为系统命令或 PHP 函数，即可在服务器上执行任意命令或读取文件。
+?file=shell.txt&ctfhub=system('cat /flag');  获取flag
