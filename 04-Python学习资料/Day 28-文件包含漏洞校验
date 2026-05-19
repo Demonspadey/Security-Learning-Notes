@@ -1,0 +1,52 @@
+## 一、核心目标
+1. 编写高危文件包含漏洞代码，理解漏洞产生逻辑
+2. 掌握白名单安全防护写法
+3. 实现路径穿越字符过滤，完成安全加固
+
+## 二、练习题代码+注释
+
+### 习题1 漏洞识别：危险文件包含（高危）
+```python
+# 高危漏洞：直接使用用户输入包含文件
+def unsafe_include():
+    # 用户可控参数，无任何校验过滤
+    filename = input("输入文件名：")
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            print(f.read())
+    except:
+        print("演示：目录遍历/文件包含漏洞可读取敏感文件")
+
+unsafe_include()
+
+### 习题2 安全改造：白名单防护
+# 安全方案：白名单校验，禁止任意文件读取
+def safe_include():
+    # 白名单：仅允许指定文件
+    white_list = ["index.txt", "home.html", "about.md"]
+    filename = input("输入文件名：")
+    # 白名单校验
+    if filename not in white_list:
+        return "非法请求，已拦截"
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            return f.read()
+    except:
+        return "文件不存在"
+
+print(safe_include())
+
+### 习题3 防护加固：路径穿越字符过滤
+# 过滤../等路径穿越字符，防止目录遍历
+def filter_path(filepath):
+    # 危险路径字符
+    ban_char = ["../", "..\\", "/", "\\"]
+    for char in ban_char:
+        filepath = filepath.replace(char, "")
+    return filepath
+
+# 测试恶意路径
+evil_path = "../../etc/passwd"
+safe_path = filter_path(evil_path)
+print("恶意路径:", evil_path)
+print("过滤后:", safe_path)
