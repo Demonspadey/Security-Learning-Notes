@@ -1,0 +1,60 @@
+## 一、核心目标
+1. 编写漏洞代码，理解路径穿越触发原理
+2. 掌握黑名单字符过滤基础防护写法
+3. 实现路径标准化+白名单双重企业级加固方案
+
+## 二、练习题代码+逐行注释
+
+### 习题1【基础】原生漏洞代码：复现路径穿越漏洞
+import os          #这里加入了OS模块，然后在下方修改了路径位置，不然不能访问
+
+def read_user_file():
+    user_path=input("请输入要查看的文件路径:")
+    # 获取脚本自身所在的目录作为基准路径
+    script_dir=os.path.dirname(os.path.abspath(__file__))
+    base_path=os.path.join(script_dir,"web_file")
+    full_path=os.path.join(base_path,user_path)
+    try:
+        with open(full_path,"r",encoding="utf-8") as f:
+            print(f.read())
+    except:
+        print("文件不存在")
+read_user_file()  
+
+### 习题2【基础】安全改造：黑名单过滤防御路径穿越
+def safe_read_file():
+    user_path=input("请输入要查看的文件路径:")
+    base_path="./web_file/"
+    black_list=["../","..\\","/","\\"]
+    for char in black_list:
+        if char in user_path:
+            print("非法路径，访问被拒绝")
+            return
+    full_path=base_path+user_path
+    try:
+        with open(full_path,"r",encoding="utf-8") as f:
+            print(f.read())
+    except:
+        print("文件不存在或无访问权限")
+safe_read_file()
+
+### 习题3【实战】企业级加固：路径标准化+白名单双重防护
+import os
+def ultimate_safe_read():
+    user_path=input("请输入要查看的文件名称:")
+    script_dir=os.path.dirname(os.path.abspath(__file__))
+    base_path=os.path.join(script_dir,"web_file")
+    allow_file=["index.txt","log.txt","info.txt"]
+    real_path=os.path.normpath(os.path.join(base_path,user_path))
+    if user_path not in allow_file:
+        print("文件非法，仅允许访问指定文件！")
+        return
+    if not os.path.abspath(real_path).startswith(os.path.abspath(base_path)):
+        print("非法跨目录访问，拦截成功")
+        return
+    try:
+        with open(real_path,"r",encoding="utf-8") as f:
+            print("文件读取成功: \n",f.read())
+    except:
+        print("文件读取失败")
+ultimate_safe_read()
