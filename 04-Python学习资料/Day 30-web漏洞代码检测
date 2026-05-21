@@ -1,0 +1,61 @@
+## 一、核心目标
+1. 回顾各类漏洞危险代码特征
+2. 巩固白名单、字符过滤、路径规范化主流防护写法
+3. 区分不同漏洞对应的代码加固思路
+
+### 题目1【基础】：漏洞名称遍历输出
+# 需求：定义Web八大漏洞列表，循环遍历输出所有漏洞名称
+# 定义八大核心Web漏洞列表
+web_vuln = ["SQL注入", "XSS跨站脚本", "CSRF跨站伪造", "权限越权", "文件上传", "反序列化", "文件包含", "目录遍历"]
+# for循环遍历列表
+for vuln in web_vuln:
+    # 逐行输出漏洞名称
+    print("已掌握Web漏洞：", vuln)
+
+### 题目2【基础】：漏洞易混点筛选判断
+# 需求：区分「代码执行类漏洞」和「数据读取类漏洞」
+# 定义两类漏洞集合
+exec_vuln = {"文件包含", "文件上传", "反序列化", "SQL注入"}
+read_vuln = {"目录遍历", "XSS"}
+
+# 自定义判断函数
+def check_vuln_type(name):
+    if name in exec_vuln:
+        print(f"{name}：属于代码执行类高危漏洞")
+    elif name in read_vuln:
+        print(f"{name}：属于数据读取/展示类漏洞")
+    else:
+        print(f"{name}：其他类型漏洞")
+
+# 调用测试
+check_vuln_type("文件包含")
+check_vuln_type("目录遍历")
+
+### 题目3【网安实战】：简单恶意参数检测脚本
+# 需求：编写Python脚本，检测用户输入是否存在注入、路径遍历恶意字符
+import re
+
+# 定义Web漏洞恶意特征正则库
+malicious_pattern = [
+    r"../",          # 目录遍历特征
+    r"union|select",# SQL注入特征
+    r"<script>",     # XSS注入特征
+    r"eval\(",       # 代码执行特征
+]
+
+# 漏洞检测函数
+def web_safe_check(user_input):
+    # 遍历所有恶意规则
+    for pattern in malicious_pattern:
+        # 正则匹配检测
+        if re.search(pattern, user_input, re.I):
+            return False, "检测到恶意参数，存在Web漏洞风险"
+    # 无恶意字符则安全
+    return True, "参数安全，无漏洞风险"
+
+# 模拟用户输入测试
+if __name__ == "__main__":
+    test1 = "index.php?file=../etc/passwd"
+    test2 = "index.php?name=admin"
+    print(web_safe_check(test1))
+    print(web_safe_check(test2))
