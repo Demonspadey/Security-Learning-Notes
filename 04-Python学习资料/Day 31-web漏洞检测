@@ -1,0 +1,83 @@
+贴合今日复习：SQL注入、XSS、越权、CSRF四大漏洞，2基础识别+1实战权限校验，格式统一带逐行注释，可直接运行
+
+习题1【基础】SQL注入危险关键字检测
+ 
+功能：检测用户输入内容是否包含SQL注入常用恶意关键字，识别注入风险
+ 
+python
+  
+# 逐行注释
+# 获取用户提交的查询输入内容
+user_input = input("请输入查询内容：")
+# 定义SQL注入高危关键字黑名单
+sql_risk_words = ["union", "select", "and", "or", "drop", "delete"]
+# 初始化风险标记
+is_sql_risk = False
+
+# 遍历匹配恶意关键字
+for word in sql_risk_words:
+    # 统一小写判断，规避大小写绕过
+    if word.lower() in user_input.lower():
+        is_sql_risk = True
+        break
+
+# 判定检测结果
+if is_sql_risk:
+    print("检测到SQL注入恶意关键字，存在攻击风险，已拦截")
+else:
+    print("输入内容安全，无注入风险")
+ 
+ 
+习题2【基础】XSS恶意脚本标签筛查
+ 
+功能：过滤检测页面输入内容，识别XSS跨站脚本恶意标签
+ 
+python
+  
+# 逐行注释
+# 接收用户评论输入内容
+comment = input("请提交评论内容：")
+# XSS常见恶意脚本标签黑名单
+xss_bad_tag = ["<script>", "onclick", "javascript", "<iframe>"]
+# 标记脚本风险
+has_xss = False
+
+# 循环筛查恶意标签
+for tag in xss_bad_tag:
+    if tag in comment:
+        has_xss = True
+        break
+
+# 输出筛查结果
+if has_xss:
+    print("包含恶意脚本内容，XSS风险拦截")
+else:
+    print("评论内容合规，正常展示")
+ 
+ 
+习题3【实战】后端简易权限校验（防范越权漏洞）
+ 
+功能：模拟服务端身份+资源双重校验，杜绝水平、垂直越权访问
+ 
+python
+  
+# 逐行注释
+def check_user_permission(login_uid, target_data_uid):
+    # 固定管理员账号ID
+    admin_id = 100
+    # 普通用户仅能访问自己的数据，管理员可查看所有数据
+    if login_uid == admin_id:
+        return True, "管理员权限，允许访问"
+    elif login_uid == target_data_uid:
+        return True, "本人数据，正常访问"
+    else:
+        return False, "无权限，禁止越权访问他人数据"
+
+# 模拟当前登录用户ID
+current_user = int(input("输入当前登录用户ID："))
+# 模拟要访问的数据所属用户ID
+data_owner = int(input("输入待访问数据所属用户ID："))
+
+# 调用权限校验函数
+access_result, tip = check_user_permission(current_user, data_owner)
+print(tip)
