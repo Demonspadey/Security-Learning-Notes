@@ -1,0 +1,71 @@
+## 一、练习目标
+1. 识别文件包含恶意特征字符并拦截请求
+2. 编写路径过滤函数，清除穿越类非法字符
+3. 实现综合Web请求校验，双重规避遍历与包含漏洞
+4. 代码逻辑对应漏洞防护理论知识点
+
+## 二、三道课后练习题（带逐行注释）
+### 习题1 恶意特征基础判断
+功能：检测参数是否包含文件包含高危标识，存在则拦截
+```python
+# 获取用户传入路径参数
+user_param = input("请输入访问路径参数：")
+# 定义文件包含常见恶意特征
+risk_sign = ["../", "php://", "file://"]
+# 初始化风险标记
+is_risk = False
+
+# 遍历匹配危险特征
+for sign in risk_sign:
+    if sign in user_param:
+        is_risk = True
+        break
+
+# 根据检测结果输出提示
+if is_risk:
+    print("检测到文件包含恶意特征，请求已拦截")
+else:
+    print("参数合规，正常放行")
+
+
+### 习题2 路径非法字符过滤函数
+# 定义路径安全过滤函数
+def safe_path_filter(origin_path):
+    # 设定需要清除的非法危险字符
+    bad_char = ["../", "..\\", "./", "php://"]
+    safe_path = origin_path
+    # 循环替换删除所有危险字符
+    for char in bad_char:
+        safe_path = safe_path.replace(char, "")
+    return safe_path
+
+# 调用函数测试
+input_path = input("输入原始访问路径：")
+result_path = safe_path_filter(input_path)
+print(f"过滤后安全路径：{result_path}")
+
+
+### 习题3 综合Web请求安全校验脚本
+# 网站请求安全校验函数
+def web_request_check(req_path):
+    # 禁止出现的攻击字符
+    forbidden = ["../", "..\\", "php://", "file://"]
+    # 锁定网站固定合法根目录
+    base_dir = "/webroot/"
+
+    # 检测是否存在恶意字符
+    for word in forbidden:
+        if word in req_path:
+            return False, "存在路径攻击特征，拒绝访问"
+    
+    # 拼接合法目录，防止越界访问
+    full_access_path = base_dir + req_path
+    if base_dir not in full_access_path:
+        return False, "超出合法访问目录范围"
+
+    return True, "请求校验通过"
+
+# 模拟接收用户请求
+user_request = input("提交访问请求路径：")
+status, msg = web_request_check(user_request)
+print(msg)
