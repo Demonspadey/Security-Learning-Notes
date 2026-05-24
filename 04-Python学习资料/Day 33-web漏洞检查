@@ -1,0 +1,58 @@
+## 一、当日练习目标
+1. 编写代码检测SQL注入高危字符，实现基础风险拦截
+2. 封装路径处理函数，清除目录遍历跳转符号
+3. 运用正则表达式批量过滤XSS恶意标签与事件属性
+4. 代码逻辑对应漏洞防护理论，做到编码与考点联动
+
+## 二、三道练习题+逐行注释代码
+### 题目1 基础题：SQL注入高危字符过滤判断
+功能：检测输入字符串是否包含SQL注入高危字符 `' " ; or --`，存在则提示存在安全风险
+```python
+# 定义SQL注入高危字符集合
+risk_char = {"'", '"', ";", "or", "--"}
+# 获取用户输入内容
+user_input = input("请输入检测内容：")
+# 标记风险状态
+has_risk = False
+
+# 遍历比对是否存在高危字符
+for char in risk_char:
+    if char in user_input:
+        has_risk = True
+        break
+
+# 根据检测结果给出提示
+if has_risk:
+    print("检测到SQL注入高危字符，存在安全风险")
+else:
+    print("输入内容安全")
+
+
+### 题目2 基础题：路径遍历字符筛查清洗
+# 定义路径安全处理函数
+def safe_path(old_path):
+    # 替换路径遍历危险符号
+    new_path = old_path.replace("../", "")
+    # 返回处理完成的路径
+    return new_path
+
+# 测试示例
+test_path = "static/../../config.ini"
+res = safe_path(test_path)
+print("处理后安全路径：", res)
+
+
+### 题目3 进阶实战题：正则批量过滤XSS恶意内容
+# 导入正则处理模块
+import re
+
+# 获取用户提交的页面评论内容
+user_text = input("请输入评论内容：")
+
+# 编写正则匹配规则，匹配多种XSS恶意内容
+pattern = r"<script>|<iframe>|onclick|onmouseover"
+# 正则替换，清空所有匹配到的恶意内容
+safe_text = re.sub(pattern, "", user_text)
+
+# 输出过滤后的合规文本
+print("正则校验后展示内容：", safe_text)
