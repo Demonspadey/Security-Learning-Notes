@@ -1,0 +1,44 @@
+## 一、练习目标
+1. 代码实现合规密码强度检测，匹配系统密码安全规范
+2. 模拟多用户权限划分，理解最小权限访问控制
+3. 代码逻辑对接软考操作系统安全考点
+
+## 二、实操练习题（带完整注释）
+### 习题1 密码强度检测
+def check_pwd(pwd):
+    score=0
+    if len(pwd) >= 8: score += 1
+    if any(c.isdigit() for c in pwd) : score += 1
+    if any(c.isupper() for c in pwd) : score += 1
+    if any(c.islower() for c in pwd) : score += 1
+    if any(c in '!@#$%^&*()' for c in pwd) : score += 1
+    if score == 5:
+        return '强'
+    elif score >= 3:
+        return '中'
+    else:
+        return '弱'
+pwd=input('请输入密码:')
+print(f'密码强度:{check_pwd(pwd)}')
+
+### 习题2 系统用户权限判断
+# 模拟操作系统用户权限数据表
+# 权限标识：read读取  write写入
+user_perm = {
+    'admin': ['read', 'write'],
+    'user1': ['read'],
+    'guest': []
+}
+
+# 权限校验函数
+def has_permission(user, action):
+    # 判断用户存在且拥有对应操作权限
+    if user in user_perm and action in user_perm[user]:
+        return '允许'
+    else:
+        return '拒绝'
+
+# 模拟登录与操作请求
+user = input('输入用户名：')
+act = input('输入操作(read/write)：')
+print(f'权限校验结果：{has_permission(user, act)}')
