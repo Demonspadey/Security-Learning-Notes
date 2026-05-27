@@ -1,0 +1,19 @@
+实操示例（Kali 终端执行）
+```bash
+# 1. 查看历史登录、系统重启记录（替代lastb查询历史行为）
+last
+
+# 2. 查看当前所有在线用户
+who
+
+# 3. 查看在线用户、进程、系统负载
+w
+
+# 4. 筛选全局登录失败记录（核心排查暴力破解）
+grep "Failed password" /var/log/auth.log
+
+# 5. 精准筛选 SSH 服务登录失败记录
+grep "sshd.*Failed password" /var/log/auth.log
+
+# 6. 实时监控最新认证日志
+tail -f /var/log/auth.log
