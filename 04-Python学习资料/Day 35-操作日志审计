@@ -1,0 +1,43 @@
+## 一、核心目标
+1.  编写Python脚本读取认证日志，实现日志查看与异常筛选
+2.  掌握文件读取、关键字匹配的基础Python写法
+3.  脚本逻辑与Linux日志审计考点一一对应，适配网安场景
+
+---
+
+## 二、代码实现与逐行解析
+### 题1：读取日志尾部内容（快速查看近期认证记录）
+```python
+# 打开系统认证日志文件，只读模式
+with open("/var/log/auth.log", "r", encoding="utf-8", errors="ignore") as f:
+    # 读取文件所有行，存入列表
+    log_lines = f.readlines()
+
+# 切片获取最后15行日志（快速查看近期记录）
+last_15_log = log_lines[-15:]
+
+# 循环打印每一行日志
+print("近期认证日志记录：")
+for line in last_15_log:
+    # 去除每行末尾换行符后输出
+    print(line.strip())
+
+
+### 题2：筛选统计登录失败记录（暴力破解溯源
+# 定义日志文件路径
+log_path = "/var/log/auth.log"
+# 初始化计数器，统计登录失败次数
+fail_count = 0
+
+# 以只读模式打开日志文件（逐行读取，大日志场景节省内存）
+with open(log_path, "r", encoding="utf-8", errors="ignore") as log_file:
+    # 逐行遍历日志
+    for line in log_file:
+        # 判断当前行是否包含登录失败关键字
+        if "Failed password" in line:
+            fail_count += 1
+            # 打印单条失败日志，方便溯源IP与账号
+            print(line.strip())
+
+# 输出统计结果，可直接用于暴力破解频次分析
+print(f"\n本次检测到登录失败记录总数：{fail_count} 条")
