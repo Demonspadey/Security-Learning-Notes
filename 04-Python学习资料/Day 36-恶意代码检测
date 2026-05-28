@@ -1,0 +1,36 @@
+## 一、题1：病毒特征关键字匹配检测
+功能：通过特征库匹配，识别文本/脚本中的恶意关键字，模拟杀毒特征扫描
+```python
+# 定义恶意代码特征关键字库
+mal_features = ["eval(", "cmd.exe", "powershell -nop", "meterpreter"]
+# 模拟待检测的文件/脚本内容
+test_str = "this is a test; cmd.exe /c calc"
+# 标记是否检测到恶意代码，初始为安全
+is_mal = False
+
+# 遍历特征库，逐一匹配检测
+for feat in mal_features:
+    # 判断当前特征是否存在于待检测内容中
+    if feat in test_str:
+        is_mal = True
+        break  # 匹配到恶意特征，直接退出循环
+
+# 根据标记输出检测结果
+if is_mal:
+    print("发现病毒")
+else:
+    print("安全")
+
+### 二、题2：文件后缀白名单检测
+# 定义合法文件后缀白名单
+white_list = ["exe", "dll", "txt", "jpg", "docx"]
+# 待检测文件名
+file_name = "test.docx"
+# 截取最后一段作为文件后缀，并转为小写统一判断
+suffix = file_name.split(".")[-1].lower()
+
+# 判断文件后缀是否在白名单内
+if suffix in white_list:
+    print("允许运行")
+else:
+    print("拒绝运行")
