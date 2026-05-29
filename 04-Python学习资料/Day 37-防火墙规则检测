@@ -1,0 +1,56 @@
+## 一、题1 模拟包过滤（IP/网段黑白名单）
+功能：按顺序匹配规则，支持精确IP、网段通配匹配，模拟防火墙包过滤机制
+```python
+# 定义防火墙规则：(匹配IP/网段, 执行动作)，顺序优先
+rules = [
+    ("192.168.1.100", "deny"),
+    ("192.168.1.*", "allow"),
+    ("0.0.0.0", "deny")
+]
+
+def check_ip(ip):
+    # 遍历所有过滤规则
+    for rule_ip, action in rules:
+        # 判断网段通配规则
+        if rule_ip.endswith("*"):
+            prefix = rule_ip[:-1]
+            if ip.startswith(prefix):
+                return action
+        # 精确IP匹配
+        elif ip == rule_ip:
+            return action
+    # 无匹配规则，默认拒绝
+    return "deny"
+# 测试IP
+test_ips = ["192.168.1.100", "192.168.1.50", "10.0.0.1"]
+for ip in test_ips:
+    print(f"{ip} -> {check_ip(ip)}")
+
+### 二、题2 模拟状态检测防火墙（连接状态校验）
+# 集合存储已建立连接
+established = set()
+
+def process_packet(src_ip, src_port, dst_ip, dst_port, is_syn):
+    # 组装当前连接标识
+    conn = (src_ip, src_port, dst_ip, dst_port)
+    # 组装反向连接，用于匹配应答报文
+    reverse_conn = (dst_ip, dst_port, src_ip, src_port)
+
+    # SYN报文：新建连接，记录并放行
+    if is_syn:
+        established.add(conn)
+        print(f"允许 SYN 新建连接: {conn}")
+        return True
+    # 校验是否为合法回包
+    elif reverse_conn in established:
+        print(f"允许合法回包: {reverse_conn}")
+        return True
+    # 陌生报文直接拒绝
+    else:
+        print(f"拒绝非法陌生报文: {conn}")
+        return False
+
+# 测试用例
+process_packet("192.168.1.2", 12345, "8.8.8.8", 80, True)
+process_packet("8.8.8.8", 80, "192.168.1.2", 12345, False)
+process_packet("1.1.1.1", 53, "192.168.1.2", 54321, False)
