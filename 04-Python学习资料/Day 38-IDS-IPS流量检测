@@ -1,0 +1,77 @@
+学习方向：结合网安知识点，代码复现IDS告警、IPS拦截核心逻辑
+
+## 一、题1 模拟IDS：流量日志匹配 + 攻击告警
+功能：基于特征库匹配网络日志，仅输出告警，不拦截流量，还原IDS工作机制
+```python
+# 模拟网络流量日志列表，单条代表一条数据包日志
+traffic_log = [
+    "10.0.0.1 -> 192.168.1.5 [TCP] 80  length=120",
+    "10.0.0.2 -> 192.168.1.5 [UDP] 53  length=64",
+    "192.168.1.5 -> 10.0.0.1 [TCP] 443 length=512",
+    "10.0.0.3 -> 192.168.1.5 [ICMP] type=8 code=0",
+    "10.0.0.1 -> 192.168.1.5 [TCP] 22  length=40 content='root:pass'"
+]
+
+# 恶意特征规则库：(协议, 端口, 匹配关键字)
+malicious_signatures = [
+    ("TCP", 22, "root:pass"),   # SSH弱口令尝试
+    ("ICMP", None, "type=8"),   # Ping端口扫描
+    ("TCP", 80, "sqlmap")       # SQL注入工具特征
+]
+
+# IDS日志分析函数
+def ids_analyze(log_line):
+    # 遍历所有恶意签名规则
+    for proto, port, pattern in malicious_signatures:
+        # 匹配网络协议
+        if proto in log_line:
+            # 端口为None表示不限制端口，否则精准匹配端口
+            if port is None or str(port) in log_line:
+                # 匹配攻击特征字符串
+                if pattern in log_line:
+                    # IDS核心动作：仅告警，不拦截
+                    print(f"[IDS 告警] 匹配到恶意签名: {proto} {port} '{pattern}' -> {log_line[:60]}")
+                    return True
+    # 无恶意特征，流量正常
+    return False
+
+# 批量分析所有流量日志
+print("=== IDS 开始分析流量 ===")
+for line in traffic_log:
+    ids_analyze(line)
+print("=== 分析完成 ===")
+
+### 二、题2 模拟IPS：流量检测 + 实时阻断
+# 模拟实时网络数据包队列
+packets = [
+    "192.168.1.2:54321 -> 8.8.8.8:80 SYN",
+    "8.8.8.8:80 -> 192.168.1.2:54321 SYN-ACK",
+    "192.168.1.2:54321 -> 8.8.8.8:80 ACK",
+    "192.168.1.2:54321 -> 8.8.8.8:80 GET /admin/config.php?cmd=whoami",
+    "10.0.0.5:12345 -> 192.168.1.5:22 SSH 'root:123456'"
+]
+
+# IPS 恶意拦截规则库（高危关键字）
+mal_rules = [
+    "cmd=",          # 远程命令注入特征
+    "whoami",        # 系统信息查询高危命令
+    "root:123456",   # SSH弱口令特征
+    "/etc/passwd"    # 读取系统敏感文件特征
+]
+
+# IPS 检测与拦截函数
+def ips_inspect(packet):
+    # 遍历所有拦截规则
+    for rule in mal_rules:
+        if rule in packet:
+            # 匹配恶意特征，执行阻断动作
+            print(f"[IPS 阻断] 丢弃恶意包：{packet[:50]}... (匹配特征: {rule})")
+            return False
+    # 无恶意特征，放行数据包
+    print(f"[IPS 允许] {packet}")
+    return True
+
+# 批量检测转发数据包
+print("=== IPS 实时检测 ===")
+for pkt in packets:
+    ips_inspect(pkt)
