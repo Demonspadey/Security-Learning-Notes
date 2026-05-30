@@ -1,0 +1,41 @@
+## 一、核心理论知识点
+### 1. IDS 与 IPS 核心区别
+1. IDS：旁路镜像部署，仅产生告警日志，**不阻断流量**，多用于事后溯源、安全审计。
+2. IPS：串行串联部署，可实时丢弃恶意报文、阻断攻击会话，多用于事前主动防御。
+
+### 2. 三大主流检测技术
+1. 签名检测：匹配预设攻击特征库，识别已知攻击，准确率高、误报少。
+2. 异常检测：基于正常流量行为基线，识别异常流量，可发现未知攻击。
+3. 行为分析：分析主机、网络行为逻辑，识别渗透类恶意操作。
+
+### 3. 典型部署位置
+网络边界、核心交换机镜像端口、服务器区域。
+
+## 二、Suricata 开源IDS/IPS 实操（Kali / Ubuntu）
+### 1. 安装与基础启动命令
+```bash
+# 更新软件源
+sudo apt update
+# 安装 Suricata
+sudo apt install suricata -y
+
+# 查看版本，验证安装
+suricata --version
+# 查看本机网卡名称
+ip a
+
+# 前台运行，监听网卡，实时输出流量与告警
+sudo suricata -i ens33
+
+# 后台守护模式运行（标准IDS常驻模式）
+sudo suricata -c /etc/suricata/suricata.yaml -i ens33 -D
+# 查看 Suricata 运行进程
+ps aux | grep suricata
+# 查看全部历史告警日志
+sudo cat /var/log/suricata/fast.log
+# 实时滚动查看最新告警（运维常用）
+sudo tail -f /var/log/suricata/fast.log
+# 查看JSON结构化日志（用于日志对接、二次分析）
+sudo tail -f /var/log/suricata/eve.json
+# 清空测试日志
+sudo > /var/log/suricata/fast.log
