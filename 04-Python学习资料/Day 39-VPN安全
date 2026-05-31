@@ -1,0 +1,70 @@
+## 一、核心目标
+1. 模拟VPN加密前后数据包长度变化
+2. 实现VPN证书有效期自动化巡检脚本
+
+---
+
+## 二、代码实现与逐行解析
+
+### 题1：模拟VPN加密前后数据包长度变化
+```python
+# 导入随机模块，模拟加密产生的不定长度头部开销
+import random
+
+def encrypt_packet(plain_payload):
+    """模拟加密：在原始payload上增加头部（隧道模式）"""
+    # 模拟IPSec ESP加密：增加8-32字节的ESP头和尾
+    enc_overhead = random.randint(8, 32)
+    # 计算加密后数据包总长度
+    encrypted_len = plain_payload + enc_overhead
+    # 返回加密后长度
+    return encrypted_len
+
+# 测试数据：定义多组原始数据包字节长度
+original_payloads = [64, 128, 256, 512, 1024]
+
+# 打印输出表头
+print("原始长度 -> 加密后长度 (增加开销)")
+
+# 遍历所有数据包，计算并打印结果
+for orig in original_payloads:
+    enc = encrypt_packet(orig)
+    print(f"{orig:4d} bytes -> {enc:4d} bytes (增加 {enc - orig:2d} bytes)")
+
+
+### 题2：模拟证书过期提醒（VPN证书巡检）
+# 导入日期时间模块，用于时间对比与计算
+from datetime import datetime
+
+# 定义证书类，封装证书校验相关功能
+class Certificate:
+    # 构造方法：初始化证书起止时间，格式 YYYY-MM-DD
+    def __init__(self, not_before, not_after):
+        # 字符串时间转为标准datetime对象
+        self.not_before = datetime.strptime(not_before, "%Y-%m-%d")
+        self.not_after = datetime.strptime(not_after, "%Y-%m-%d")
+    
+    # 校验证书当前是否处于有效期
+    def is_valid(self):
+        now = datetime.now()
+        return self.not_before <= now <= self.not_after
+    
+    # 计算证书剩余有效天数，已过期返回-1
+    def days_until_expiry(self):
+        now = datetime.now()
+        if now > self.not_after:
+            return -1  # 已过期
+        return (self.not_after - now).days
+
+# 实例化证书：有效期 2025-01-01 ~ 2026-12-31
+cert = Certificate("2025-01-01", "2026-12-31")
+
+# 逻辑判断并输出提醒信息
+if cert.is_valid():
+    days_left = cert.days_until_expiry()
+    print(f"证书有效，剩余 {days_left} 天过期")
+    # 剩余不足30天，触发过期预警
+    if days_left < 30:
+        print("⚠️ 证书即将过期，请及时更新")
+else:
+    print("❌ 证书已过期，VPN隧道可能中断")
