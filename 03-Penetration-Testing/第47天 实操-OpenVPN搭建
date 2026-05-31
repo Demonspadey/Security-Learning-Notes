@@ -1,0 +1,104 @@
+📋 今日 OpenVPN 服务器搭建全程总结
+
+一、环境准备
+
+· 系统：Ubuntu（VMware 虚拟机）
+· 目标：搭建 OpenVPN 服务器，实现 VPN 功能
+
+二、具体操作步骤
+
+1. 安装 OpenVPN 和 Easy-RSA
+
+```bash
+sudo apt update
+sudo apt install openvpn easy-rsa -y
+```
+
+2. 创建 Easy-RSA 工作目录（使用新版命令）
+
+```bash
+make-cadir ~/openvpn-ca
+cd ~/openvpn-ca
+```
+
+3. 初始化 PKI 并生成证书
+
+```bash
+./easyrsa init-pki
+./easyrsa build-ca nopass          # Common Name 输入 VPN-CA
+./easyrsa gen-req server nopass    # Common Name 输入 server
+./easyrsa sign-req server server   # 输入 yes 确认
+./easyrsa gen-dh                   # 生成 Diffie-Hellman 参数（耗时）
+```
+
+4. 生成 TLS 认证密钥
+
+```bash
+openvpn --genkey secret abc.key
+```
+
+5. 整理证书到服务端目录
+
+```bash
+sudo mkdir -p /etc/openvpn/server
+sudo cp pki/ca.crt pki/issued/server.crt pki/private/server.key pki/dh.pem ta.key /etc/openvpn/server/
+```
+
+6. 创建服务端配置文件
+
+```bash
+sudo nano /etc/openvpn/server/server.conf
+```
+
+粘贴标准配置（注意证书路径、DNS、路由推送等）。
+
+7. 启动服务并验证
+
+```bash
+sudo systemctl start openvpn-server@server
+sudo systemctl enable openvpn-server@server
+sudo systemctl status openvpn-server@server
+ip addr show tun0   # 应看到 10.8.0.1
+```
+
+8. （可选）生成客户端证书
+
+```bash
+cd ~/openvpn-ca
+./easyrsa gen-req client1 nopass
+./easyrsa sign-req client client1
+```
+
+9. 配置防火墙和 IP 转发（让客户端上网）
+
+```bash
+sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
+sudo sysctl -p
+sudo iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+```
+
+三、验证成功标志
+
+· systemctl status 显示 active (running)
+· ip addr show tun0 存在 10.8.0.1
+· 日志显示 Initialization Sequence Completed
+· 物理机可以ping通10.8.0.1
+
+四、遇到的典型问题及解决
+
+· source vars 和 ./clean-all 报错：新版 Easy-RSA 3.x 不再支持，改用 ./easyrsa init-pki 等。
+· 权限不足：使用 sudo 或以 root 身份执行。
+· 服务启动失败：检查配置文件路径、证书是否存在、端口是否被占。
+
+五、当前服务器用途
+
+· 远程安全访问内网资源
+· 加密公共 WiFi 流量（需客户端连接）
+· 学习 VPN 技术
+
+六、后续可能操作
+
+· 让外网手机连接：需要桥接模式 + 路由器端口转发，或使用内网穿透（ZeroTier/frp）。
+· 生成客户端 .ovpn 文件并导入手机测试。
+
+---
