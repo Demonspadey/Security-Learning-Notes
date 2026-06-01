@@ -1,0 +1,49 @@
+### 题1 多线程模拟HTTP并发（模拟HTTP Flood原理）
+```python
+import threading
+import time
+
+# 定义请求函数
+def send_request(thread_id):
+    print(f"[线程 {thread_id}] 发起HTTP访问请求")
+    time.sleep(0.1)  # 模拟网络延迟
+    print(f"[线程 {thread_id}] 请求响应完成\n")
+
+thread_list = []
+# 生成10个并发线程
+for i in range(10):
+    thread = threading.Thread(target=send_request, args=(i,))
+    thread_list.append(thread)
+    thread.start()
+
+# 等待全部线程结束
+for t in thread_list:
+    t.join()
+print("===== 所有并发请求模拟完成 =====")
+
+### 题2 正则提取日志IP+异常访问告警（攻击溯源）
+import re
+from collections import Counter
+
+# 模拟web访问日志
+attack_log = """
+2026-06-01 09:10:01 192.168.1.20 - GET /index.html 200
+2026-06-01 09:10:02 10.0.1.55 - POST /login 403
+2026-06-01 09:10:03 203.0.113.88 - GET /admin 404
+2026-06-01 09:10:04 203.0.113.88 - GET /admin 404
+2026-06-01 09:10:05 203.0.113.88 - GET /admin 404
+2026-06-01 09:10:06 192.168.1.20 - GET /about 200
+"""
+# IPv4正则表达式
+ip_reg = r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b"
+all_ip = re.findall(ip_reg, attack_log)
+print("【日志所有访问IP】", all_ip)
+
+# 统计IP访问频次
+ip_frequency = Counter(all_ip)
+print("\n【IP访问频次统计与攻击告警】")
+for ip, count in ip_frequency.items():
+    if count >= 3:
+        print(f"⚠️ 高危告警：{ip} 异常访问{count}次，疑似DDoS/扫描")
+    else:
+        print(f"✅ 正常访问：{ip} 访问{count}次")
