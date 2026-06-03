@@ -1,0 +1,54 @@
+Cookie校验
+## 题1 安全会话ID生成器
+import secrets
+import hashlib
+import time
+
+def generate_session_id(include_timestamp=False):
+    """生成256bit安全会话ID，可选拼接纳秒时间戳提升随机性"""
+    if include_timestamp:
+        raw_data = f"{secrets.token_hex(32)}{time.time_ns()}"
+        sid = hashlib.sha256(raw_data.encode()).hexdigest()
+    else:
+        sid = secrets.token_hex(32)
+    return sid
+
+if __name__ == "__main__":
+    print("会话ID生成测试：")
+    for num in range(5):
+        res_sid = generate_session_id()
+        print(f"序号{num+1} | SID:{res_sid} | 字符长度:{len(res_sid)}")
+
+## 题2 正则解析安全日志，提取用户登录与异常账号
+import re
+
+log_text = """
+[2026-06-02 10:15:32] user_id=alice action=login status=success ip=192.168.1.10
+[2026-06-02 10:17:45] user_id=bob action=view_profile status=success ip=10.0.0.5
+[2026-06-02 10:20:10] user_id=alice action=change_password status=success ip=192.168.1.10
+[2026-06-02 10:22:33] user_id=charlie action=login status=failed reason=invalid_pwd ip=203.0.113.88
+"""
+# 命名分组提取用户+操作
+rule = r'user_id=(?P<uid>\w+)\s+action=(?P<opt>\w+)'
+all_log = re.finditer(rule, log_text)
+for item in all_log:
+    print(f"用户:{item.group('uid'):<10} 操作:{item.group('opt')}")
+# 筛选登录失败用户
+fail_user = re.findall(r'user_id=(\w+)\s+action=login\s+status=failed', log_text)
+print(f"\n登录失败黑名单用户：{fail_user}")
+
+## 题3 Cookie安全属性校验脚本
+def check_cookie_security(cookie_str):
+    """校验Cookie是否配置HttpOnly、Secure"""
+    res = {"HttpOnly": False, "Secure": False}
+    if "HttpOnly" in cookie_str:
+        res["HttpOnly"] = True
+    if "Secure" in cookie_str:
+        res["Secure"] = True
+    return res
+
+# 测试用例
+cookie1 = "PHPSESSID=abc123xyz; HttpOnly; Secure"
+cookie2 = "SID=123456"
+print("Cookie1安全配置：", check_cookie_security(cookie1))
+print("Cookie2安全配置：", check_cookie_security(cookie2))
