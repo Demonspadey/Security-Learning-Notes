@@ -1,0 +1,23 @@
+## 一、核心目标
+1. 实操区分DAC自主、MAC强制两种Linux原生权限模型命令
+2. 掌握chmod/setfacl(ACL)、SELinux全套实操指令，对应软考考点
+3. 理解RBAC/TBAC工程落地思路，结合最小特权、职责分离原则配置权限
+---
+## 二、DAC自主访问控制实操（文件UGO+ACL）
+### 1.基础UGO权限chmod
+```bash
+touch test.txt
+ls -l test.txt
+chmod 750 test.txt
+- 权限释义：u(所有者)rwx、g(同组)rx、o(其他)无权限；所有者可自主变更权限=DAC核心特征
+
+- 配套：修改属主 chown user:group test.txt ，变更后新拥有者自主管控权限
+ 
+2.精细化ACL(setfacl/getfacl)
+sudo setfacl -m u:alice:r test.txt #单独分配用户只读
+getfacl test.txt                   #查看ACL配置
+sudo setfacl -x u:alice test.txt   #撤销指定用户权限
+三、MAC强制访问控制实操（SELinux）
+getenforce       #查看SELinux状态 Enforcing开启/Permissive宽容/Disabled关闭
+setenforce 1     #临时启用强制模式
+ls -Z test.txt   #查看文件安全上下文标签
