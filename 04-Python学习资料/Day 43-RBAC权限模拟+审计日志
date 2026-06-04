@@ -1,0 +1,67 @@
+## 一、核心目标
+1. 用Python模拟RBAC权限校验逻辑，贴合软考RBAC考点
+2. 使用正则提取角色变更审计日志，统计用户最终角色
+3. 理解脚本和RBAC访问控制模型对应关系
+---
+## 题1 RBAC权限校验脚本（逐行注释）
+```python
+# 角色和权限映射：RBAC-权限绑定角色
+role_permissions = {
+    "admin": ["read", "write", "delete"],
+    "editor": ["read", "write"],
+    "viewer": ["read"]
+}
+# 用户和角色映射：用户绑定角色，不直接配权限
+user_roles = {
+    "alice": ["admin"],
+    "bob": ["editor"],
+    "charlie": ["viewer"]
+}
+
+def check_permission(username, operation):
+    # 用户不存在直接拒绝访问
+    if username not in user_roles:
+        return False
+    perm_set = set()
+    # 汇总用户所有角色对应的全部权限
+    for r in user_roles[username]:
+        perm_set.update(role_permissions[r])
+    # 判断操作是否在权限集合内
+    return operation in perm_set
+
+# 批量测试用例
+test = [("alice","delete"),("bob","delete"),("charlie","write")]
+for u,o in test:
+    print("✅允许" if check_permission(u,o) else "❌拒绝",u,o)
+
+## 题2 正则解析RBAC角色变更日志
+import re
+from collections import defaultdict
+
+# 模拟系统角色变更原始日志
+log_data = """
+2026-06-03 user=alice action=assign_role role=admin
+2026-06-03 user=bob action=assign_role role=editor
+2026-06-03 user=alice action=remove_role role=admin
+2026-06-03 user=charlie action=assign_role role=viewer
+2026-06-03 user=alice action=assign_role role=auditor
+"""
+# 正则捕获：用户名、操作类型、角色名
+pat = r"user=(\w+).*action=(\w+).*role=(\w+)"
+res = re.findall(pat, log_data)
+
+print("===角色变更流水记录===")
+for user,act,role in res:
+    print(f"{user} {'授予' if act=='assign_role' else '撤销'} {role}")
+
+# 统计用户最终生效角色
+final_role = defaultdict(set)
+for user,act,role in res:
+    if act == "assign_role":
+        final_role[user].add(role)
+    else:
+        final_role[user].discard(role)
+
+print("\n===用户最终角色清单===")
+for k,v in final_role.items():
+    print(k,":",v)
