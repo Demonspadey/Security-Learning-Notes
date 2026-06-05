@@ -1,0 +1,28 @@
+## 任务1 AES对称文件加解密
+```bash
+#生成明文文件
+echo "机密用户业务数据" > secret.txt
+#AES256-CBC加密
+openssl enc -aes-256-cbc -in secret.txt -out secret.enc
+#解密还原
+openssl enc -d -aes-256-cbc -in secret.enc -out secret_dec.txt
+#对比文件
+ls -lh secret.txt secret.enc
+
+## 任务2 RSA公私钥生成、密钥加密
+#生成2048位RSA私钥
+openssl genrsa -out private.pem 2048
+#从私钥提取公钥
+openssl rsa -in private.pem -pubout -out public.pem
+#待加密AES密钥明文
+echo "AES_KEY_202606" > key.txt
+#公钥加密密钥
+openssl rsautl -encrypt -pubin -inkey public.pem -in key.txt -out key.enc
+#私钥解密查看
+openssl rsautl -decrypt -inkey private.pem -in key.enc
+
+## 任务3 Rsync带日期后缀增量备份
+#创建测试目录
+mkdir -p ~/test_data && echo "业务数据" > ~/test_data/file.txt
+#-av归档，-b备份原文件，suffix添加日期后缀
+rsync -avb --suffix="_$(date +%Y%m%d)" ~/test_data/ /backup/test_data/
