@@ -1,0 +1,66 @@
+## 题1：手机号、邮箱脱敏函数
+def mask_phone(phone):
+    #11位手机号中间4位星号屏蔽
+    if len(phone) == 11 and phone.isdigit():
+        return phone[:3] + "****" + phone[-4:]
+    return phone
+
+def mask_email(email):
+    #邮箱脱敏：首字符+***@域名
+    if "@" not in email:
+        return email
+    local, domain = email.split("@",1)
+    if len(local) <= 2:
+        return local[0]+"*@"+domain
+    else:
+        return local[0]+"***@"+domain
+
+if __name__ == '__main__':
+    print(mask_phone("13912349876"))
+    print(mask_email("lisi@qq.com"))
+    print(mask_email("ab@163.com"))
+
+## 题2：正则批量提取页面所有邮箱
+import re
+
+html_text = """
+<div>商务：biz@sec.com</div>
+<div>运维：ops@sec.org.cn</div>
+<div>售后：kf_01@test.com</div>
+"""
+#邮箱正则规则
+rule = r"\b[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}\b"
+res = re.findall(rule,html_text)
+for idx,mail in enumerate(res,1):
+    print(f"{idx}.{mail}")
+
+## 题3：AES-CBC文件加解密（pycryptodome）
+#安装：pip install pycryptodome
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad,unpad
+
+def aes_encrypt(file_path,out_path,key):
+    #CBC固定16字节IV
+    cipher = AES.new(key.encode("utf-8"),AES.MODE_CBC,iv=b'1234567890123456')
+    with open(file_path,"rb") as f:
+        data = f.read()
+    en_data = cipher.encrypt(pad(data,AES.block_size))
+    with open(out_path,"wb") as f:
+        f.write(en_data)
+
+def aes_decrypt(file_path,out_path,key):
+    cipher = AES.new(key.encode("utf-8"),AES.MODE_CBC,iv=b'1234567890123456')
+    with open(file_path,"rb") as f:
+        data = f.read()
+    de_data = unpad(cipher.decrypt(data),AES.block_size)
+    with open(out_path,"wb") as f:
+        f.write(de_data)
+
+#测试运行
+if __name__ == '__main__':
+    key = "1234567812345678" #密钥固定16位
+    with open("demo.txt","w",encoding="utf-8") as f:
+        f.write("敏感业务数据")
+    aes_encrypt("demo.txt","demo.enc",key)
+    aes_decrypt("demo.enc","demo_dec.txt",key)
+    print("AES文件加解密完成")
