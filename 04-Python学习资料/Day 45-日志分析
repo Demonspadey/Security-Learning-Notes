@@ -1,0 +1,67 @@
+##题1：SSH失败日志提取攻击IP，暴力破解告警
+import re
+from collections import Counter
+
+auth_log = """
+2026-06-05 08:10:23 192.168.1.100 Failed password for root from 203.0.113.45
+2026-06-05 08:11:15 192.168.1.101 Failed password for invalid user admin from 198.51.100.22
+2026-06-05 08:12:01 192.168.1.100 Failed password for root from 203.0.113.45
+2026-06-05 08:12:30 192.168.1.102 Failed password for root from 203.0.113.89
+2026-06-05 08:13:12 192.168.1.100 Failed password for root from 203.0.113.45
+2026-06-05 08:15:43 192.168.1.101 Failed password for root from 198.51.100.22
+"""
+#IP正则
+ip_reg = r"\b(?:\d{1,3}\.){3}\d{1,3}\b"
+all_ip = re.findall(ip_reg,auth_log)
+
+#区分内网IP
+def is_private(ip):
+    if ip.startswith(("192.168.","10.","172.16.")):
+        return True
+    return False
+
+attack_ip = [ip for ip in all_ip if not is_private(ip)]
+cnt = Counter(attack_ip)
+print("====SSH爆破告警统计====")
+for ip,num in cnt.items():
+    if num >=3:
+        print(f"高危封禁：{ip} 失败{num}次")
+    else:
+        print(f"普通监控：{ip} 失败{num}次")
+
+##题2：多源日志聚合分级风险
+import re
+from collections import defaultdict
+
+web_logs = [
+    "203.0.113.88 - GET /admin/config.php 200",
+    "198.51.100.22 - POST /login.php 403",
+    "203.0.113.88 - GET /admin/config.php 200",
+    "203.0.113.88 - GET /admin/config.php 200",
+    "192.0.2.55 - GET / 200",
+]
+ids_alerts = [
+    "198.51.100.22 扫描端口22",
+    "203.0.113.88 SQL注入尝试 /admin/config.php?id=1' OR '1'='1",
+    "192.0.2.88 暴力破解SSH",
+]
+reg = r"\b(?:\d{1,3}\.){3}\d{1,3}\b"
+ips_total = []
+for i in web_logs:
+    ips_total.extend(re.findall(reg,i))
+for j in ids_alerts:
+    ips_total.extend(re.findall(reg,j))
+
+res = defaultdict(int)
+for ip in ips_total:
+    res[ip] +=1
+
+print("\n====IP风险分级====")
+print(f"{'IP地址':<18}{'次数':<8}{'风险等级'}")
+for k,v in sorted(res.items(),key=lambda x:x[1],reverse=True):
+    if v>=3:
+        print(f"{k:<18}{v:<8}高危 建议封禁")
+    elif v>=2:
+        print(f"{k:<18}{v:<8}中危 持续监控")
+    else:
+        print(f"{k:<18}{v:<8}低危 常规观察")
