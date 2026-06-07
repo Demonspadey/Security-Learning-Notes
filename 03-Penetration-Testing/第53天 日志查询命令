@@ -1,0 +1,27 @@
+## 一、Windows Powershell日志查询
+# 打开：eventvwr.msc
+# 筛选登录成功4624
+Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4624} -MaxEvents 20
+# 筛选登录失败4625
+Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4625} -MaxEvents 20
+# 查看近百条安全日志
+Get-WinEvent -LogName Security -MaxEvents 100 | Format-List
+
+## 二、Linux登录日志查询
+who          # utmp 当前在线用户
+w
+last         # wtmp 历史登录登出
+lastb        # btmp SSH失败登录（爆破记录）
+lastlog      # 全用户末次登录时间
+
+# 系统日志实时跟踪
+tail -f /var/log/secure          # CentOS SSH认证
+tail -f /var/log/auth.log        # Ubuntu SSH认证
+tail -f /var/log/messages       # 系统综合日志
+
+# 统计SSH爆破IP（高频实操）
+grep "Failed password" /var/log/secure | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr
+
+## 考点备注
+1.secure/auth.log存放账号认证日志；messages系统软硬件、内核日志；
+2.lastb需要root权限执行。
