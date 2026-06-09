@@ -1,0 +1,36 @@
+题1：计算MTTD、MTTR 时间差计算
+from datetime import datetime
+
+# 定义函数：计算平均检测时间、平均恢复时间
+def calc_mttd_mttr(occur, detect, recover, fmt="%Y-%m-%d %H:%M:%S"):
+    # 时间字符串转为可运算的datetime对象
+    t_occur = datetime.strptime(occur, fmt)
+    t_detect = datetime.strptime(detect, fmt)
+    t_recover = datetime.strptime(recover, fmt)
+
+    # 计算时长并转为分钟
+    mttd = (t_detect - t_occur).total_seconds() / 60
+    mttr = (t_recover - t_detect).total_seconds() / 60
+
+    print(f"MTTD = {mttd:.1f} 分钟")
+    print(f"MTTR = {mttr:.1f} 分钟")
+    return mttd, mttr
+
+# 调用函数测试
+calc_mttd_mttr("2026-06-08 08:00:00", "2026-06-08 08:45:00", "2026-06-08 10:30:00")
+
+题2：生成Markdown格式应急报告模板
+# 定义函数，拼接生成应急报告
+def gen_report(name, detect_time, impact, actions, recs):
+    return f"""# 应急报告
+- 事件：{name}
+- 发现：{detect_time}
+- 影响：{impact}
+- 处置：{', '.join(actions)}
+- 建议：{', '.join(recs)}"""
+
+# 定义处置动作、优化建议列表
+acts = ["断网", "封禁IP", "恢复备份"]
+recs = ["修改弱口令", "安装杀毒"]
+# 输出报告
+print(gen_report("SSH暴力破解", "2026-06-08 08:45", "服务器", acts, recs))
