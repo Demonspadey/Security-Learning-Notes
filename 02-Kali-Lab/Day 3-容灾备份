@@ -1,0 +1,25 @@
+# 1. 搭建测试目录与测试文件
+mkdir -p ~/backup_test/data
+cd ~/backup_test
+echo "重要文件1" > data/file1.txt
+echo "重要文件2" > data/file2.txt
+
+# 创建有效软链接、失效软链接
+ln -s data/file1.txt link_valid
+ln -s data/nonexist.txt link_broken
+
+# 2. 查找并删除失效软链接（真题考点）
+find . -type l ! -exec test -e {} \; -print   # 查找失效软链接
+find . -type l ! -exec test -e {} \; -delete  # 删除失效软链接
+
+# 3. rsync 带时间戳增量备份
+mkdir -p ~/backup_dest
+rsync -avb --suffix="_$(date +%Y%m%d)" ~/backup_test/data/ ~/backup_dest/data/
+
+# 查看最终备份结果
+ls -l ~/backup_dest/data/
+  
+# 4. 修改文件后重新备份，观察是否显示后缀时间戳
+echo "hello world!" >> ~/backup_test/data/file1.txt
+rsync -avb --suffix="_$(date +%Y%m%d)" ~/backup_test/data/ ~/backup_dest/data/
+ls -l ~/backup_dest/data/
