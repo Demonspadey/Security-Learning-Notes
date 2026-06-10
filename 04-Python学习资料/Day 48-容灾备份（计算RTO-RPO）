@@ -1,0 +1,43 @@
+## 一、核心目标
+1. 使用 `datetime` 库计算时间差，实现 RTO、RPO 自动计算
+2. 掌握字符串格式化，生成标准化备份日志报告
+3. 理解脚本在容灾运维场景的实际用途
+
+---
+## 二、知识点与代码（逐行注释）
+### 1. 脚本一：RTO / RPO 自动计算（🔴 必抄）
+功能：传入备份时间、故障时间、恢复时间，自动计算 RTO、RPO（单位：小时）
+```python
+# 导入日期时间模块，用于时间转换与差值计算
+from datetime import datetime
+
+# 定义计算函数
+def calc_rto_rpo(backup_time, fail_time, recover_time, fmt="%Y-%m-%d %H:%M:%S"):
+    # 将字符串格式时间转为程序可计算的时间对象
+    t_backup = datetime.strptime(backup_time, fmt)
+    t_fail = datetime.strptime(fail_time, fmt)
+    t_recover = datetime.strptime(recover_time, fmt)
+
+    # RTO = 故障发生 到 业务恢复 的总秒数 → 转为小时
+    rto = (t_recover-t_fail).total_seconds() / 3600
+    # RPO = 上次备份 到 故障发生 的总秒数 → 转为小时
+    rpo = (t_fail-t_backup).total_seconds() /3600
+    
+    # 格式化输出结果，保留2位小数
+    print(f"RTO = {rto:.2f} 小时")
+    print(f"RPO = {rpo:.2f} 小时")
+    return rto, rpo
+
+# 测试调用
+calc_rto_rpo("2026-06-08 22:00:00", "2026-06-09 06:00:00", "2026-06-09 10:30:00")
+
+## 2. 脚本二：生成标准化备份报告（🟡 理解）
+# 定义生成备份报告的函数
+def backup_report(source, dest, backup_time, status):
+    # 格式化字符串，拼接备份信息
+    report = f"备份报告\n源目录:{source}\n目标目录:{dest}\n备份时间:{backup_time}\n执行状态:{status}"
+    return report
+
+# 调用函数并打印报告
+result = backup_report("/data", "/backup", "2026-06-09 02:00", "成功")
+print(result)
