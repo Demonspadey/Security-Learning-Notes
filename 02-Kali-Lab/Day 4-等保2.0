@@ -1,0 +1,17 @@
+# 任务1 资产基础信息采集，测评建档必备
+cat /etc/os-release     #查看系统版本信息
+uname -a
+
+# 任务2 端口服务排查，落实最小开放原则
+sudo ss -tulnp
+sudo netstat -tulnp
+
+# 任务3 核查主机安全防护组件
+# Debian/Ubuntu 系列
+dpkg -l | grep -E "clamav|ufw|apparmor" 2>/dev/null
+# CentOS/RHEL 系列
+rpm -qa | grep -E "clamav|firewalld|selinux" 2>/dev/null
+
+# 任务4 定级场景逻辑判断演示
+echo "政府网站造成国家安全特别严重损害 → 第四级 强制保护"
+echo "大型电商、医院系统严重影响社会秩序 → 第三级 监督保护"
