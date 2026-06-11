@@ -1,0 +1,46 @@
+## 题1 根据安全等级返回对应测评周期
+# 定义函数入参：系统保护等级
+def level_period(level):
+    # 字典映射各等级测评周期
+    periods = {
+        1: "自行测评",
+        2: "建议每两年",
+        3: "每年一次",
+        4: "每半年一次",
+        5: "特殊管理"
+    }
+    # 无匹配等级返回未知
+    return periods.get(level, "未知等级")
+
+# 测试三级系统周期
+print(level_period(3))
+
+## 题2 依据客体类型+损害程度自动判定安全等级
+def level_determine(object_type, damage):
+    """
+    object_type 取值：1公民个人 2社会秩序 3国家安全
+    damage 取值：1一般 2严重 3特别严重
+    return：返回1~5对应安全等级
+    """
+    # 侵害公民个人权益
+    if object_type == 1:
+        return 1 if damage <= 2 else 2
+    # 侵害社会公共秩序
+    elif object_type == 2:
+        if damage == 1:
+            return 2
+        elif damage == 2:
+            return 3
+        else:
+            return 4
+    # 侵害国家安全
+    else:
+        if damage == 1:
+            return 3
+        elif damage == 2:
+            return 4
+        else:
+            return 5
+
+# 测试场景：社会秩序、严重损害
+print(level_determine(2, 2))
