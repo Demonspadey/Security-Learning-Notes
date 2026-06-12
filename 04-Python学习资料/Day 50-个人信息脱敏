@@ -1,0 +1,43 @@
+## 一、核心目标
+1. 掌握字符串切片，实现姓名、手机号、身份证脱敏
+2. 使用 re 正则完成手机号掩码，联动Linux sed正则思想
+3. 利用if分支语句，模拟用户授权校验，落地告知同意合规逻辑
+4. 理解脚本在数据合规场景的实际应用
+
+---
+## 二、知识点与代码（逐行注释）
+### 1. 脚本一：字符串切片脱敏（🔴 必抄）
+功能：姓名、手机号、身份证基础脱敏
+```python
+def anonymize(name,id_num,phone):
+    anon_name=name[0]+"**"
+    anon_id=id_num[-4:] if len(id_num) >=4 else id_num
+    anon_phone=phone[-4:] if len(phone) >=4 else phone
+    return anon_name,anon_id,anon_phone
+if __name__ == "__main__":
+    name,id_num,phone="张三","1101119900307663x","13812345678"
+    res=anonymize(name,id_num,phone)
+    print(f"匿名化结果：{res}")
+
+## 2. 脚本二：用户授权判断（🟡 理解 ）
+# 接收用户输入授权选择
+agree = input("是否同意隐私政策？(Y/N)：")
+
+# 分支判断合规授权状态
+if agree.upper() == "Y":
+    print("授权成功，可正常处理个人信息")
+else:
+    print("未获取明示同意，禁止处理个人信息")
+
+## 3. 脚本三：正则实现手机号掩码（🔴 必抄）  
+导入正则模块
+import re
+
+# 原始手机号
+phone_num = "13812345678"
+# 正则分组：匹配前3位、中间4位、后4位数字
+pattern = r"(\d{3})\d{4}(\d{4})"
+# 替换中间4位为****，\1 \2 引用分组内容
+result = re.sub(pattern, r"\1****\2", phone_num)
+
+print(f"脱敏后手机号：{result}")
