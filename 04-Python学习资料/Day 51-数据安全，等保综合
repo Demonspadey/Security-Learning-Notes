@@ -1,0 +1,106 @@
+## 一、核心目标
+1. 汇总时间计算、数据脱敏、逻辑判断、等级判定四类核心脚本
+2. 统一代码规范，巩固逐行注释习惯
+3. 串联Linux命令逻辑与Python实现，形成技术闭环
+
+---
+## 二、核心代码模块汇总
+### 1. 时间差计算：MTTD/MTTR/RTO/RPO 自动核算
+```python
+from datetime import datetime
+
+def calc_security_time(attack_time, detect_time, recover_time, fmt="%Y-%m-%d %H:%M:%S"):
+    """
+    计算MTTD、MTTR、事件总时长
+    入参：攻击发生时间、发现时间、恢复时间
+    """
+    # 字符串转时间对象
+    t_attack = datetime.strptime(attack_time, fmt)
+    t_detect = datetime.strptime(detect_time, fmt)
+    t_recover = datetime.strptime(recover_time, fmt)
+
+    # 计算MTTD：攻击发生→发现
+    mttd = (t_detect - t_attack).total_seconds() / 60
+    # 计算MTTR：发现→业务恢复
+    mttr = (t_recover - t_detect).total_seconds() / 60
+    # 事件总时长
+    total = (t_recover - t_attack).total_seconds() / 60
+
+    print(f"MTTD = {mttd:.0f} 分钟")
+    print(f"MTTR = {mttr:.0f} 分钟")
+    print(f"事件总时长 = {total:.0f} 分钟")
+    return mttd, mttr, total
+
+### 2. 数据脱敏：字符串切片基础脱敏
+def basic_desensitize(name, phone, id_card):
+    """姓名、手机号、身份证基础脱敏（去标识化）"""
+    # 姓名留姓氏，其余隐藏
+    new_name = name[0] + "**"
+    # 手机号保留后4位
+    new_phone = phone[-4:]
+    # 身份证保留后4位
+    new_id = id_card[-4:]
+
+    print(f"脱敏结果：{new_name} | {new_phone} | {new_id}")
+    return new_name, new_phone, new_id
+
+# 测试
+basic_desensitize("张三", "13812345678", "110101199001011234")
+
+### 3. 正则脱敏：手机号掩码（对标sed正则逻辑
+import re
+
+def phone_mask(phone_num):
+    """手机号中间四位掩码，对应Linux sed脱敏逻辑"""
+    # 正则分组：前3位、中间4位、后4位
+    pattern = r"(\d{3})\d{4}(\d{4})"
+    # 替换中间四位为****
+    result = re.sub(pattern, r"\1****\2", phone_num)
+    return result
+
+# 测试
+print(phone_mask("13812345678"))
+
+### 4. 逻辑判断：用户隐私授权校验（告知同意原则）
+def privacy_auth_check():
+    """模拟APP隐私授权校验，落实告知同意合规"""
+    agree = input("是否同意隐私政策？(Y/N)：")
+    # 统一转为大写，兼容大小写输入
+    if agree.upper() == "Y":
+        print("已获取明示同意，可正常处理个人信息")
+        return True
+    else:
+        print("未获取授权，禁止处理个人信息")
+        return False
+
+# 调用
+privacy_auth_check()
+
+### 5. 等级判定：等保系统自动定级
+def level_determine(object_type, damage):
+    """
+    等保定级自动判定
+    object_type：1=公民个人 2=社会秩序 3=国家安全
+    damage：1=一般 2=严重 3=特别严重
+    """
+    if object_type == 1:
+        return 1 if damage <= 2 else 2
+    elif object_type == 2:
+        if damage == 1:
+            return 2
+        elif damage == 2:
+            return 3
+        else:
+            return 4
+    else:
+        if damage == 1:
+            return 3
+        elif damage == 2:
+            return 4
+        else:
+            return 5
+
+# 测试：社会秩序+严重损害
+print(f"系统保护等级：{level_determine(2, 2)}级")
+# 测试调用
+calc_security_time("2026-06-13 01:10:00", "2026-06-13 01:35:00", "2026-06-13 02:20:00")
