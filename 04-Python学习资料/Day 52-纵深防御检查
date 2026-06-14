@@ -1,0 +1,94 @@
+## 一、核心目标
+1. 掌握Python调用系统命令，实现各层安全状态自动检查
+2. 学会分层输出安全检查结果，生成标准化安全报告
+3. 理解脚本在纵深防御日常巡检中的落地应用
+
+---
+## 二、核心代码（逐行注释）
+### 题1：五层防御自动巡检脚本（🔴 必抄）
+功能：自动检查网络层、主机层、应用层、数据层、终端层安全状态，输出巡检结果
+```python
+import subprocess
+import os
+
+def check_network_layer():
+    """网络层检查：校验iptables INPUT链默认策略是否为DROP"""
+    # 调用系统命令，获取防火墙规则
+    result = subprocess.run(
+        ['sudo', 'iptables', '-L', 'INPUT', '-n'],
+        capture_output=True,
+        text=True
+    )
+    # 判断输出中是否包含默认DROP策略
+    return 'policy DROP' in result.stdout
+
+def check_host_layer():
+    """主机层检查：校验杀毒软件clamd进程是否运行"""
+    result = subprocess.run(['pgrep', '-f', 'clamd'], capture_output=True)
+    # 返回码为0表示进程存在
+    return result.returncode == 0
+
+def check_app_layer():
+    """应用层检查：校验Web服务80/443端口是否监听"""
+    result = subprocess.run(
+        ['ss', '-tulnp'],
+        capture_output=True,
+        text=True
+    )
+    return ':80' in result.stdout or ':443' in result.stdout
+
+def check_data_layer():
+    """数据层检查：校验最新备份文件是否存在"""
+    backup_path = '/backup/latest.tar.gz'
+    return os.path.exists(backup_path)
+
+def check_terminal_layer():
+    """终端层检查：模拟校验终端准入状态，可根据实际场景扩展"""
+    # 真实场景可替换为EDR进程检查、准入状态校验
+    return True
+
+def overall_security_check():
+    """汇总五层检查结果，输出巡检报告"""
+    # 定义各层检查项与对应函数
+    layers = [
+        ("网络层", check_network_layer()),
+        ("主机层", check_host_layer()),
+        ("应用层", check_app_layer()),
+        ("数据层", check_data_layer()),
+        ("终端层", check_terminal_layer())
+    ]
+
+    print("===== 纵深防御安全巡检报告 =====")
+    all_pass = True
+    for name, status in layers:
+        status_text = "✅ 正常" if status else "❌ 存在风险"
+        print(f"{name}: {status_text}")
+        if not status:
+            all_pass = False
+
+    print("--------------------------------")
+    if all_pass:
+        print("整体状态：✅ 全部层级防护正常")
+    else:
+        print("整体状态：⚠️  存在风险项，请及时加固")
+
+### 题2：生成标准化安全报告（🟡 理解）
+def generate_security_report():
+    """生成各层防护详情报告"""
+    report = {
+        "网络层": "iptables默认DROP策略，IPS正常运行，抗DDoS设备在线",
+        "主机层": "ClamAV运行正常，系统补丁已更新至最新",
+        "应用层": "WAF规则已更新，网页防篡改服务正常",
+        "数据层": "每日全量备份执行成功，敏感数据已脱敏",
+        "终端层": "EDR客户端全部在线，准入控制生效"
+    }
+
+    print("===== 纵深防御每日安全报告 =====")
+    for layer, detail in report.items():
+        print(f"[{layer}] {detail}")
+
+# 调用生成报告
+generate_security_report()
+
+if __name__ == "__main__":
+    overall_security_check()
