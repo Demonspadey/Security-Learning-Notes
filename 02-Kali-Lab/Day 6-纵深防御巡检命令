@@ -1,0 +1,14 @@
+网络层：查看防火墙INPUT链默认策略
+sudo iptables -L INPUT -n | head -1
+
+主机层：查看ClamAV杀毒进程
+pgrep -f clamd || echo "cladm未运行"
+
+应用层：查看Web服务器监听端口
+ss -tuln | grep -E ":80|:443"
+
+数据层：检查备份文件是否存在（根据实际路径）
+ls -l /backup/latest.tar.gz 2>dev/null || echo "备份文件不存在"
+
+终端层：查看在线用户
+who w
