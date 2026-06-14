@@ -1,0 +1,45 @@
+**单词 1**
+**vulnerability** — 漏洞、弱点
+
+> 例句：The scanner found a critical **vulnerability** in the web server.
+> 翻译：扫描器在 Web 服务器上发现了一个严重漏洞。
+
+**单词 2**
+**exploit** — 利用（v.）；漏洞利用程序（n.）
+
+> 例句：We can **exploit** this buffer overflow to get a shell.
+> 翻译：我们可以利用这个缓冲区溢出漏洞来获得 shell。
+
+**单词 3**
+**payload** — 载荷（攻击代码）
+
+> 例句：Generate a reverse shell **payload** with msfvenom.
+> 翻译：用 msfvenom 生成一个反弹 shell 的载荷。
+
+**单词 4**
+**shell** — 命令行权限
+
+> 例句：We got a reverse **shell** on the target machine.
+> 翻译：我们在目标机器上拿到了一个反弹 shell。
+
+**单词 5**
+**scan** — 扫描
+
+> 例句：Let's **scan** the target to find open ports.
+> 翻译：我们来扫描目标找开放端口。
+
+📝 **今日小练习**
+```
+1. 填空：The scanner found a critical _________ in the web server.
+   （提示：漏洞）  填写：vulnerability
+
+2. 填空：We got a reverse _________ on the target machine.
+   （提示：shell）  填写：shell
+
+3. 翻译：Generate a reverse shell payload with msfvenom.
+   使用msfvenom工具生成一个反弹shell的载荷
+  
+4. 配对：将单词和中文连起来
+   exploit       A. 扫描    选B
+   payload       B. 利用    选C
+   scan          C. 载荷    选A
