@@ -1,0 +1,48 @@
+**单词 6**
+**port** — 端口
+
+> 例句：Port 80 is open, running an HTTP service.
+> 翻译：80 端口开放，运行着 HTTP 服务。
+
+**单词 7**
+**service** — 服务
+
+> 例句：We need to enumerate the **service** version.
+> 翻译：我们需要枚举服务的版本。
+
+**单词 8**
+**open** — 开放的
+
+> 例句：Only port 22 and 80 are **open**.
+> 翻译：只有 22 和 80 端口是开放的。
+
+**单词 9**
+**version** — 版本
+
+> 例句：The Apache **version** is 2.4.49, which is vulnerable.
+> 翻译：Apache 版本是 2.4.49，这个版本有漏洞。
+
+**单词 10**
+**target** — 目标
+
+> 例句：The **target** IP address is 192.168.1.10.
+> 翻译：目标 IP 地址是 192.168.1.10。
+
+📝 **今日小练习**
+```
+1. 填空：Port 80 is _________ , running an HTTP service.
+   （提示：开放的）  填写：open
+
+2. 填空：We need to enumerate the _________ version.
+   （提示：服务）  填写： service
+
+3. 翻译：Only port 22 and 80 are open.
+   仅开放了22和80端口
+
+4. 连线：
+   port         A. 版本    C
+   version      B. 目标    A
+   target       C. 端口    B
+```
+
+---
