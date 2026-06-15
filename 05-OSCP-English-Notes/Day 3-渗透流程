@@ -1,0 +1,57 @@
+**单词 11**
+**reconnaissance** — 侦察（信息收集），常简写为 recon
+
+> 例句：The first phase is **reconnaissance**, also called recon.
+> 翻译：第一阶段是侦察，也叫信息收集。
+
+**单词 12**
+**enumeration** — 枚举、信息探测
+
+> 例句：**Enumeration** is the key to success in penetration testing.
+> 翻译：枚举是渗透测试成功的关键。
+
+**单词 13**
+**foothold** — 立足点
+
+> 例句：We gained a **foothold** on the target as www-data.
+> 翻译：我们以 www-data 身份在目标上拿到了立足点。
+
+**单词 14**
+**escalation** — 提升（提权）
+
+> 例句：After the foothold, we need privilege **escalation**.
+> 翻译：拿到立足点后，我们需要权限提升。
+
+**单词 15**
+**compromise** — 攻破、入侵
+
+> 例句：The goal is to fully **compromise** the domain controller.
+> 翻译：目标是完全攻破域控制器。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. 以下哪个词表示"侦察"？  (B) 
+   A. escalation    B. reconnaissance    C. compromise    D. enumeration
+
+2. "Enumeration is the key to success" — "enumeration" 的意思是？   (A)
+   A. 枚举    B. 提权    C. 利用    D. 侦察
+
+3. "We gained a foothold on the target" — "foothold" 的意思是？   (B)
+   A. 脚架    B. 立足点    C. 脚印    D. 根据地
+
+4. 以下哪个词表示"权限提升"？   (A)
+   A. escalation    B. enumeration    C. exploitation    D. examination
+
+5. "Compromise" 在渗透测试中最常翻译成什么？   (D)
+   A. 妥协    B. 损害    C. 折中    D. 攻破
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：The first phase is reconnaissance.
+```  翻译: 第一阶段是侦查.
+
+---
+
