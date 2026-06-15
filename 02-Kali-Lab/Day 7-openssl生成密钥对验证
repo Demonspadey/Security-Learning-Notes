@@ -1,0 +1,20 @@
+# 生成2048位RSA私钥
+openssl genrsa -out private.pem 2048
+# 从私钥中提取公钥
+openssl rsa -in private.pem -pubout -out public.pem
+# 查看公钥内容
+cat public.pem
+# 生成文件校验完整性
+echo "hello world" > test.txt
+# 哈希校验文件完整性
+sha256sum test.txt       #得到哈希值
+python3 -c "import hashlib; f=open('test.txt','rb'); print('SHA256:',hashlib.sha256(f.read()).hexdigest())"  #得到相同哈希值
+python3 -c "
+import hashlib
+with open('test.txt','rb') as f:
+    print('SHA256:',hashlib.sha256(f.read()).hexdigest())
+"                   #也能得到相同哈希值
+# 修改内容后再次验证
+echo "hello world!" > test.txt       #这里就增加了一个!
+sha256 test.txt    #哈希值与上方完全不一样  雪崩效应
+MD5sum 也同样可以验证
