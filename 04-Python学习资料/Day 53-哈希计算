@@ -1,0 +1,75 @@
+## 一、核心目标
+1. 掌握hashlib库的使用，实现文件SHA256哈希计算
+2. 理解古典密码原理，掌握凯撒密码的加密解密实现
+3. 理解分块读取大文件的思路，避免内存溢出
+
+---
+## 二、核心代码（逐行注释）
+### 题1：大文件SHA256哈希计算（🔴 必抄）
+功能：分块读取大文件，计算SHA256哈希值，用于文件完整性校验
+```python
+# 导入哈希库
+import hashlib
+
+def calculate_sha256(filename):
+    """
+    计算指定文件的SHA256哈希值
+    分块读取，避免大文件占用过多内存
+    """
+    # 创建SHA256哈希对象
+    sha256 = hashlib.sha256()
+    try:
+        # 二进制模式打开文件
+        with open(filename, 'rb') as f:
+            # 每次读取4096字节，循环直到文件末尾
+            for chunk in iter(lambda: f.read(4096), b''):
+                # 更新哈希对象
+                sha256.update(chunk)
+        # 返回十六进制格式的哈希字符串
+        return sha256.hexdigest()
+    except FileNotFoundError:
+        print(f"错误：文件 {filename} 不存在")
+        return None
+
+# 测试：创建测试文件并计算哈希
+if __name__ == "__main__":
+    with open('data.txt', 'w', encoding='utf-8') as f:
+        f.write("信息安全工程师备考")
+    
+    hash_value = calculate_sha256('data.txt')
+    if hash_value:
+        print(f"data.txt 的 SHA256 值：{hash_value}")
+
+### 题2：凯撒密码加密解密（🟡 理解）
+def caesar_encrypt(text, shift):
+    """
+    凯撒加密：将字母移动shift个位置
+    仅处理英文字母，其他字符保持不变
+    """
+    result = []
+    for ch in text:
+        if ch.isalpha():
+            # 判断大小写，确定基准ASCII值
+            base = ord('A') if ch.isupper() else ord('a')
+            # 移位后取模，实现循环
+            new_ch = chr((ord(ch) - base + shift) % 26 + base)
+            result.append(new_ch)
+        else:
+            # 非字母字符直接保留
+            result.append(ch)
+    return ''.join(result)
+
+def caesar_decrypt(cipher, shift):
+    """解密：反向移位即可"""
+    return caesar_encrypt(cipher, -shift)
+
+# 测试
+if __name__ == "__main__":
+    plain_text = "encrypt"
+    shift = 3
+    cipher_text = caesar_encrypt(plain_text, shift)
+    decrypt_text = caesar_decrypt(cipher_text, shift)
+    
+    print(f"明文：{plain_text}")
+    print(f"加密：{cipher_text}")
+    print(f"解密：{decrypt_text}")
