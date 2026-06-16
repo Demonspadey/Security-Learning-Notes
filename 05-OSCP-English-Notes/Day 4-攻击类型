@@ -1,0 +1,59 @@
+**单词 16**
+**RCE** — Remote Code Execution 远程代码执行
+
+> 例句：CVE-2021-41773 allows **RCE** on Apache servers.
+> 翻译：CVE-2021-41773 允许在 Apache 服务器上远程执行代码。
+
+**单词 17**
+**authentication** — 身份验证、认证
+
+> 例句：The application has a weak **authentication** mechanism.
+> 翻译：这个应用的认证机制很弱。
+
+**单词 18**
+**bypass** — 绕过
+
+> 例句：We can **bypass** the login page using SQL injection.
+> 翻译：我们可以用 SQL 注入绕过登录页面。
+
+**单词 19**
+**injection** — 注入
+
+> 例句：SQL **injection** can dump the entire database.
+> 翻译：SQL 注入可以导出整个数据库。
+
+**单词 20**
+**directory** — 目录
+
+> 例句：Use gobuster to find hidden **directories** on the web server.
+> 翻译：用 gobuster 找 Web 服务器上的隐藏目录。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "RCE" 的全称和中文意思是？   （A）  
+   A. Remote Code Execution，远程代码执行
+   B. Random Code Error，随机代码错误
+   C. Root Certificate Error，根证书错误
+   D. Remote Control Engine，远程控制引擎
+
+2. "Bypass" 在安全测试中最接近的意思是？  （B）
+   A. 通过    B. 绕过    C. 路过    D. 经过
+
+3. "SQL injection" — "injection" 的意思是？   （A） 
+   A. 注入    B. 注射    C. 插入    D. 以上都对 
+
+4. "Authentication" 的意思是？  （B）
+   A. 授权    B. 认证    C. 审计    D. 自动
+
+5. "Use gobuster to find hidden directories" — "directories" 的意思是？  （A）
+   A. 目录    B. 直接    C. 指示    D. 方向
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：The application has a weak authentication mechanism.
+```  这个应用程序有薄弱的身份认证机制。
+
+---
