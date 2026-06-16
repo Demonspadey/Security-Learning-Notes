@@ -1,0 +1,104 @@
+# 第79天 Python学习笔记：RSA计算与数字签名模拟
+> 学习日期：2026.06.17 | 对应计划：第79天 | 方向：Python密码学场景落地
+---
+## 一、核心目标
+1. 掌握RSA完整密钥生成与加解密计算，适配软考计算题
+2. 实现数字签名与验签全流程模拟，理解哈希+非对称的配合逻辑
+3. 熟练使用pow函数三参数形式实现高效模幂运算
+
+
+## 二、核心代码（逐行注释）
+### 题1：RSA完整密钥生成+加解密工具（🔴 必抄）
+功能：对接软考RSA计算考点，输出标准得分步骤，支持加解密验证
+```python
+def rsa_full_calc(p, q, e, msg):
+    """
+    RSA完整计算流程：密钥生成 + 加密 + 解密验证
+    :param p: 大质数p
+    :param q: 大质数q
+    :param e: 公钥指数e
+    :param msg: 明文数值
+    """
+    # 1. 计算核心参数
+    n = p * q
+    phi_n = (p - 1) * (q - 1)
+    # pow三参数形式直接计算模逆元
+    d = pow(e, -1, phi_n)
+
+    # 输出标准考试步骤
+    print("===== RSA密钥计算得分步骤 =====")
+    print(f"1. 模数 n = {p} × {q} = {n}")
+    print(f"2. 欧拉值 φ(n) = {p-1} × {q-1} = {phi_n}")
+    print(f"3. 私钥 d = {d}")
+    print(f"公钥 (n,e) = ({n}, {e})")
+    print(f"私钥 (n,d) = ({n}, {d})")
+
+    # 2. 公钥加密
+    cipher = pow(msg, e, n)
+    # 3. 私钥解密
+    plain = pow(cipher, d, n)
+
+    print("\n===== 加解密验证 =====")
+    print(f"明文：{msg}")
+    print(f"加密密文：{cipher}")
+    print(f"解密还原：{plain}")
+    print(f"验证结果：{'✅ 一致' if plain == msg else '❌ 错误'}")
+
+# 真题参数测试
+if __name__ == "__main__":
+    rsa_full_calc(47, 71, 3, 42)
+
+### 题2：RSA数字签名&验签模拟（🟡 理解）
+import hashlib
+
+def create_sign(msg, d, n):
+    """
+    生成数字签名：发送方用自身私钥签名
+    :param msg: 原始消息字符串
+    :param d: 发送方私钥指数
+    :param n: 模数
+    :return: 签名值、原始哈希值
+    """
+    # 1. 对消息生成SHA256哈希摘要
+    hash_hex = hashlib.sha256(msg.encode("utf-8")).hexdigest()
+    # 十六进制转整数，用于模幂运算
+    hash_val = int(hash_hex, 16) % n
+    # 2. 私钥加密哈希摘要，生成签名
+    sign = pow(hash_val, d, n)
+    return sign, hash_val
+
+def check_sign(msg, sign, e, n):
+    """
+    验证数字签名：接收方用发送方公钥验签
+    :param msg: 接收的消息字符串
+    :param sign: 接收的签名值
+    :param e: 发送方公钥指数
+    :param n: 模数
+    :return: 验签是否通过
+    """
+    # 1. 对接收的消息重新计算哈希
+    new_hash_hex = hashlib.sha256(msg.encode("utf-8")).hexdigest()
+    new_hash = int(new_hash_hex, 16) % n
+    # 2. 公钥解密签名，得到原始哈希
+    old_hash = pow(sign, e, n)
+    # 3. 对比两个哈希值
+    return new_hash == old_hash
+
+# 场景测试
+if __name__ == "__main__":
+    # 测试用RSA参数（仅演示，真实场景用2048位以上密钥）
+    n, e, d = 3337, 3, 2147
+    original_msg = "项目安全合规审核通过"
+    tamper_msg = "项目安全合规审核不通过"
+
+    # 发送方生成签名
+    sign, _ = create_sign(original_msg, d, n)
+    print(f"原始报文签名值：{sign}")
+
+    # 正常报文验签
+    normal_result = "✅ 通过" if check_sign(original_msg, sign, e, n) else "❌ 失败"
+    print(f"正常报文验签结果：{normal_result}")
+
+    # 篡改报文验签
+    tamper_result = "✅ 通过" if check_sign(tamper_msg, sign, e, n) else "❌ 失败"
+    print(f"篡改报文验签结果：{tamper_result}")
