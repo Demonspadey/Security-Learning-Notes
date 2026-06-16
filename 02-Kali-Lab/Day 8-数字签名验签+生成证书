@@ -1,0 +1,16 @@
+# 1. 生成2048位RSA私钥
+openssl genrsa -out mykey.pem 2048
+# 2. 生成证书签名请求CSR
+openssl req -new -key mykey.pem -out myreq.csr -subj "/CN=localhost"
+# 3. 生成365天自签名证书
+openssl x509 -req -days 365 -in myreq.csr -signkey mykey.pem -out mycert.crt
+# 4. 查看证书核心信息
+openssl x509 -in mycert.crt -text -noout | grep -A3 -E "Serial|Validity|Signature Algorithm"
+# 5. 创建测试文件并计算器SHA256哈希
+echo "hello world" > test.txt
+sha256sum test.txt
+# 6. 使用私钥对文件生成数字签名
+openssl dgst -sha256 -sign mykey.pem -out test.sig test.txt
+# 7. 使用公钥验证签名
+openssl x509 -in mycert.crt -pubkey -noout > mtpubkey.pem
+openssl dgst -sha256 -verify mypubkey.pem -signature test.sig test.txt
