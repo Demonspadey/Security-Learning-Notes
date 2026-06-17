@@ -1,0 +1,53 @@
+**单词 21**
+**Nmap** — 网络映射器（端口扫描工具）
+
+> 例句：**Nmap** is the most popular port scanner in the industry.
+> 翻译：Nmap 是行业内最流行的端口扫描器。
+
+**单词 22**
+**Metasploit** — 渗透测试框架
+
+> 例句：We can use **Metasploit** to automate the exploitation.
+> 翻译：我们可以用 Metasploit 来自动化漏洞利用。
+
+**单词 23**
+**Burp Suite** — Web 代理抓包工具
+
+> 例句：Use **Burp Suite** to intercept and modify HTTP requests.
+> 翻译：用 Burp Suite 拦截和修改 HTTP 请求。
+
+**单词 24**
+**Netcat** — 网络瑞士军刀（常简写为 nc）
+
+> 例句：We set up a **netcat** listener to catch the reverse shell.
+> 翻译：我们设置了一个 netcat 监听器来接收反弹 shell。
+
+**单词 25**
+**Wireshark** — 数据包分析工具
+
+> 例句：**Wireshark** can capture and analyze network traffic.
+> 翻译：Wireshark 可以抓包和分析网络流量。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. 以下哪个工具是端口扫描器？  （B） 
+   A. Metasploit    B. Nmap    C. Wireshark    D. Netcat
+
+2. "Burp Suite" 的主要功能是？  （B）
+   A. 端口扫描    B. 拦截修改 HTTP 请求    C. 数据包分析    D. 密码破解
+
+3. "Netcat" 在渗透测试中的用途是？  （B）
+   A. 端口扫描    B. 设置监听器接收反弹 shell    C. 抓包分析    D. 漏洞利用
+
+4. "Wireshark can capture and analyze network traffic" — "traffic" 的意思是？  （B）
+   A. 交通    B. 流量    C. 交易    D. 运输
+```
+
+**翻译题**
+```
+5. 把这句话翻译成中文：Wireshark can capture and analyze network traffic.
+```  Wireshark可以抓取和分析网络流量包
+
+---
