@@ -1,0 +1,103 @@
+## 一、核心目标
+1. 掌握正则匹配方法，实现攻击Payload自动分类识别
+2. 实现攻击类型与防护方案的自动匹配
+3. 理解日志批量检测的落地思路
+
+---
+## 二、核心代码（逐行注释）
+### 题1：攻击类型自动识别（🔴 必抄）
+功能：输入请求Payload，自动判断攻击类型，适配日志批量检测场景
+```python
+# 导入正则库
+import re
+
+def classify_attack(payload):
+    """
+    根据请求内容识别攻击类型
+    :param payload: 请求参数内容
+    :return: 识别出的攻击类型列表
+    """
+    attack_types = []
+
+    # SQL注入匹配：忽略大小写
+    if re.search(r"' OR|UNION SELECT|1' AND|--.*$", payload, re.I):
+        attack_types.append("SQL注入")
+
+    # XSS攻击匹配
+    if re.search(r"<script>|alert\(|javascript:|onerror=", payload, re.I):
+        attack_types.append("XSS跨站脚本")
+
+    # 路径遍历匹配
+    if re.search(r"\.\./|\.\.\\", payload):
+        attack_types.append("路径遍历")
+
+    # 命令注入匹配
+    if re.search(r";\s*\w+|\|\s*whoami|&\s*\w+", payload):
+        attack_types.append("命令注入")
+
+    # 无匹配则为正常请求
+    return attack_types if attack_types else ["正常请求"]
+
+# 测试用例
+if __name__ == "__main__":
+    test_cases = [
+        "1' OR '1'='1",
+        "<script>alert(1)</script>",
+        "../../etc/passwd",
+        "127.0.0.1; whoami",
+        "normal_search_keyword"
+    ]
+
+    print("===== 攻击类型识别结果 =====")
+    for case in test_cases:
+        result = classify_attack(case)
+        print(f"请求内容：{case:30} → 攻击类型：{', '.join(result)}")
+
+### 题2：攻击防护方案自动查询（🟡 理解）
+def get_defense_scheme(attack_type):
+    """
+    根据攻击类型返回对应防护方案
+    :param attack_type: 攻击类型名称
+    :return: 防护措施列表
+    """
+    defense_map = {
+        "SQL注入": [
+            "使用参数化查询（预编译语句）",
+            "用户输入白名单校验",
+            "数据库账号最小权限",
+            "屏蔽数据库报错信息"
+        ],
+        "XSS跨站脚本": [
+            "输出内容HTML实体编码",
+            "Cookie设置HttpOnly属性",
+            "配置CSP内容安全策略",
+            "输入内容过滤校验"
+        ],
+        "路径遍历": [
+            "路径白名单限制",
+            "规范化路径，过滤../字符",
+            "限制Web进程目录权限",
+            "关闭远程文件包含"
+        ],
+        "命令注入": [
+            "禁止直接拼接系统命令",
+            "过滤特殊命令连接符",
+            "程序最小权限运行",
+            "可执行命令白名单"
+        ],
+        "CSRF": [
+            "添加CSRF Token校验",
+            "Cookie设置SameSite属性",
+            "校验Referer请求头",
+            "关键操作二次验证"
+        ]
+    }
+    return defense_map.get(attack_type, ["常规安全加固，输入校验与权限管控"])
+
+# 测试
+if __name__ == "__main__":
+    print("===== 防护方案查询 =====")
+    for attack in ["SQL注入", "XSS跨站脚本", "命令注入"]:
+        print(f"\n【{attack}】防护措施：")
+        for idx, scheme in enumerate(get_defense_scheme(attack), 1):
+            print(f"  {idx}. {scheme}")
