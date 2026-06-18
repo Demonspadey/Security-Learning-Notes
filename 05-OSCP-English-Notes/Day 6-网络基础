@@ -1,0 +1,53 @@
+**单词 26**
+**IP address** — IP 地址
+
+> 例句：What is the **IP address** of the target machine?
+> 翻译：目标机器的 IP 地址是多少？
+
+**单词 27**
+**protocol** — 协议
+
+> 例句：The **protocol** used is HTTP over TCP port 80.
+> 翻译：使用的协议是基于 TCP 80 端口的 HTTP。
+
+**单词 28**
+**localhost** — 本地主机
+
+> 例句：Run the server on **localhost** port 8000 for testing.
+> 翻译：在本地主机的 8000 端口上运行服务器做测试。
+
+**单词 29**
+**forward** — 转发
+
+> 例句：We need to **forward** port 8080 to the internal machine.
+> 翻译：我们需要把 8080 端口转发到内网机器。
+
+**单词 30**
+**firewall** — 防火墙
+
+> 例句：The **firewall** is blocking all ports except 443.
+> 翻译：防火墙阻止了除 443 以外的所有端口。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "IP address" 的中文意思是？  （B）
+   A. 网络地址    B. IP 地址    C. 协议地址    D. 端口地址
+
+2. "Protocol" 在计算机领域的意思是？  （B）
+   A. 协商    B. 协议    C. 礼节    D. 草案
+
+3. "The firewall is blocking all ports except 443" — "blocking" 的意思是？  （A）
+   A. 阻止    B. 块    C. 街区    D. 障碍
+
+4. "Forward" 在网络术语中的意思是？  （B）
+   A. 前面    B. 转发    C. 前进    D. 发送
+```
+
+**翻译题**
+```
+5. 把这句话翻译成中文：Run the server on localhost port 8000 for testing.
+```  在本地主机部署一个8000端口服务用于测试
+
+---
