@@ -1,0 +1,33 @@
+题目1：区分对称/非对称加密算法
+# 封装算法分类判断
+def crypto_type(alg):
+    # 对称加密算法列表
+    symmetric = ["aes", "des", "sm4"]
+    # 非对称加密算法列表
+    asymmetric = ["rsa", "ecc", "sm2"]
+    alg_low = alg.lower()
+    if alg_low in symmetric:
+        return "对称加密算法"
+    elif alg_low in asymmetric:
+        return "非对称加密算法"
+    else:
+        return "未知加密算法"
+
+# 循环批量测试常见算法
+alg_list = ["AES", "RSA", "SM4", "SM2"]
+for a in alg_list:
+    print(f"{a}: {crypto_type(a)}")
+
+题目2：BLP/Biba模型规则校验（模拟访问判断）
+# 密级数字映射：0低密，1中密，2高密
+def blp_read_check(sub_level, obj_level):
+    # BLP规则：不能读高密（No Read Up）
+    if sub_level < obj_level:
+        return "BLP禁止读取（低密不能读高密）"
+    else:
+        return "BLP允许读取"
+
+# 三组测试场景
+print(blp_read_check(0, 2))  # 低密用户读高密文件
+print(blp_read_check(2, 1))  # 高密用户读中密文件
+print(blp_read_check(1, 1))  # 同级读取
