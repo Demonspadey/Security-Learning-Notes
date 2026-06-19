@@ -1,0 +1,56 @@
+**单词 31**
+**enumerate** — 枚举、探测
+
+> 例句：**Enumerate** all users on the SMB service.
+> 翻译：枚举 SMB 服务上的所有用户。
+
+**单词 32**
+**brute force** — 暴力破解
+
+> 例句：Use Hydra to **brute force** the SSH password.
+> 翻译：用 Hydra 暴力破解 SSH 密码。
+
+**单词 33**
+**hash** — 哈希值
+
+> 例句：Dump the password **hashes** using Mimikatz.
+> 翻译：用 Mimikatz 导出密码哈希值。
+
+**单词 34**
+**crack** — 破解
+
+> 例句：Use John the Ripper to **crack** the password hash.
+> 翻译：用 John the Ripper 破解密码哈希。
+
+**单词 35**
+**listener** — 监听器
+
+> 例句：Start a netcat **listener** on port 4444.
+> 翻译：在 4444 端口启动一个 netcat 监听器。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "Enumerate all users" — "enumerate" 的意思是？  （B）
+   A. 破解    B. 枚举    C. 监听    D. 跳转
+
+2. "Brute force" 的中文意思是？  （A）
+   A. 暴力破解    B. 强力    C. 蛮力    D. 力量
+
+3. "Dump the password hashes" — "hash" 的意思是？  （A） 
+   A. 哈希    B. 哈希值    C. 加密    D. 乱码
+
+4. "Crack" 在渗透测试中的意思是？   （C）
+   A. 破裂    B. 裂缝    C. 破解    D. 噪音
+
+5. "Start a netcat listener on port 4444" — "listener" 的意思是？   （B）
+   A. 听众    B. 监听器    C. 收听者    D. 扬声器
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：Start a netcat listener on port 4444.
+``` 在4444端口开启一个netcat监听端口服务
+
+---
