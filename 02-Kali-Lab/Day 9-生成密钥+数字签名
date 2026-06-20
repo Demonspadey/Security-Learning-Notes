@@ -1,0 +1,12 @@
+### 1. OpenSSL RSA操作
+```bash
+# 生成2048位RSA私钥
+openssl genrsa -out rsa_private.pem 2048
+# 从私钥导出公钥
+openssl rsa -in rsa_private.pem -pubout -out rsa_public.pem
+# 查看私钥详细参数
+openssl rsa -in rsa_private.pem -text -noout
+# 签名文件
+openssl dgst -sha256 -sign rsa_private.pem -out signature.bin message.txt
+# 验证签名
+openssl dgst -sha256 -verify rsa_public.pem -signature signature.bin message.txt
