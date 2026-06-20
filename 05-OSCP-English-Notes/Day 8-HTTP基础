@@ -1,0 +1,56 @@
+**单词 36**
+**request** — 请求
+
+> 例句：The browser sends a GET **request** to the server.
+> 翻译：浏览器向服务器发送一个 GET 请求。
+
+**单词 37**
+**response** — 响应
+
+> 例句：The server returned a 200 OK **response**.
+> 翻译：服务器返回了一个 200 OK 响应。
+
+**单词 38**
+**header** — 请求头/响应头
+
+> 例句：Check the response **headers** for server information.
+> 翻译：检查响应头获取服务器信息。
+
+**单词 39**
+**parameter** — 参数
+
+> 例句：The URL **parameter** "id" is vulnerable to SQL injection.
+> 翻译：URL 参数 "id" 存在 SQL 注入漏洞。
+
+**单词 40**
+**cookie** — Cookie
+
+> 例句：The session **cookie** can be stolen via XSS.
+> 翻译：会话 cookie 可以通过 XSS 攻击被窃取。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "The browser sends a GET request" — "request" 的意思是？   （A）
+   A. 请求    B. 响应    C. 要求    D. 需要
+
+2. "The server returned a 200 OK response" — "response" 的意思是？  （B）
+   A. 请求    B. 响应    C. 回复    D. 反馈
+
+3. "Header" 在 HTTP 中的意思是？  （C）
+   A. 头部    B. 标题    C. 请求头/响应头    D. 页眉
+
+4. "The URL parameter id is vulnerable" — "parameter" 的意思是？  （A）
+   A. 参数    B. 平行    C. 范例    D. 范围
+
+5. "Cookie" 在 Web 安全中最常指什么？  （B）
+   A. 饼干    B. 会话标识    C. 缓存    D. 加密
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：Check the response headers for server information.
+```检查响应头中的服务器版本信息
+
+---
