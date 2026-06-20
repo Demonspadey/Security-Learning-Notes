@@ -1,0 +1,30 @@
+import hashlib
+import os
+
+def get_file_hash(filename, algorithm='sha256'):
+    """计算文件的哈希值"""
+    h = hashlib.new(algorithm)
+    try:
+        with open(filename, 'rb') as f:
+            while chunk := f.read(4096):
+                h.update(chunk)
+        return h.hexdigest()
+    except FileNotFoundError:
+        return None
+
+# 创建一个测试文件
+with open('test.txt', 'w', encoding='utf-8') as f:
+    f.write('信息安全工程师考试 - 第1天学习')
+
+# 计算不同哈希算法结果
+for alg in ['md5', 'sha1', 'sha256']:
+    h = get_file_hash('test.txt', alg)
+    print(f'{alg.upper():>6}: {h}')
+
+# 验证：文件内容改变 → 哈希值完全改变
+with open('test.txt', 'a', encoding='utf-8') as f:
+    f.write('.')
+
+new_hash = get_file_hash('test.txt', 'sha256')
+print(f'\n修改后 SHA256: {new_hash}')
+print(f'哈希已变化: ✓  这就是完整性校验的原理')
