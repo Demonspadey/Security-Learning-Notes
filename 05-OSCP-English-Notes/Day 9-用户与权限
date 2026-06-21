@@ -1,0 +1,56 @@
+**单词 41**
+**root** — 根用户（Linux 最高权限）
+
+> 例句：We need to escalate to **root** to read the proof file.
+> 翻译：我们需要提权到 root 才能读取 proof 文件。
+
+**单词 42**
+**user** — 用户
+
+> 例句：The current **user** is www-data, not root.
+> 翻译：当前用户是 www-data，不是 root。
+
+**单词 43**
+**privilege** — 权限
+
+> 例句：We do not have enough **privileges** to access that file.
+> 翻译：我们没有足够的权限访问那个文件。
+
+**单词 44**
+**permission** — 权限（文件/目录）
+
+> 例句：Check the file **permissions** using ls -la.
+> 翻译：用 ls -la 检查文件权限。
+
+**单词 45**
+**password** — 密码
+
+> 例句：We found a **password** in the configuration file.
+> 翻译：我们在配置文件中找到了一个密码。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "Root" 在 Linux 系统中指什么？  （B）
+   A. 根目录    B. 根用户（最高权限）    C. 树根    D. 根源
+
+2. "The current user is www-data" — "user" 的意思是？  （A）
+   A. 用户    B. 使用    C. 用户名    D. 使用者
+
+3. "Privilege" 在渗透测试中常翻译为？  （C）
+   A. 特权    B. 优惠    C. 权限    D. 荣誉
+
+4. "Check the file permissions" — "permission" 的意思是？  （B）
+   A. 许可    B. 权限    C. 允许    D. 同意
+
+5. "Password" 的意思是？  （B）
+   A. 路径    B. 密码    C. 通过    D. 单词
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：The current user is www-data, not root.
+``` 当前登录用户为www-data，不是root最高权限账户
+
+---
