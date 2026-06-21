@@ -1,0 +1,24 @@
+# ===== 1. 生成RSA密钥对（本日实操完整列出） =====
+openssl genrsa -out rsa_private.pem 2048
+openssl rsa -in rsa_private.pem -pubout -out rsa_public.pem
+
+# 查看私钥完整信息（可以看到 n, e, d, p, q）
+openssl rsa -in rsa_private.pem -text -noout
+
+# 查看公钥的 n 和 e（公钥只有 n 和 e）
+openssl rsa -in rsa_public.pem -pubin -text -noout
+
+# ===== 2. 创建测试文件 =====
+echo "数字签名测试消息" > msg.txt
+
+# ===== 3. 签名：私钥签名 =====
+openssl dgst -sha256 -sign rsa_private.pem -out msg.sig msg.txt
+
+# ===== 4. 验签：公钥验证 =====
+openssl dgst -sha256 -verify rsa_public.pem -signature msg.sig msg.txt
+# → Verified OK（验签成功）
+
+# ===== 5. 篡改后再验签 =====
+echo "篡改后的消息" > msg_tampered.txt
+openssl dgst -sha256 -verify rsa_public.pem -signature msg.sig msg_tampered.txt
+# → Verification Failure（验签失败，说明篡改被检测到）
