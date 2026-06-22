@@ -1,0 +1,56 @@
+**单词 46**
+**report** — 报告
+
+> 例句：Write a professional penetration testing **report**.
+> 翻译：写一份专业的渗透测试报告。
+
+**单词 47**
+**finding** — 发现（报告中找到的漏洞或问题）
+
+> 例句：List all **findings** in order of severity.
+> 翻译：按严重程度列出所有发现。
+
+**单词 48**
+**screenshot** — 截图
+
+> 例句：Take a **screenshot** of the proof.txt file.
+> 翻译：给 proof.txt 文件截个图。
+
+**单词 49**
+**proof** — 证据
+
+> 例句：The **proof** that we rooted the machine is proof.txt.
+> 翻译：我们拿到 root 权限的证据是 proof.txt 文件。
+
+**单词 50**
+**remediation** — 修复方案
+
+> 例句：The **remediation** for this vulnerability is to update the software.
+> 翻译：这个漏洞的修复方案是更新软件。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "Write a professional penetration testing report" — "report" 的意思是？ （A）
+   A. 报告    B. 报道    C. 汇报    D. 举报
+
+2. "List all findings in order of severity" — "finding" 的意思是？ （D）
+   A. 发现    B. 寻找    C. 发现物    D. 漏洞发现
+
+3. "Take a screenshot" — "screenshot" 的意思是？ （B）
+   A. 屏幕    B. 截图    C. 拍摄    D. 照片
+
+4. "The proof that we rooted the machine" — "proof" 的意思是？ （D）
+   A. 证据    B. 证明    C. 证实    D. 以上都对
+
+5. "Remediation" 在安全报告中的意思是？ （B）
+   A. 补救    B. 修复方案    C. 治疗    D. 纠正
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：Take a screenshot of the proof.txt file.
+``` 对存放权限证据的 proof.txt 文件进行截图留存
+
+---
