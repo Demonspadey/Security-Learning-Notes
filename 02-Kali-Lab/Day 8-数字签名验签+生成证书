@@ -12,5 +12,5 @@ sha256sum test.txt
 # 6. 使用私钥对文件生成数字签名
 openssl dgst -sha256 -sign mykey.pem -out test.sig test.txt
 # 7. 使用公钥验证签名
-openssl x509 -in mycert.crt -pubkey -noout > mtpubkey.pem
+openssl x509 -in mycert.crt -pubkey -noout > mypubkey.pem
 openssl dgst -sha256 -verify mypubkey.pem -signature test.sig test.txt
