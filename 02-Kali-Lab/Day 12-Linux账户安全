@@ -1,0 +1,8 @@
+sudo cat /etc/shadow    # 存储用户密码哈希，需root权限
+cat /etc/passwd         # 存储用户基础信息，全局可读
+cat /etc/login.defs     # 全局密码过期策略模板
+chage -l 用户名          # 查看用户密码过期配置
+sudo chage -M 90 用户名 # 设置密码90天过期
+sudo useradd -m testuser # 创建带家目录新用户
+sudo passwd testuser    # 设置用户登录密码
+sudo userdel -r testuser # 删除用户+家目录
