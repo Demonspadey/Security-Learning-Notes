@@ -1,0 +1,43 @@
+Python 代码（HMAC+随机Token，原始代码不修改）
+import secrets
+import string
+import hashlib
+import hmac
+
+# ===== 1. 生成随机Token（模拟认证会话） =====
+print("=== 随机会话Token生成 ===")
+# token_hex(16) = 16字节 = 32个十六进制字符
+token = secrets.token_hex(16)
+print(f"会话Token: {token}")
+
+# URL安全的Base64编码版本
+token_urlsafe = secrets.token_urlsafe(16)
+print(f"URL安全Token: {token_urlsafe}")
+
+# ===== 2. 生成随机密码 =====
+print("\n=== 随机密码生成 ===")
+length = 16
+chars = string.ascii_letters + string.digits + "!@#$%^&*"
+password = ''.join(secrets.choice(chars) for _ in range(length))
+print(f"随机密码: {password}")
+print(f"包含字母: {any(c.isalpha() for c in password)}")
+print(f"包含数字: {any(c.isdigit() for c in password)}")
+print(f"含特殊字符: {any(c in '!@#$%^&*' for c in password)}")
+
+# ===== 3. HMAC-SHA256模拟（报文认证） =====
+print("\n=== HMAC报文认证码 ===")
+key = b"shared_secret_key"
+message = "转账1000元给张三".encode('utf-8')   # 显式编码，避免bytes中文警告
+mac = hmac.new(key, message, hashlib.sha256).hexdigest()
+print(f"消息: {message.decode()}")
+print(f"HMAC-SHA256: {mac}")
+
+# 接收方验证：相同密钥+相同消息 → 相同HMAC ✅
+verify_message = "转账1000元给张三".encode('utf-8')
+verify_mac = hmac.new(key, verify_message, hashlib.sha256).hexdigest()
+print(f"验证通过: {mac == verify_mac}")
+
+# 篡改检测：消息被改 → HMAC不同 ❌
+tampered_message = "转账1000元给李四".encode('utf-8')
+tampered_mac = hmac.new(key, tampered_message, hashlib.sha256).hexdigest()
+print(f"消息被篡改 → HMAC不同: {mac == tampered_mac}")
