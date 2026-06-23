@@ -1,0 +1,63 @@
+### 一、中英配对（每题 1 分，共 10 分）
+
+```
+1. vulnerability         A. 注入    （B）
+2. payload               B. 漏洞    （D） 
+3. enumeration           C. 目录    （E）
+4. injection             D. 载荷    （A）
+5. directory             E. 枚举    （C）
+6. authentication        F. 防火墙    （H）
+7. firewall              G. 哈希值    （F）
+8. hash                  H. 认证    （G）
+9. privilege             I. 权限    （I）
+10. remediation          J. 修复方案    （J）
+```
+
+### 二、选择题（每题 1 分，共 10 分）
+
+```
+11. "Scan" 的意思是？    （B）
+    A. 计划    B. 扫描    C. 逃避    D. 害怕
+
+12. "Shell" 在渗透测试中常指？    （C）
+    A. 贝壳    B. 外壳    C. 命令行权限    D. 壳牌
+
+13. "Version" 的中文意思是？    （A）
+    A. 版本    B. 文章    C. 翻译    D. 变化
+
+14. "RCE" 的全称是？    （B）
+    A. Remote Control Engine
+    B. Remote Code Execution
+    C. Random Code Error
+    D. Root Certificate Exception
+
+15. "Bypass" 的意思是？    （B）
+    A. 通过    B. 绕过    C. 经过    D. 越过
+
+16. "Foothold" 在渗透测试中常翻译为？    （C）
+    A. 脚架    B. 脚印    C. 立足点    D. 基础
+
+17. "Brute force" 的意思是？    （A）
+    A. 暴力破解    B. 强大力量    C. 蛮力    D. 武力
+
+18. "Request" 和 "Response" 分别指？    （A）
+    A. 请求和响应    B. 需求和回应    C. 问题和答案    D. 要求和回复
+
+19. "Root" 在 Linux 中指？    （C）
+    A. 根部    B. 根目录    C. 根用户（最高权限）    D. 根源
+
+20. "Finding" 在渗透测试报告中的意思是？    （B）
+    A. 寻找    B. 发现（漏洞或问题）    C. 找到    D. 探索
+```
+
+### 三、翻译题（每题 2 分，共 10 分）
+
+```
+21. Enumeration is the key to success in penetration testing.    枚举探测是渗透测试成功的关键
+22. The firewall is blocking all ports except 443.    防火墙拦截了除443以外的所有端口
+23. Use Burp Suite to intercept and modify HTTP requests.    用burp suite工具拦截篡改HTTP请求的数据包
+24. 扫描目标找开放端口。  Scan the target to find open ports  (没写出来)
+25. 我们需要提权到 root。  We need to escalate to root   （没写出来）
+```
+
+---
