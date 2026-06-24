@@ -1,0 +1,56 @@
+**单词 51**
+**buffer overflow** — 缓冲区溢出
+
+> 例句：A **buffer overflow** can cause the program to crash or execute arbitrary code.
+> 翻译：缓冲区溢出可以导致程序崩溃或执行任意代码。
+
+**单词 52**
+**privilege escalation** — 权限提升（提权）
+
+> 例句：After gaining access, we need **privilege escalation** to become root.
+> 翻译：获得访问权限后，我们需要权限提升来成为 root。
+
+**单词 53**
+**cross-site scripting** — 跨站脚本攻击，常简写为 XSS
+
+> 例句：**Cross-site scripting** allows an attacker to inject malicious scripts into web pages.
+> 翻译：跨站脚本攻击允许攻击者向网页注入恶意脚本。
+
+**单词 54**
+**SQL injection** — SQL 注入
+
+> 例句：**SQL injection** can be used to bypass authentication or dump the database.
+> 翻译：SQL 注入可以用来绕过认证或导出数据库。
+
+**单词 55**
+**local file inclusion** — 本地文件包含，常简写为 LFI
+
+> 例句：**Local file inclusion** allows reading sensitive files on the server.
+> 翻译：本地文件包含允许读取服务器上的敏感文件。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "Buffer overflow" 的中文意思是？    （A）
+   A. 缓冲区溢出    B. 缓冲超时    C. 内存溢出    D. 堆栈溢出
+
+2. "Privilege escalation" 常翻译为？    （A）
+   A. 权限提升    B. 权限降低    C. 权限转移    D. 权限删除
+
+3. "Cross-site scripting" 的缩写是？    （B）
+   A. CSS    B. XSS    C. CROS    D. SXX
+
+4. "SQL injection can dump the database" — "dump" 在这里的意思是？    （B）
+   A. 倾倒    B. 导出    C. 垃圾场    D. 放弃
+
+5. "LFI" 允许攻击者做什么？    （B）
+   A. 远程执行代码    B. 读取本地文件    C. 注入恶意脚本    D. 提权到 root
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：SQL injection can be used to bypass authentication.
+```SQL注入漏洞可以绕过身份认证。
+
+---
