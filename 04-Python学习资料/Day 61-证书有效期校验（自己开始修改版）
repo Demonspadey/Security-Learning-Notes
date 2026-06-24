@@ -1,0 +1,50 @@
+Python代码：证书有效期校验（原始代码不修改）
+from datetime import datetime
+
+print("=== 证书有效期检查工具 ===\n")
+today = datetime.now()
+
+# 模拟证书日期
+cert_start = datetime(2025, 6, 1)
+cert_end = datetime(2026, 6, 1)
+
+print(f"证书生效: {cert_start.date()}")
+print(f"证书过期: {cert_end.date()}")
+print(f"当前日期: {today.date()}")
+
+if today < cert_start:
+    print("❌ 证书尚未生效")
+elif today > cert_end:
+    print("❌ 证书已过期")
+else:
+    days_left = (cert_end - today).days
+    print(f"✅ 证书有效（剩余{days_left}天）")
+    if days_left < 30:
+        print("⚠️ 30天内过期，请及时续期！")
+
+
+修改代码，自己填写对应日期版：
+from datetime import datetime
+print("===证书有效期检查工具===")
+today=datetime.now()
+try:
+    start_str=input("请输入证书有效日期(格式: YYYY-MM-DD):")
+    cert_start=datetime.strptime(start_str, "%Y-%m-%d")
+    end_str=input("请输入证书失效日期 (格式: YYYY-MM-DD):")
+    cert_end=datetime.strptime(end_str, "%Y-%m-%d")
+except ValueError:
+    print("日期格式错误，请使用 YYYY-MM-DD 格式。")
+    exit()
+print(f"\n证书生效:{cert_start.date()}")
+print(f"证书过期:{cert_end.date()}")
+print(f"当前日期:{today.date()}")
+
+if today < cert_start:
+    print("证书尚未生效")
+elif today > cert_end:
+    print("证书已过期")
+else:
+    days_left =(cert_end - today).days
+    print(f"证书有效 (剩余{days_left}天)")
+    if days_left < 30:
+        print("30天内过期，请及时续期！")
