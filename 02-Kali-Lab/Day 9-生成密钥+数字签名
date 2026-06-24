@@ -6,6 +6,8 @@ openssl genrsa -out rsa_private.pem 2048
 openssl rsa -in rsa_private.pem -pubout -out rsa_public.pem
 # 查看私钥详细参数
 openssl rsa -in rsa_private.pem -text -noout
+#生成文件
+ehco "hello world" > message.txt
 # 签名文件
 openssl dgst -sha256 -sign rsa_private.pem -out signature.bin message.txt
 # 验证签名
