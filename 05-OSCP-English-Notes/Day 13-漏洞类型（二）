@@ -1,0 +1,59 @@
+**单词 56**
+**remote file inclusion** — 远程文件包含，常简写为 RFI
+
+> 例句：**Remote file inclusion** allows an attacker to load a remote malicious file.
+> 翻译：远程文件包含允许攻击者加载一个远程恶意文件。
+
+**单词 57**
+**command injection** — 命令注入
+
+> 例句：**Command injection** lets the attacker execute system commands on the server.
+> 翻译：命令注入让攻击者可以在服务器上执行系统命令。
+
+**单词 58**
+**denial of service** — 拒绝服务，常简写为 DoS
+
+> 例句：A **denial of service** attack makes the service unavailable to users.
+> 翻译：拒绝服务攻击使服务对用户不可用。
+
+**单词 59**
+**man-in-the-middle** — 中间人攻击，常简写为 MITM
+
+> 例句：A **man-in-the-middle** attack intercepts communication between two parties.
+> 翻译：中间人攻击拦截两方之间的通信。
+
+**单词 60**
+**social engineering** — 社会工程学
+
+> 例句：**Social engineering** tricks people into revealing sensitive information.
+> 翻译：社会工程学诱骗人们泄露敏感信息。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "RFI" 的全称是？    （A）
+   A. Remote File Inclusion    B. Random File Input
+   C. Remote Function Inject   D. Real File Integrity
+
+2. "Command injection" 的中文意思是？    （A）
+   A. 命令注入    B. 命令执行    C. 命令解析    D. 命令修改
+
+3. "DoS" 的全称和中文意思是？    （A）
+   A. Denial of Service，拒绝服务    B. Disk Operating System，磁盘操作系统
+   C. Date of Service，服务日期    D. Data Output Stream，数据输出流
+
+4. "MITM" 的中文意思是？    （A）
+   A. 中间人攻击    B. 恶意软件    C. 管理接口    D. 消息传输
+
+5. "Social engineering" 攻击的目标是？    （B）
+   A. 系统漏洞    B. 人（心理）    C. 网络设备    D. 加密算法
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：A man-in-the-middle attack intercepts communication between two parties.
+```中间人攻击会拦截甚至篡改通信双方的网络数据
+
+---
+
