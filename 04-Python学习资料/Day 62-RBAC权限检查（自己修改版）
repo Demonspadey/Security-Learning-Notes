@@ -1,0 +1,87 @@
+ RBAC 权限检查脚本
+# 场景：公司内部文档管理系统
+# 任务：运行脚本 → 理解逻辑 → 改一个东西
+
+# ===== 角色→权限 映射 =====
+roles_permissions = {
+    "admin":   ["read", "write", "delete", "manage_users"],
+    "editor":  ["read", "write"],
+    "viewer":  ["read"]
+}
+
+# ===== 用户→角色 映射 =====
+user_roles = {
+    "张三": "admin",
+    "李四": "editor",
+    "王五": "viewer"
+}
+
+# ===== 权限检查函数 =====
+def check_permission(user, action):
+    """检查用户是否有执行某操作的权限"""
+    # ① 检查用户是否存在
+    if user not in user_roles:
+        return f"❌ 用户 {user} 不存在"
+
+    # ② 获取用户的角色
+    role = user_roles[user]
+
+    # ③ 检查角色是否有该权限
+    permissions = roles_permissions.get(role, [])
+    if action in permissions:
+        return f"✅ 用户 {user}（{role}）可以执行 {action} 操作"
+    else:
+        return f"❌ 用户 {user}（{role}）没有 {action} 权限"
+
+# ===== 测试 =====
+print("=" * 45)
+print("RBAC 权限检查 — 测试用例")
+print("=" * 45)
+
+test_cases = [
+    ("张三", "delete"),
+    ("李四", "write"),
+    ("王五", "write"),
+    ("赵六", "read"),
+    ("张三", "manage_users"),
+]
+
+for user, action in test_cases:
+    print(check_permission(user, action))
+
+
+### 修改版
+roles_permissions={
+    "admin": ["read","write","delete","manage_users"],
+    "editor": ["read","write"],
+    "viewer": ["read"],
+    "manager":["read","write","approve"]
+}
+user_roles={
+    "张三": "admin",
+    "李四": "manager",
+    "王五": "viewer",
+    "赵六":"editor"
+}
+def check_permission(user,action):
+    """检查用户是否有执行某操作的权限"""
+    if user not in user_roles:
+        return f"用户{user}不存在"
+    role=user_roles[user]
+    permissions=roles_permissions.get(role,[])
+    if action in permissions:
+        return f"用户{user} ({role})可以执行{action}操作"
+    else:
+        return f"用户{user} ({role})没有{action}权限"
+print("="*45)
+print("RBAC 权限检查 - 测试用例")
+print("="*45)
+test_cases=[
+    ("张三","delete"),
+    ("李四","approve"),
+    ("王五","write"),
+    ("赵六","read"),
+    ("张三","manage_users")
+]
+for user ,action in test_cases:
+    print(check_permission(user,action))
