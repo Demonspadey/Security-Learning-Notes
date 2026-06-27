@@ -1,0 +1,25 @@
+### Linux 文件权限操作
+```bash
+# 查看权限
+ls -la 文件名
+
+# 符号权限修改
+chmod u+rwx file
+chmod g-w file
+chmod o=r file
+chmod a+x file
+
+# 数字权限修改
+chmod 755 file
+chmod 644 file
+chmod 700 file
+
+# 修改所有者、所属组
+chown 用户:组 文件
+chgrp 组 文件
+
+# 特殊四进制权限
+chmod 4755  # setuid
+chmod 2755  # setgid
+chmod 1777  # sticky bit
+chmod u-s,g-s,o-t 文件、目录 删除特殊权限标记
