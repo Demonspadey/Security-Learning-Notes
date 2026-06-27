@@ -1,0 +1,56 @@
+**单词 61**
+**HTTP method** — HTTP 方法（GET、POST、PUT 等）
+
+> 例句：The **HTTP method** "PUT" can sometimes be used to upload files.
+> 翻译：HTTP 方法 "PUT" 有时可以用来上传文件。
+
+**单词 62**
+**session** — 会话
+
+> 例句：The **session** token is stored in a cookie after login.
+> 翻译：登录后会话令牌存储在 cookie 中。
+
+**单词 63**
+**endpoint** — 端点（API 接口地址）
+
+> 例句：We found an API **endpoint** that returns user data without authentication.
+> 翻译：我们发现了一个无需认证就返回用户数据的 API 端点。
+
+**单词 64**
+**upload** — 上传
+
+> 例句：The file **upload** function does not validate the file type.
+> 翻译：文件上传功能没有验证文件类型。
+
+**单词 65**
+**download** — 下载
+
+> 例句：We can **download** the source code through the backup file.
+> 翻译：我们可以通过备份文件下载源代码。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. 以下哪个不是常见的 HTTP 方法？    （C）
+   A. GET    B. POST    C. FETCH    D. PUT
+
+2. "Session" 的中文意思是？    （A）
+   A. 会话    B. 会议    C. 阶段    D. 学期
+
+3. "Endpoint" 在 Web 安全中最常指什么？    （B）
+   A. 终点    B. API 接口    C. 端点设备    D. 结束点
+
+4. "The file upload function does not validate the file type" — "validate" 的意思是？    （A）
+   A. 验证    B. 有效    C. 价值    D. 确认
+
+5. "Backup" 的意思是？    （A）
+   A. 备份    B. 后退    C. 后面    D. 背景
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：We found an API endpoint that returns user data without authentication.
+```我们找到一处API接口，该接口无需登录验证就能读取用户信息。
+
+---
