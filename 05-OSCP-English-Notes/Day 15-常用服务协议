@@ -1,0 +1,56 @@
+**单词 66**
+**SSH** — Secure Shell，安全外壳协议
+
+> 例句：We use **SSH** to remotely administer the Linux server.
+> 翻译：我们用 SSH 远程管理 Linux 服务器。
+
+**单词 67**
+**FTP** — File Transfer Protocol，文件传输协议
+
+> 例句：The **FTP** server allows anonymous login with default credentials.
+> 翻译：FTP 服务器允许使用默认凭据匿名登录。
+
+**单词 68**
+**SMB** — Server Message Block，服务器消息块协议
+
+> 例句：The **SMB** service is running on Windows port 445.
+> 翻译：SMB 服务运行在 Windows 的 445 端口上。
+
+**单词 69**
+**DNS** — Domain Name System，域名系统
+
+> 例句：**DNS** enumeration can reveal subdomains of the target.
+> 翻译：DNS 枚举可以揭示目标的子域名。
+
+**单词 70**
+**SMTP** — Simple Mail Transfer Protocol，简单邮件传输协议
+
+> 例句：The **SMTP** server can be used to enumerate valid users.
+> 翻译：SMTP 服务器可以用来枚举有效用户。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "SSH" 通常用于什么？    （B）
+   A. 文件传输    B. 远程管理    C. 邮件发送    D. 域名解析
+
+2. "FTP" 默认端口是多少？    （B）
+   A. 22    B. 21    C. 25    D. 445
+
+3. "SMB" 运行在 Windows 的哪个端口上？    （A）
+   A. 139/445    B. 22/23    C. 80/443    D. 21/22
+
+4. "DNS enumeration" — "enumeration" 在这里的意思是？    （A）
+   A. 枚举    B. 声明    C. 计算    D. 编号
+
+5. "SMTP" 可用于什么操作？    （B）
+   A. 文件共享    B. 枚举有效用户    C. 远程登录    D. Web 服务
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：SMB service is running on Windows port 445.
+```SMB 服务运行在Windows系统的 445 端口
+
+---
