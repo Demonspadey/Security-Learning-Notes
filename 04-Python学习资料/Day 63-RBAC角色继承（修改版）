@@ -1,0 +1,78 @@
+带角色继承的RBAC
+# 场景：公司权限系统，角色有层次关系
+# 任务：运行脚本 → 理解递归继承 → 改一个东西
+
+# ===== 角色继承关系 =====
+# 上级角色自动继承下级角色的所有权限
+role_hierarchy = {
+    "viewer":  None,      # 基础角色，没有父级
+    "editor":  "viewer",  # editor继承viewer
+    "manager": "editor",  # manager继承editor
+    "admin":   "manager",  # admin继承manager
+    "auditor": None    #（修改新增角色）
+}
+
+# ===== 各角色独有的权限（不含继承的） =====
+own_permissions = {
+    "viewer":  ["read"],
+    "editor":  ["write"],
+    "manager": ["approve"],
+    "admin":   ["delete", "manage_users"],
+    "auditor": ["read","audit_log"] #（修改新增角色权限）
+}
+
+# ===== 用户→角色 =====
+user_roles = {
+    "张三": "admin",
+    "李四": "manager",
+    "王五": "editor",
+    "赵六": "viewer"   #"赵六": "auditor" #（修改赵六角色）
+}
+
+# ===== 递归获取有效权限 =====
+def get_effective_permissions(role):
+    """递归获取角色的所有权限（含继承）"""
+    if role is None:
+        return set()
+    permissions = set(own_permissions.get(role, []))
+    parent = role_hierarchy.get(role)
+    if parent:
+        permissions.update(get_effective_permissions(parent))
+    return permissions
+
+# ===== 权限检查 =====
+def check_permission(user, action):
+    if user not in user_roles:
+        return f"❌ 用户 {user} 不存在"
+    role = user_roles[user]
+    effective_perms = get_effective_permissions(role)
+    if action in effective_perms:
+        return f"✅ 用户 {user}（{role}）可以执行 {action}"
+    else:
+        return f"❌ 用户 {user}（{role}）没有 {action} 权限"
+
+# ===== 显示角色权限继承 =====
+def show_role_permissions():
+    print("\n📋 角色权限表（含继承）：")
+    print("-" * 40)
+    for role in ["viewer", "editor", "manager", "admin"]:
+        perms = get_effective_permissions(role)
+        print(f"  {role:10s} → {sorted(perms)}")
+    print()
+
+# ===== 测试 =====
+show_role_permissions()
+
+print("🔍 权限检查测试：")
+print("=" * 40)
+test_cases = [
+    ("张三", "delete"),       # admin → 有
+    ("李四", "approve"),      # manager → 有
+    ("李四", "write"),        # 继承editor → 有
+    ("王五", "approve"),      # editor → 没有
+    ("赵六", "read"),         # viewer → 有
+    ("赵六", "write"),        # viewer → 没有
+    ("赵六", "audit_log")       #（修改新增 audit_log → 有）
+]
+for user, action in test_cases:
+    print(check_permission(user, action))
