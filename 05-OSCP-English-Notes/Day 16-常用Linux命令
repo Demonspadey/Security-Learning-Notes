@@ -1,0 +1,56 @@
+**单词 71**
+**chmod** — 修改文件权限
+
+> 例句：Use **chmod** 777 to make the script executable.
+> 翻译：用 chmod 777 让脚本可执行。
+
+**单词 72**
+**grep** — 文本搜索（查找符合条件的行）
+
+> 例句：**Grep** for "password" in the configuration files.
+> 翻译：在配置文件中搜索 "password"。
+
+**单词 73**
+**find** — 查找文件
+
+> 例句：Use the **find** command to locate files with SUID permission.
+> 翻译：用 find 命令查找具有 SUID 权限的文件。
+
+**单词 74**
+**netstat** — 网络状态查看
+
+> 例句：**Netstat** -an shows all listening ports on the machine.
+> 翻译：netstat -an 显示机器上所有监听的端口。
+
+**单词 75**
+**cron** — 定时任务
+
+> 例句：Check the **cron** jobs to see if any run as root.
+> 翻译：检查定时任务，看看有没有以 root 身份运行的。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "Chmod 777" 的作用是？    （B）
+   A. 删除文件    B. 让文件所有人可读写执行    C. 改名    D. 移动文件
+
+2. "Grep" 命令用于什么？    （A）
+   A. 搜索文本    B. 查看网络    C. 修改权限    D. 压缩文件
+
+3. "Find" 命令可以用来查找什么？    （B）
+   A. 用户    B. 文件    C. 进程    D. 端口
+
+4. "Netstat -an" 显示什么信息？    （B）
+   A. 路由表    B. 监听的端口    C. 磁盘空间    D. CPU 使用率
+
+5. "Cron" 在 Linux 中用于什么？    （A）
+   A. 定时执行任务    B. 管理系统服务    C. 查看日志    D. 修改密码
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：Check the cron jobs to see if any run as root.
+```检查以root权限自动运行的所有定时任务
+
+---
