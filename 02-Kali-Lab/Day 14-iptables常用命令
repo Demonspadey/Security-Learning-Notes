@@ -1,0 +1,29 @@
+# 查看规则
+iptables -L -n -v        # 数字格式、详细流量计数查看filter表
+iptables -t nat -L -n -v # 查看nat地址转换表
+iptables -S              # 输出完整可复用规则语句
+
+# 设置全局默认策略
+iptables -P INPUT DROP    # 入站默认拒绝（白名单核心）
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD DROP
+
+# 常用放行规则
+iptables -A INPUT -i lo -j ACCEPT # 放行本地回环
+# 放行已建立连接的回包
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT # 内网SSH
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+# 封禁IP规则
+iptables -A INPUT -s 10.0.0.5 -j DROP  # 追加至末尾
+iptables -I INPUT -s 10.0.0.5 -j DROP  # 插入规则列表最顶端，优先匹配
+
+# 删除/清空规则
+iptables -D INPUT -s 10.0.0.5 -j DROP
+iptables -F # 清空当前链所有规则，谨慎执行易断网
+
+# 规则持久化保存与恢复
+iptables-save > /etc/iptables/rules.v4
+iptables-restore < /etc/iptables/rules.v4
