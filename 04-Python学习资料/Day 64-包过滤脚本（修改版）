@@ -1,0 +1,81 @@
+Python包过滤模拟脚本（原始代码不修改）
+# 场景：公司边界防火墙，按规则顺序从上到下匹配
+# 任务：运行脚本 → 理解顺序匹配机制 → 改一个东西
+
+# ===== 防火墙规则表 =====
+# 每条规则：(源IP匹配, 目标端口, 协议, 动作)
+# "ANY" 表示匹配任意值
+# ⚠️ 规则按顺序匹配，匹配到第一条就执行，后面的不看了
+rules = [
+    ("10.0.0.*",   "ANY", "ANY",  "ACCEPT"),  # 内网全放行
+    ("192.168.*",  "ANY", "ANY",  "ACCEPT"),  # 内网全放行
+    ("ANY",        "22",  "TCP",  "DROP"),    # 封所有SSH
+    ("ANY",        "ANY", "ANY",  "ACCEPT"),  # 默认放行（兜底）
+]
+
+def packet_match(packet, rule):
+    """检查单个包是否匹配单条规则"""
+    src_ip, dst_port, protocol = packet
+    rule_src, rule_port, rule_proto, _ = rule
+
+    # 检查源IP
+    if rule_src != "ANY":
+        prefix = rule_src.replace("*", "")
+        if not src_ip.startswith(prefix):
+            return False
+    # 检查目标端口
+    if rule_port != "ANY" and dst_port != rule_port:
+        return False
+    # 检查协议
+    if rule_proto != "ANY" and protocol != rule_proto:
+        return False
+    return True
+
+def firewall_process(packet):
+    """包过滤处理：按顺序匹配规则，返回动作"""
+    for rule in rules:
+        if packet_match(packet, rule):
+            return rule[3]  # 返回动作（ACCEPT/DROP）
+    return "ACCEPT"  # 没有匹配的规则，默认放行
+
+# ===== 测试 =====
+print("=" * 55)
+print("🔥 包过滤防火墙规则测试")
+print("=" * 55)
+
+test_packets = [
+    ("10.0.0.5",     "80",  "TCP"),   # 内网访问Web
+    ("192.168.1.10", "443", "TCP"),   # 内网访问HTTPS
+    ("10.0.0.5",     "22",  "TCP"),   # 内网SSH → 应该被拦
+    ("202.96.128.1", "80",  "TCP"),   # 外网访问Web
+    ("202.96.128.1", "22",  "TCP"),   # 外网SSH → 应该被拦
+    ("202.96.128.1", "443", "TCP"),   # 外网HTTPS
+]
+
+print(f"{'源IP':20s} {'端口':6s} {'协议':5s} → {'动作':6s}")
+print("-" * 55)
+for src_ip, dst_port, proto in test_packets:
+    result = firewall_process((src_ip, dst_port, proto))
+    print(f"{src_ip:20s} {dst_port:6s} {proto:5s} → {result}")
+
+公司Web服务器（192.168.1.100:80）遭受外网DDoS攻击，
+安全团队决定阻断所有外网IP对该服务器的80端口访问。
+
+要求：
+① 添加一条规则，阻断外网对192.168.1.100:80的访问
+② ⚠️ 注意：不能阻断内网对该服务器的访问！
+③ 添加后重新运行，观察外网访问80端口是否被拦
+④ 思考：这条规则应该加在规则表的什么位置？为什么？
+
+rules = [
+    ("10.0.0.*",   "ANY", "ANY",  "ACCEPT"),  # 内网全放行
+    ("192.168.*",  "ANY", "ANY",  "ACCEPT"),  # 内网全放行
+    ("ANY",        "80",  "TCP",  "DROP"),    # 阻断所有80端口访问（内网已被前面放行）
+    ("ANY",        "22",  "TCP",  "DROP"),    # 封所有SSH
+    ("ANY",        "ANY", "ANY",  "ACCEPT"),  # 默认放行
+]
+流量 匹配过程 结果
+内网IP → 80 匹配规则1或2 → ACCEPT，不继续往下走 ✅ 放行
+外网IP → 80 不匹配规则1和2 → 匹配规则3 → DROP ❌ 阻断
+任意IP → 443 不匹配规则1/2/3/4 → 匹配规则5 → ACCEPT ✅ 放行
+关键：阻断80端口的规则必须放在内网放行规则后面。如果放在前面，内网和外网访问80都会被阻断。
