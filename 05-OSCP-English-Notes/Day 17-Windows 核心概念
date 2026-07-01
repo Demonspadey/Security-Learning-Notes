@@ -1,0 +1,56 @@
+**单词 76**
+**registry** — 注册表
+
+> 例句：Malware often adds entries to the Windows **registry** for persistence.
+> 翻译：恶意软件经常在 Windows 注册表中添加条目以实现持久化。
+
+**单词 77**
+**process** — 进程
+
+> 例句：Check the running **processes** for suspicious activity.
+> 翻译：检查正在运行的进程有无可疑活动。
+
+**单词 78**
+**service** — 服务（Windows 后台服务）
+
+> 例句：The vulnerable **service** runs with SYSTEM privileges.
+> 翻译：那个有漏洞的服务以 SYSTEM 权限运行。
+
+**单词 79**
+**domain** — 域（Windows 域环境）
+
+> 例句：The target machine is joined to a Windows **domain**.
+> 翻译：目标机器加入了一个 Windows 域。
+
+**单词 80**
+**token** — 令牌（访问令牌）
+
+> 例句：The **token** contains the user's identity and privileges.
+> 翻译：令牌包含用户的身份和权限。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "Registry" 在 Windows 中用于存储什么？    （B）
+   A. 文件    B. 配置和设置    C. 密码    D. 网络连接
+
+2. "Process" 的中文意思是？    （C）
+   A. 进展    B. 过程    C. 进程    D. 处理
+
+3. "The vulnerable service runs with SYSTEM privileges" — "SYSTEM" 在 Windows 中是什么权限级别？    （C）
+   A. 普通用户    B. 管理员    C. 系统最高权限    D. 来宾用户
+
+4. "Domain" 在 Windows 网络环境中指什么？    （B）
+   A. 域名    B. 域（集中管理环境）    C. 区域    D. 领域
+
+5. "Token" 在 Windows 安全中包含了什么？    （A）
+   A. 用户身份和权限    B. 密码    C. 加密密钥    D. 网络地址
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：Check the running processes for suspicious activity.
+```检查正在运行的进程是否有可疑行为。
+
+---
