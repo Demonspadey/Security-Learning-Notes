@@ -1,0 +1,39 @@
+# 场景1：Linux服务器安全加固（白名单）    #iptables所有命令都需要sudo权限
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+# 场景2：禁止某个IP访问
+iptables -A INPUT -s 10.0.0.5 -j DROP
+
+# 场景3：限制ICMP（防ping探测）
+iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
+# SNAT：把内网IP转换为公网IP（内网上网）
+iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o eth0 -j SNAT --to-source 公网IP
+
+# MASQUERADE：动态SNAT（公网IP不固定时用，如ADSL拨号）
+iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o eth0 -j MASQUERADE
+
+# DNAT：把公网IP的端口映射到内网服务器（外网访问内网Web）
+iptables -t nat -A PREROUTING -d 公网IP -p tcp --dport 80 -j DNAT --to-destination 192.168.1.100:80
+# 封禁某个IP的所有访问
+iptables -A INPUT -s 10.0.0.5 -j DROP
+
+# 封禁某个IP访问特定端口
+iptables -A INPUT -s 10.0.0.5 -p tcp --dport 80 -j DROP
+
+# 限制ICMP（防ping扫描）
+iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 1/s -j ACCEPT
+iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
+
+# 防SYN Flood（限制新连接速率）
+iptables -A INPUT -p tcp --syn -m limit --limit 100/s -j ACCEPT
+iptables -A INPUT -p tcp --syn -j DROP
+
+# 放行VPN流量
+iptables -A INPUT -p udp --dport 1194 -j ACCEPT  # OpenVPN
