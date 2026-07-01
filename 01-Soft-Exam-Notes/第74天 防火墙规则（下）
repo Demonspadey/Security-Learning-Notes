@@ -1,0 +1,209 @@
+## 一、今日5个核心目标
+1. 熟记iptables 4表5链架构、各表功能、表链绑定关系，应对选择题、填空题
+2. 完整默写Linux服务器标准白名单iptables加固策略，掌握每条规则得分要点
+3. 精准区分SNAT/DNAT/MASQUERADE修改字段、挂载链路、适用场景，案例大题必考
+4. 掌握防火墙+NAT综合组网案例标准答题步骤，规范规则书写格式
+5. 区分串联/旁路安全设备，联动防火墙场景分析简答作答模板
+
+## 二、核心背诵考点卡片
+### 卡片1 iptables 四张功能表（应试优先级）
+1. filter（默认表，最高频考点）
+    功能：数据包放行/丢弃，边界访问控制
+    绑定链：INPUT、OUTPUT、FORWARD
+    出题角度：选择题问默认表、匹配对应流量链
+2. nat 地址转换表
+    功能：修改IP/端口，内网上网、端口映射发布内网服务
+    绑定链：PREROUTING、POSTROUTING、OUTPUT
+    出题角度：NAT大题规则书写、链路匹配选择
+3. mangle 报文修改表
+    功能：修改TTL、报文标记；全5条链可用，仅认知，极少出题
+4. raw 原始套接字表
+    功能：跳过连接跟踪conntrack；仅PREROUTING、OUTPUT，几乎不考
+
+### 卡片2 iptables 五条流量链（数据包流经顺序）
+1. PREROUTING：路由前处理 → DNAT专用，修改目标IP
+2. INPUT：目标为本机入站流量过滤
+3. FORWARD：跨主机路由转发流量过滤
+4. OUTPUT：本机程序主动出站流量
+5. POSTROUTING：路由后、网卡出站前 → SNAT专用，修改源IP
+
+### 卡片3 三类NAT完整对比（案例默写核心）
+| NAT类型 | 修改字段 | 挂载链 | 应试标准适用场景 |
+|--------|----------|--------|------------------|
+| SNAT | 源IP地址 | POSTROUTING | 网关拥有固定公网IP，内网主机访问互联网 |
+| MASQUERADE | 源IP地址 | POSTROUTING | ADSL拨号、动态获取公网IP，SNAT动态替代方案 |
+| DNAT | 目标IP地址 | PREROUTING | 外网用户访问内网服务器、端口映射公网发布业务 |
+速记口诀：前链改目标DNAT，后链改源IP SNAT，动态IP用伪装MASQUERADE
+
+### 卡片4 标准白名单策略（考试完整默写模板）
+```bash
+# 1. 清空历史规则，避免冲突
+iptables -F
+iptables -t nat -F
+
+# 2. 全局默认拒绝（白名单核心，最小权限得分点）
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+# 3. 放行lo本地回环网卡，本机进程内部通信必备
+iptables -A INPUT -i lo -j ACCEPT
+
+# 4. 放行已建立、关联连接回包（高频丢分考点）
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# 5. 按需开放业务端口
+iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+应试易错区分： -P  设置整条链默认策略； -A  追加单条匹配规则，二者不可混用；ESTABLISHED规则作用：放行外部应答数据包，无此规则外网完全无法访问。
+ 
+卡片5 NAT底层基础考点
+ 
+1. NAT诞生原因：IPv4公网地址资源不足，内网私有IP（10/172.16-31/192.168网段）无法跨公网路由，必须地址转换。
+
+2. Linux网关开启转发前置命令（FORWARD/NAT生效必备，案例填空）
+临时生效：
+echo 1 > /proc/sys/net/ipv4/ip_forward
+sysctl -w net.ipv4.ip_forward=1
+永久生效：修改/etc/sysctl.conf配置文件，设置net.ipv4.ip_forward=1
+ 
+卡片6 Windows注册表&Wireshark速记考点
+ 
+1. Windows防火墙策略注册表路径
+ HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy 
+子项：DomainProfile域网络、StandardProfile专用、PublicProfile公用；键值EnableFirewall开关、DefaultInboundAction默认策略，仅管理员可修改。
+
+2. TCP/IP安全参数注册表路径
+ HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters 
+关键参数：SynAttackProtect防御SYN洪水、DisableIPSourceRouting关闭源路由攻击、EnableICMPRedirect禁用中间人重定向。
+
+3. Wireshark过滤icmp.ping
+过滤语句： icmp.type == 8 || icmp.type == 0 ，匹配ping请求与回复，对应iptables封禁ICMP限速场景选择题。
+ 
+卡片7 安全设备基础区分（联动防火墙综合题）
+ 
+1. 串联部署（可实时阻断流量）：防火墙、IPS
+
+2. 旁路镜像部署（仅告警分析，无阻断能力）：IDS、NTA、SIEM、蜜罐
+高频选择题陷阱：IDS仅产生告警，不能自动拦截攻击流量。
+ 
+三、易混淆陷阱&真题出题角度
+ 
+1. 概念陷阱
+ 
+- 混淆-P与-A：-P是整条链默认策略，-A仅追加单条放行/封禁规则
+
+- NAT链路混淆：DNAT挂载PREROUTING，SNAT/MASQUERADE挂载POSTROUTING
+
+- MASQUERADE场景记反：固定公网IP用SNAT，动态拨号IP用MASQUERADE
+
+- FORWARD链作用：管控跨主机转发流量，INPUT仅管控访问本机数据包
+ 
+2. 出题角度分类
+ 
+- 选择题：表归属、NAT挂载链路、参数含义、设备部署方式区分
+
+- 简答题：默写白名单加固脚本、区分三类NAT适用场景
+
+- 综合案例：Linux网关组网，补全过滤规则+SNAT上网+DNAT端口映射全套命令
+ 
+四、案例标准答题模板
+ 
+模板1 iptables白名单加固简答
+ 
+需求：Linux服务器仅内网访问SSH、全网开放HTTPS，其余入站流量全部拒绝
+答：1. 清空原有filter、nat表规则；2. 设置INPUT、FORWARD默认DROP，OUTPUT默认ACCEPT；3. 放行lo回环接口；4. 放行ESTABLISHED/RELATED已有连接回包；5. 限定192.168.1.0/24网段访问22端口；6. 全网放行443 HTTPS端口。
+ 
+模板2 NAT场景区分简答
+ 
+1. 内网主机访问互联网：公网IP固定书写SNAT规则，宽带动态IP书写MASQUERADE规则，挂载POSTROUTING链
+
+2. 外网访问内网Web服务：使用DNAT规则，挂载PREROUTING链，将公网端口流量转发至内网服务器私有IP
+ 
+模板3 综合组网案例答题步骤
+ 
+1. 书写服务器本地白名单过滤规则；2. 配置SNAT/MASQUERADE实现内网主机访问互联网；3. 配置DNAT实现内网业务公网端口映射发布；4. 补充开启Linux IP转发内核参数；5. 匹配安全设备选型（扫描告警场景选IDS/NTA、实时拦截攻击选IPS）
+ 
+五、上午15道真题选择题（完整答案+详细解析）
+ 
+1. iptables 默认使用的表是（）
+A. nat　B. filter　C. mangle　D. raw
+✅ B
+解析：命令不加-t指定表时，默认操作filter过滤表，nat表必须手动-t nat指定。
+
+2. SNAT 工作在以下哪条链（）
+A. PREROUTING　B. POSTROUTING　C. INPUT　D. FORWARD
+✅ B
+解析：SNAT在路由决策完成后、数据包离开网卡前修改源IP，挂载POSTROUTING链。
+
+3. DNAT 工作在以下哪条链（）
+A. PREROUTING　B. POSTROUTING　C. OUTPUT　D. FORWARD
+✅ A
+解析：DNAT需要在路由判断前修改目标IP，否则路由转发逻辑失效，挂载PREROUTING链。
+
+4. 白名单策略中必须放行ESTABLISHED连接的原因是（）
+A. 防止网络断开　B. 允许返回流量通过
+C. 防ARP攻击　D. 加速网络
+✅ B
+解析：本机主动向外发起请求后，外部服务器返回的应答数据包属于ESTABLISHED连接，无此规则会被INPUT默认DROP全部拦截，无法访问外网。
+
+5. iptables 中 -P INPUT DROP 的含义是（）
+A. 添加一条DROP规则　B. 设置默认策略为DROP
+C. 删除所有规则　D. 保存规则
+✅ B
+解析：-P=Policy整条链全局默认策略，-A仅追加单条匹配放行/封禁规则，二者作用完全不同。
+
+6. 以下关于MASQUERADE和SNAT对比正确的是（）
+A. SNAT用于公网IP不固定时　B. MASQUERADE性能优于SNAT
+C. MASQUERADE用于动态IP场景　D. 两者完全相同
+✅ C
+解析：SNAT适配静态固定公网IP；MASQUERADE适配ADSL拨号动态获取公网IP场景。
+
+7. 某公司只有一个公网IP，想让内网100台PC都能上网，应配置（）
+A. DNAT　B. SNAT或MASQUERADE　C. 一对一NAT　D. 端口映射
+✅ B
+解析：内网批量主机访问互联网使用源地址转换，静态IP选SNAT，动态IP选MASQUERADE。
+
+8. 以下关于FORWARD链说法正确的是（）
+A. 控制访问本机的包　B. 控制本机发出的包
+C. 控制转发的包　D. 控制NAT转换
+✅ C
+解析：FORWARD链专门处理经过本机路由转发、不归属本机收发的跨网段流量。
+
+9. 状态检测防火墙跟踪连接状态使用的是（）
+A. 状态表　B. ARP表　C. 路由表　D. MAC表
+✅ A
+解析：状态检测防火墙核心是全局TCP连接状态表，记录新建、已建立、关闭会话。
+
+10. 应用代理防火墙相比包过滤防火墙的主要优势是（）
+A. 速度快　B. 内外网完全隔离　C. 成本低　D. 配置简单
+✅ B
+解析：应用代理防火墙拆分两段独立TCP连接，内网与外网无直连报文，安全等级最高。
+
+11. iptables 中 -m state --state ESTABLISHED,RELATED 的作用是（）
+A. 匹配新连接　B. 匹配已有连接和关联连接
+C. 匹配无效连接　D. 匹配所有连接
+✅ B
+解析：state模块ESTABLISHED代表已建立会话；RELATED代表关联衍生连接（FTP被动端口等）。
+
+12. 某企业内网Web服务器需要通过公网对外提供服务，应配置（）
+A. SNAT　B. DNAT　C. MASQUERADE　D. 都不需要
+✅ B
+解析：外网访问内网私有IP服务器，需要DNAT修改数据包目标IP做端口映射。
+
+13. 以下安全设备中，部署方式为"旁路"的是（）
+A. 防火墙　B. IPS　C. IDS　D. NAT网关
+✅ C
+解析：IDS接交换机镜像端口旁路部署，仅采集流量告警；IPS、防火墙串联在线可拦截流量。
+
+14. 防SYN Flood攻击的iptables规则中，--limit 参数的作用是（）
+A. 限制连接速率　B. 限制IP范围　C. 限制端口　D. 限制协议
+✅ A
+解析：-m limit模块用于限制单位时间内匹配报文数量，抵御洪水类DOS攻击。
+
+15. 以下关于filter表和nat表说法正确的是（）
+A. filter表有PREROUTING链　B. nat表有INPUT链
+C. filter表用于包过滤，nat表用于地址转换　D. 两表功能相同
+✅ C
+解析：filter表负责访问控制过滤，nat表专门处理IP...
