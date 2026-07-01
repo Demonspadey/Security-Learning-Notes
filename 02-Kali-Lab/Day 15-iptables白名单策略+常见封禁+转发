@@ -13,6 +13,10 @@ iptables -A INPUT -s 10.0.0.5 -j DROP
 
 # 场景3：限制ICMP（防ping探测）
 iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
+
+#开启IP转发功能需要执行
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
 # SNAT：把内网IP转换为公网IP（内网上网）
 iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o eth0 -j SNAT --to-source 公网IP
 
