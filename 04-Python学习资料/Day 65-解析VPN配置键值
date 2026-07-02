@@ -1,0 +1,58 @@
+## 一、今日编程学习目标
+1.熟练使用split单分隔符拆分key=value格式配置文本
+2.过滤配置注释行、空行，借助字典统一收纳全部配置参数
+3.掌握配置文件常规解析逻辑，复用在日志解析、扫描配置读取场景
+4.自主修改原有配置文本，追加新参数并自动完成提取
+
+## 二、底层代码原理
+1.配置文件普遍采用key=value书写格式，依靠split("=",1)限定仅第一次等号分割，规避参数内容自带等号出错问题
+2.for循环逐行遍历文本，if条件跳过注释#与空白无效行，精简冗余数据
+3.字典结构持久存储配置参数，后续能够循环遍历打印所有配置项
+
+## 三、完整可运行原始代码
+```python
+# Day12_parse_config.py VPN配置解析脚本
+# 模拟读取strongswan配置文本，自动提取所有网关网段参数
+config_text = """left=10.0.0.1
+leftsubnet=192.168.1.0/24
+right=10.0.0.2
+rightsubnet=192.168.2.0/24
+authby=secret
+esp=aes256-sha256
+"""
+
+config = {}
+# 逐行循环切割配置内容
+for line in config_text.strip().split("\n"):
+    line = line.strip()
+    # 过滤空行、注释行
+    if not line or line.startswith("#"):
+        continue
+    # 单次分割键值对
+    if "=" in line:
+        key, value = line.split("=", 1)
+        config[key] = value
+
+# 格式化循环输出全部配置参数
+print("=== VPN 配置参数 ===")
+
+### 修改版
+1. 在原始 config_text 字符串末尾依次新增两行配置
+protocol=esp
+ike_version=2
+2. 无需改动循环解析代码，原有分割逻辑自动识别新增参数
+3. 手动手写追加两行文本，熟悉配置扩充基础写法
+改造后最终输出效果
+=== VPN 配置参数 ===
+left = 10.0.0.1
+leftsubnet = 192.168.1.0/24
+right = 10.0.0.2
+rightsubnet = 192.168.2.0/24
+authby = secret
+esp = aes256-sha256
+protocol = esp
+ike_version = 2
+总共提取了 8 个参数
+for k, v in config.items():
+    print(f"  {k:15s} = {v}")
+print(f"\n总共提取了 {len(config)} 个参数")
