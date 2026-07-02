@@ -1,0 +1,59 @@
+**单词 81**
+**CVE** — Common Vulnerabilities and Exposures，通用漏洞与暴露
+
+> 例句：CVE-2021-44228 is a critical vulnerability in Log4j.
+> 翻译：CVE-2021-44228 是 Log4j 中的一个严重漏洞。
+
+**单词 82**
+**zero-day** — 零日漏洞（尚未有补丁的漏洞）
+
+> 例句：A **zero-day** vulnerability is extremely dangerous because no patch exists.
+> 翻译：零日漏洞极其危险，因为没有可用的补丁。
+
+**单词 83**
+**proof of concept** — 概念验证，常简写为 PoC
+
+> 例句：The researcher published a **proof of concept** exploit for CVE-2023-xxx.
+> 翻译：研究人员发布了 CVE-2023-xxx 的概念验证利用代码。
+
+**单词 84**
+**patch** — 补丁
+
+> 例句：Microsoft released a security **patch** to fix the vulnerability.
+> 翻译：微软发布了一个安全补丁来修复这个漏洞。
+
+**单词 85**
+**exploit chain** — 利用链
+
+> 例句：The attack used an **exploit chain** of two vulnerabilities to gain root.
+> 翻译：攻击者使用了一个包含两个漏洞的利用链来获得 root 权限。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "CVE" 的全称是？    （A）
+   A. Common Vulnerabilities and Exposures
+   B. Computer Virus Elimination
+   C. Critical Vulnerability Engine
+   D. Central Verification Entity
+
+2. "Zero-day" 漏洞的特点是？    （B）
+   A. 已有补丁    B. 尚未有补丁    C. 危害极低    D. 只影响旧版本
+
+3. "PoC" 在安全领域中常指什么？    （A）
+   A. 概念验证代码    B. 攻击报告    C. 安全策略    D. 渗透测试
+
+4. "Patch" 的中文意思是？    （D） #开始选A错误
+   A. 补丁    B. 补片    C. 修补    D. 以上都对
+
+5. "Exploit chain" 的中文意思是？    （A） #开始选B错误
+   A. 利用链    B. 漏洞链    C. 攻击链接    D. 链条漏洞
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：A zero-day vulnerability is extremely dangerous because no patch exists.
+```零日漏洞是没有补丁修补的，攻击风险极大。
+
+---
