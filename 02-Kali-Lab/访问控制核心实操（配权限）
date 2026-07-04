@@ -31,7 +31,7 @@ Step 1.1 创建实验环境
   #       rw-  rw-  r--
   #      所有者 组  其他人
 
-  # secret.txt 只让所有者能读写（其他人什么都不能）
+  # secret.txt 只让所有者能读写（其他人什么都不能干）
   chmod 600 secret.txt
   ls -l secret.txt
   # 变成: -rw-------  （只有所有者可读写）
