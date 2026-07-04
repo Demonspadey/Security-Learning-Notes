@@ -18,7 +18,7 @@ Step 1.1 创建实验环境
   sudo useradd -m testuser_alice   # 创建用户 alice
   sudo useradd -m testuser_bob     # 创建用户 bob
 
-  # 设置密码（简单密码方便测试）
+  # 设置密码
   echo "testuser_alice:qqwweerr11" | sudo chpasswd
   echo "testuser_bob:qqwweerr22" | sudo chpasswd
 
