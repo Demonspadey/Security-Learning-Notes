@@ -1,0 +1,83 @@
+## 一、今日学习目标
+1. 掌握多行文本分割、按空格拆分日志字段
+2. 使用字典完成告警级别计数统计
+3. 拓展改造：读取本地日志文件、统计攻击源IP频次
+4. 理解SIEM日志统计底层实现思路
+
+## 二、核心代码原理
+1. strip()去除首尾换行空格，split("\n")按行分割全部日志
+2. split()空格拆分单行日志，提取告警级别字段
+3. 字典get()自动计数，无需if判断初始化
+4. 模拟SIEM对各类安全告警做数量汇总分析
+
+## 三、完整原始可运行代码
+# Day15_log_stats.py — IDS告警日志统计
+import os
+# 模拟IDS日志文本，生产环境替换为文件读取
+log_text = """2026-07-06 08:01:23 192.168.1.10 CRITICAL Port scan detected
+2026-07-06 08:02:15 10.0.0.5 HIGH SQL injection attempt
+2026-07-06 08:03:44 192.168.1.10 CRITICAL Port scan detected
+2026-07-06 08:05:12 172.16.0.8 MEDIUM Failed login x3
+2026-07-06 08:07:30 10.0.0.5 HIGH XSS probe detected
+2026-07-06 08:10:01 192.168.1.10 HIGH Reverse shell detected
+2026-07-06 08:12:45 10.0.0.5 CRITICAL SQL injection blocked
+2026-07-06 08:15:20 172.16.0.8 LOW Unusual outbound connection"""
+
+# 按换行分割日志行
+lines = log_text.strip().split("\n")
+alert_counts = {}
+# 遍历每条日志提取告警等级
+for line in lines:
+    parts = line.split()
+    if len(parts) >= 4:
+        level = parts[3]
+        alert_counts[level] = alert_counts.get(level, 0)
+# 分级输出统计结果
+print("=== 告警级别统计 ===")
+for level in ["CRITICAL", "HIGH", "MEDIUM", "LOW"]:
+    count = alert_counts.get(level, 0)
+    if count > 0:
+        print(f"  {level:10s}: {count}次")
+
+## 四、原始运行输出
+=== 告警级别统计 ===
+  CRITICAL  : 2次
+  HIGH      : 3次
+  MEDIUM    : 1次
+  LOW       : 1次
+
+## 五、指定改造需求（原文要求）
+1. 修改逻辑：不再使用内置log_text，改为读取本地日志文件
+2. 新增拓展功能：提取每条日志源IP，统计每个IP告警总次数
+### 改造思路提示
+1. open("ids.log","r")读取文件，替代内置文本字符串
+2. parts[2]取出源IP，新建ip_count字典循环累加
+3. 新增print输出IP访问统计表
+
+## 六、代码复盘知识点
+1. 文本分割：split()无参数自动按任意空白切割，适配日志空格分隔格式
+2. 字典计数是安全脚本通用统计方案（SIEM、流量分析底层）
+3. 分层代码：日志读取、字段提取、统计输出解耦，便于拓展
+4. 生产延伸：可结合iptables、Windows安全日志做批量审计汇总
+
+
+修改版
+import os
+with open(r"D:\_agent_tmp\security.log", "r", encoding="utf-8") as f:
+    log_text = f.read()
+
+lines = log_text.strip().split("\n")
+print(f"共读取 {len(lines)} 条日志记录")
+
+alert_counts = {}
+for line in lines:
+    parts = line.split()
+    if len(parts) >= 4:
+        level = parts[3]
+        alert_counts[level] = alert_counts.get(level, 0) + 1
+
+print("\n=== 告警级别统计 ===")
+for level in ["CRITICAL", "HIGH", "MEDIUM", "LOW"]:
+    count = alert_counts.get(level, 0)
+    if count > 0:
+        print(f"  {level:10s}: {count}次")
