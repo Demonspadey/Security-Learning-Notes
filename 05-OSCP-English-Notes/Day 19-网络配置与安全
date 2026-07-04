@@ -1,0 +1,57 @@
+**单词 86**
+**proxy** — 代理
+
+> 例句：Route your traffic through a **proxy** to hide your real IP address.
+> 翻译：通过代理路由你的流量以隐藏真实 IP 地址。
+
+**单词 87**
+**tunnel** — 隧道
+
+> 例句：We can create an SSH **tunnel** to access internal services.
+> 翻译：我们可以创建 SSH 隧道来访问内部服务。
+
+**单词 88**
+**subnet** — 子网
+
+> 例句：The internal **subnet** is 192.168.1.0/24.
+> 翻译：内部子网是 192.168.1.0/24。
+
+**单词 89**
+**gateway** — 网关
+
+> 例句：The default **gateway** is 192.168.1.1.
+> 翻译：默认网关是 192.168.1.1。
+
+**单词 90**
+**reverse connection** — 反向连接
+
+> 例句：The **reverse connection** allows the target to connect back to our machine.
+> 翻译：反向连接允许目标机器回连到我们的机器。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "Proxy" 的主要功能是？    （B）
+   A. 加速网络    B. 代表客户端发送请求    C. 检测病毒    D. 加密数据
+
+2. "SSH tunnel" 可以用来做什么？    （D）
+   A. 隐藏流量    B. 访问内部服务    C. 加密通信    D. 以上都对
+
+3. "Subnet 192.168.1.0/24" 中的 "/24" 表示什么？    （A）
+   A. 子网掩码 255.255.255.0    B. 24 个 IP 地址
+   C. 24 台设备    D. 24 位加密
+
+4. "Gateway" 的中文意思是？    （A）
+   A. 网关    B. 大门    C. 通道    D. 关口
+
+5. "Reverse connection" 中谁主动发起连接？    （B）
+   A. 攻击者的机器    B. 目标机器    C. 中间服务器    D. 路由器
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：We can create an SSH tunnel to access internal services.
+```我们可以通过搭建SSH隧道，就能够让外网连接内网服务器
+
+---
