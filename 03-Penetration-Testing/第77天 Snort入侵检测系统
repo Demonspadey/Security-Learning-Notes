@@ -1,0 +1,73 @@
+## 一、Snort基础介绍
+1. Snort定义
+开源NIDS网络入侵检测系统，开发者Martin Roesch，现归属Cisco。
+2. 三大运行模式
+- 嗅探器模式：命令 snort -v / snort -vd，终端实时打印数据包头部，类似tcpdump抓包
+- 包记录器模式：命令 snort -l /var/log/snort，抓取流量持久保存到本地磁盘
+- NIDS入侵检测模式（核心常用）：命令 snort -A console -c snort.conf，加载规则匹配攻击并输出告警
+速记参数：-v看报文、-l存日志、-c加载规则配置、-A控制告警输出
+
+## 二、Snort四层处理流程
+包解码器 → 预处理器 → 检测引擎 → 输出模块
+1. 包解码器：捕获网卡流量，逐层解析二层~四层协议头部
+2. 预处理器（实操核心）：完成IP分片重组、TCP流重组、HTTP载荷解码；作用是抵御分片、编码类流量规避攻击
+3. 检测引擎：Snort核心模块，逐条匹配自定义安全规则
+4. 输出模块：将告警分发至终端、本地日志、数据库
+
+## 三、Snort规则完整结构
+一条规则 = 规则头 + 规则选项
+### 1. 规则头标准格式
+动作 协议 源IP 源端口 -> 目的IP 目的端口
+五大动作说明
+- alert：告警+记录数据包，日常最常用
+- log：仅记录流量，不产生告警提示
+- pass：白名单，直接放行流量跳过检测
+- activate：告警并唤醒绑定的dynamic动态规则
+- dynamic：仅能被activate规则激活生效
+
+### 2. 高频规则选项实操说明
+msg:"描述"; 告警展示自定义文字，每条规则必填
+sid:编号; 规则全局唯一ID
+  编号规范：1~99官方预留、100~1000000系统内置、>1000000 用户自定义规则
+rev:数字; 规则修订版本号，迭代更新时递增
+content:"字符串"; 在数据包载荷检索特征，**默认区分大小写**
+nocase; 搭配content使用，关闭大小写区分
+offset:N; 从载荷第N个字节开始检索特征
+depth:N; 限制向后检索的最大字节长度
+flags:S/A/F; 匹配TCP标志位 S=SYN A=ACK F=FIN
+itype:8; 匹配ICMP报文类型，itype:8对应ping请求
+
+### 3. 标准实操规则示例
+# 内网外联SSH检测
+alert tcp 192.168.0.0/16 any -> any 22 (msg:"内网SSH外联"; sid:1000010;)
+# DNS UDP53流量监测
+alert udp any any -> any 53 (msg:"DNS查询流量"; sid:1000011;)
+# HTTP路径穿越/etc/passwd检测
+alert tcp any any -> any 80 (msg:"路径穿越攻击";content:"/etc/passwd";nocase;sid:1000012;)
+
+## 四、Snort运维实操命令
+# 校验配置文件语法是否合法
+sudo snort -T -c /etc/snort/snort.conf
+# 前台运行，终端实时输出告警
+sudo snort -A console -c /etc/snort/snort.conf -i eth0
+# 后台运行，日志存储至指定目录
+sudo snort -c /etc/snort/snort.conf -l /var/log/snort/
+# 离线解析本地pcap抓包文件
+sudo snort -c /etc/snort/snort.conf -r captured.pcap
+# 纯嗅探抓包模式
+sudo snort -v -i eth0
+
+## 五、Windows抓包驱动注册表
+路径：HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinPcap
+说明：Windows下Snort、Wireshark抓包依赖WinPcap/Npcap驱动；抓包无流量优先检查驱动是否安装
+
+## 六、Wireshark配套过滤语句
+tcp.flags.syn == 1
+作用：过滤所有SYN握手数据包，用于验证端口扫描类Snort规则
+
+## 七、实操故障与攻击处置
+1. DNS隧道攻击：数据隐藏在DNS子域名，走UDP53端口；应急阻断命令
+iptables -A OUTPUT -s 可疑主机IP -p udp --dport 53 -j DROP
+2. HTTPS加密流量短板：旁路NIDS仅能解析IP头部，无法解密应用层载荷；解决方案
+① 部署SSL解密代理 ② 服务器部署HIDS ③ NTA流量行为分析
+3. Snort无告警常见原因：规则未引入配置文件、content特征写错、加密流量无法解析
