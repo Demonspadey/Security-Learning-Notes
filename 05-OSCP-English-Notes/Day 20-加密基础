@@ -1,0 +1,57 @@
+**单词 91**
+**encryption** — 加密
+
+> 例句：**Encryption** converts data into a format that cannot be read without a key.
+> 翻译：加密将数据转换为没有密钥就无法读取的格式。
+
+**单词 92**
+**decryption** — 解密
+
+> 例句：The private key is required for **decryption** of the message.
+> 翻译：解密消息需要私钥。
+
+**单词 93**
+**certificate** — 证书
+
+> 例句：The HTTPS **certificate** expired three days ago.
+> 翻译：HTTPS 证书三天前过期了。
+
+**单词 94**
+**public key** — 公钥
+
+> 例句：The **public key** is used to encrypt data, and only the private key can decrypt it.
+> 翻译：公钥用于加密数据，只有私钥才能解密。
+
+**单词 95**
+**private key** — 私钥
+
+> 例句：Never share your **private key** with anyone.
+> 翻译：永远不要把你的私钥分享给任何人。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "Encryption" 的中文意思是？    （A）
+   A. 加密    B. 解密    C. 编码    D. 解码
+
+2. "Decryption" 需要什么？    （A）
+   A. 公钥或私钥    B. 用户名    C. 密码    D. 验证码
+
+3. "Certificate" 在 HTTPS 中的主要作用是？    （B）
+   A. 加密数据    B. 证明服务器身份    C. 加速连接    D. 存储密码
+
+4. "Public key" 和 "Private key" 是什么关系？    （B）
+   A. 完全相同    B. 公钥加密的数据只能用私钥解密    C. 可以互相代替    D. 没有关系
+
+5. 以下哪个做法是安全的？    （C）
+   A. 分享私钥给朋友    B. 将私钥上传到 GitHub
+   C. 妥善保管私钥    D. 使用弱密码保护私钥
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：Never share your private key with anyone.
+```永远不要把私钥泄露给任何人。
+
+---
