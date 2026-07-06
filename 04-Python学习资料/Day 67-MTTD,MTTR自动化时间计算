@@ -1,0 +1,72 @@
+## 1、本次开发核心目的
+依托Python完成安全事件检测时长、故障修复时长自动化运算，替代人工口算；适配企业安全报表、应急复盘数据统计，巩固列表、元组、循环遍历、文件读取、数值进制换算基础语法。
+
+## 2、基础前置知识点释义
+1. 元组()：捆绑一组绑定数据，不可修改，用来单独封装单条安全事件全部时间信息
+2. 列表[]：批量收纳多条事件元组，支持循环遍历追加数据
+3. 时间换算逻辑：时:分字符串统一换算纯分钟数值，简化减法运算
+换算公式：总分钟 = 小时 × 60 + 分钟
+4. 累加运算符 +=：持续累计总MTTD、总MTTR时长
+5. 字符串格式化 :02d：自动补零，8小时转为08，适配标准时间书写格式
+
+## 3、第一版硬编码代码v1详解
+```python
+# 封装所有安全事件，元组结构(事件名称，攻击分钟数，发现分钟数，恢复分钟数)
+events = [
+    ("事件1", 8*60+0, 8*60+30, 9*60+30),
+    ("事件2", 10*60+0, 10*60+45, 12*60+15),
+    ("事件3", 14*60+0, 14*60+10, 14*60+40),
+]
+# 初始化时间累加容器
+total_mttd = 0
+total_mttr = 0
+
+# 循环逐个拆解每一条事件数据
+for name, attack, detect, recover in events:
+    mttd = detect - attack
+    mttr = recover - detect
+    total_mttd = total_mttd + mttd
+    total_mttr = total_mttr + mttr
+    print(f"  {name}: MTTD={mttd}分钟, MTTR={mttr}分钟")
+
+# 求取全局平均值
+avg_mttd = total_mttd / len(events)
+avg_mttr = total_mttr / len(events)
+
+# 最终结果打印
+print(f"\n=== 平均指标 ===")
+print(f"  平均MTTD: {avg_mttd:.0f}分钟  (检测效率)")
+print(f"  平均MTTR: {avg_mttr:.0f}分钟  (修复效率)")
+
+### 修改版
+events = []
+# 只读模式读取本地文档，utf-8防止中文乱码
+with open(r"D:\_agent_tmp\incident_data.txt", "r", encoding="utf-8") as f:
+    lines = f.read().strip().split("\n")
+
+# 切片[1:]跳过表头第一行，只解析实际数据行
+for line in lines[1:]:
+    parts = line.split(",")
+    name = parts[0]
+    # 冒号切割时分字符串
+    attack_h, attack_m = parts[1].split(":")
+    detect_h, detect_m = parts[2].split(":")
+    recover_h, recover_m = parts[3].split(":")
+    # 字符串强制转为int数字，换算分钟并入列表
+    events.append((
+        name,
+        int(attack_h)*60 + int(attack_m),
+        int(detect_h)*60 + int(detect_m),
+        int(recover_h)*60 + int(recover_m),
+    ))
+
+total_mttd = 0
+total_mttr = 0
+# 原有循环计算代码无需改动，代码复用性提升
+for name, attack, detect, recover in events:
+    attack_str = f"{attack//60:02d}:{attack%60:02d}"    #带入攻击时间   
+    mttd = detect - attack
+    mttr = recover - detect
+    total_mttd += mttd
+    total_mttr += mttr
+    print(f" {name}: 攻击{attack_str} MTTD={mttd}分钟, MTTR={mttr}分钟")
