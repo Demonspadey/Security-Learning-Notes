@@ -1,0 +1,59 @@
+**单词 96**
+**executive summary** — 执行摘要（报告开头的高层概述）
+
+> 例句：The **executive summary** explains the findings to non-technical managers.
+> 翻译：执行摘要向非技术管理人员解释发现的问题。
+
+**单词 97**
+**scope** — 范围
+
+> 例句：The **scope** of the penetration test includes the web application only.
+> 翻译：渗透测试的范围仅包括 Web 应用。
+
+**单词 98**
+**impact** — 影响
+
+> 例句：The **impact** of this vulnerability is critical because it exposes user data.
+> 翻译：这个漏洞的影响是严重的，因为它暴露了用户数据。
+
+**单词 99**
+**risk level** — 风险等级
+
+> 例句：Assign a **risk level** to each finding: Critical, High, Medium, or Low.
+> 翻译：给每个发现分配风险等级：严重、高、中、低。
+
+**单词 100**
+**recommendation** — 建议（修复建议）
+
+> 例句：Our **recommendation** is to disable the vulnerable service immediately.
+> 翻译：我们的建议是立即停用有漏洞的服务。
+
+📝 **今日小练习**
+
+**选择题**
+```
+1. "Executive summary" 是写给谁看的？    （B）
+   A. 技术人员    B. 管理层/非技术背景人员    C. 开发人员    D. 安全专家
+
+2. "Scope" 在渗透测试中指的是什么？    （A）
+   A. 目标范围    B. 测试工具    C. 测试时间    D. 测试人员
+
+3. "Impact" 的中文意思是？    （B）
+   A. 冲击    B. 影响/危害    C. 碰撞    D. 效果
+
+4. 风险等级从高到低排列正确的是？    （B）
+   A. High > Medium > Critical > Low
+   B. Critical > High > Medium > Low
+   C. Medium > High > Critical > Low
+   D. Low > Medium > High > Critical
+
+5. "Recommendation" 在安全报告中的意思是？    （B）
+   A. 推荐    B. 修复建议    C. 建议书    D. 介绍信
+```
+
+**翻译题**
+```
+6. 把这句话翻译成中文：Our recommendation is to disable the vulnerable service immediately.
+```我们的修复建议是立即停用存在漏洞的服务。
+
+---
