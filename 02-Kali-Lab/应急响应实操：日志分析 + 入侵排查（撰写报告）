@@ -43,7 +43,7 @@ Step 1.2 Kali 模拟暴力破解
 【SSH 暴力破解入侵应急处置报告】#学写报告+自修改
 一、基本信息
 事件时间：2026 年 07 月 06 日
-涉事资产：Ubuntu 26.04 LTS 服务器，内网 IP：192.168.163.128
+涉事资产：Ubuntu 26.04 LTS 服务器，内网 IP：192.168.xxx.xxx
 事件类型：SSH 暴力破解入侵安全事件
 发现人员：demon
 攻击源 IP：192.168.xxx.xxx
@@ -57,12 +57,12 @@ grep "Failed password" /var/log/auth.log | wc -l
 2. 提取攻击源 IP 统计
 运行
 grep "Failed password" /var/log/auth.log | grep -oP '\d+\.\d+\.\d+\.\d+' | sort | uniq -c | sort -nr
-执行结果：20 次失败登录全部来源于同一 IP 192.168.163.130，持续针对 root 账号进行密码遍历爆破。
+执行结果：20 次失败登录全部来源于同一 IP 192.168.xxx.xxx，持续针对 root 账号进行密码遍历爆破。
 日志特征：大量重复日志 Failed password for root from 192.168.xxx.xxx port xxx ssh2，短时间密集发起登录请求。
 （二）入侵确认
 执行登录历史查询命令核查成功登录记录：
 运行
-last | grep 192.168.163.130
+last | grep 192.168.xxx.xxx
 核查结论：该爆破 IP 存在 root 用户成功登录记录，确认攻击者暴力破解弱密码成功，非法获取服务器最高权限。
 三、事件风险危害
 权限高危风险：攻击者拿到 root 最高权限，可任意查看、修改、删除服务器全部文件、配置；
@@ -75,7 +75,7 @@ last | grep 192.168.163.130
 2. 防火墙封禁恶意攻击 IP
 服务器本地配置 iptables 规则，永久拦截该恶意 IP 所有入站流量：
 运行
-sudo iptables -A INPUT -s 192.168.163.130 -j DROP
+sudo iptables -A INPUT -s 192.168.xxx.xxx -j DROP
 3. 主机安全排查
 检查是否新增可疑用户、定时任务、异常进程、监听端口；
 全盘检索可疑后门、脚本、陌生可执行文件；
@@ -107,8 +107,8 @@ grep "Failed password" /var/log/auth.log | wc -l
 # 统计攻击IP爆破频次
 grep "Failed password" /var/log/auth.log | grep -oP '\d+\.\d+\.\d+\.\d+' | sort | uniq -c | sort -nr
 # 核查可疑IP成功登录记录
-last | grep 192.168.163.130
+last | grep 192.168.xxx.xxx
 # 封禁恶意IP防火墙规则
-iptables -A INPUT -s 192.168.163.130 -j DROP
+iptables -A INPUT -s 192.168.xxx.xxx -j DROP
 
 
