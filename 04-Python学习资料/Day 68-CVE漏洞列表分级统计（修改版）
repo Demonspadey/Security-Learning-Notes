@@ -1,0 +1,85 @@
+## 1、开发用途
+读取txt格式CVE漏洞清单文件，按Critical/High/Medium/Low四个严重级别自动分类计数，生成可视化统计条形，同时分级别输出对应CVE编号清单；适用于漏扫报告批量自动化统计，拓展安全报表自动生成功能。
+
+## 2、新增核心语法知识点
+1. try/except 异常捕获：规避文件不存在、格式错乱导致程序直接崩溃，生产脚本必备防护写法
+2. 字典嵌套列表：`{"Critical": ["CVE-2024-001","CVE-2024-004"]}`，实现分级存储对应漏洞编号
+3. 列表.append()：向列表末尾追加元素，批量存入同级别CVE编号
+4. 字符串乘法 `'█' * 数字`：快速生成简易字符条形图，直观展示漏洞数量分布
+5. 字典.get(键, 默认值)：读取字典无对应键时返回预设0/空列表，避免索引报错
+
+## 3、数据源文件 cve_list.txt 内容
+文件路径：D:\_agent_tmp\cve_list.txt
+CVE-2024-001,Critical, 远程代码执行漏洞
+CVE-2024-002,High,SQL 注入漏洞
+CVE-2024-003,Medium, 信息泄露漏洞
+CVE-2024-004,Critical, 认证绕过漏洞
+CVE-2024-005,High, 缓冲区溢出漏洞
+CVE-2024-006,Low, 目录遍历漏洞
+CVE-2024-007,Critical, 反序列化漏洞
+CVE-2024-008,High,XSS 跨站脚本漏洞
+CVE-2024-009,Medium,CSRF 漏洞
+CVE-2024-010,Low,HTTP 头注入漏洞
+
+## 4、完整运行脚本 v1 逐行注释
+```python
+# 1.异常捕获模块，防止文件缺失程序崩溃
+try:
+    # r原始路径字符串，r""规避转义字符报错，只读模式打开txt文件
+    with open(r"D:\_agent_tmp\cve_list.txt", "r", encoding="utf-8") as f:
+        # 读取全部文本，去除首尾空行，按换行符分割为每行列表
+        lines = f.read().strip().split("\n")
+# 捕获文件不存在专属异常
+except FileNotFoundError:
+    print("错误：找不到 cve_list.txt 文件")
+    print("请先创建 D:\\_agent_tmp\\cve_list.txt")
+    exit() # 终止程序，不再执行后续代码
+
+# 定义输出展示顺序，固定严重级从高到低打印
+severity_order = ["Critical", "High", "Medium", "Low"]
+# 空字典：存储每个级别漏洞数量
+severity_counts = {}
+# 空字典：键=漏洞级别，值=对应级别全部CVE编号列表
+cve_by_level = {}
+
+# 循环遍历文件每一行数据
+for line in lines:
+    # 按逗号分割单行文本，拆分CVE编号、风险等级、漏洞描述
+    parts = line.split(",")
+    # 过滤空行、残缺行，保证至少包含编号+等级两段数据才处理
+    if len(parts) >= 2:
+        cve_id = parts[0].strip() # 去除字符串前后空格，提取CVE编号
+        severity = parts[1].strip() # 提取漏洞风险等级
+        
+        # 统计当前级别漏洞总数，无该级别则默认0再+1
+        severity_counts[severity] = severity_counts.get(severity, 0) + 1
+        
+        # 判断字典内是否已存在该风险等级，不存在则新建空列表
+        if severity not in cve_by_level:
+            cve_by_level[severity] = []
+        # 将当前CVE编号追加存入对应级别的列表
+        cve_by_level[severity].append(cve_id)
+
+# 打印总读取记录条数
+print(f"共读取 {len(lines)} 条CVE记录\n")
+
+# 打印分级数量条形统计图
+print("=== 严重级别分布 ===")
+total = 0
+for level in severity_order:
+    # 获取当前级别漏洞条数，无数据返回0
+    count = severity_counts.get(level, 0)
+    bar = "█" * count # 字符乘法生成条形
+    # :10s格式化占位，统一对齐文本
+    print(f"  {level:10s}: {count}条 {bar}")
+    total += count
+print(f"\n  合计: {total} 条")
+
+# 修改版在print(f"\n  合计: {total} 条")前面添加以下代码统计各级别漏洞清单
+print("\n=== 各级别漏洞清单 ===")
+for level in severity_order:
+    items = cve_by_level.get(level, [])
+    if items: # 当前级别存在漏洞才打印
+        print(f"  [{level}]")
+        for cve in items:
+            print(f"    - {cve}")
