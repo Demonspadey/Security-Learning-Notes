@@ -1,0 +1,86 @@
+Step 1.1 确认两台 VM 能互通
+──────────────────────────────────────────────────────────────────────────────
+【Kali 上执行】
+  ping -c 4 <UBUNTU_IP>   # 能PING通，NAT网络
+
+Step 1.2 在 Ubuntu 上多开几个服务
+──────────────────────────────────────────────────────────────────────────────
+【Ubuntu 上执行】
+
+  sudo systemctl start apache2
+
+  # 确认开了
+  sudo ss -tlnp | grep -E '22|80'
+
+  # Ubuntu 两个端口开放了：22(SSH) + 80(HTTP)
+
+Step 1.3 跑一次简单端口扫描
+──────────────────────────────────────────────────────────────────────────────
+【Kali 上执行】
+
+  sudo nmap -sS -T4 <UBUNTU_IP>
+
+  PORT     STATE  SERVICE    ← 端口/状态/服务名
+  22/tcp   open   ssh        ← 22端口开放，运行SSH
+  80/tcp   open   http       ← 80端口开放，运行http
+
+Step 2.1 探测开放端口 + 服务版本 + OS 识别
+──────────────────────────────────────────────────────────────────────────────
+【Kali 上执行】
+
+  # -sV = version detection（版本探测）
+  # -O  = OS detection（操作系统识别）
+  # -A  = aggressive scan（= -sV + -O + traceroute）
+  sudo nmap -A -T4 <UBUNTU_IP>
+
+  服务版本号    OpenSSH 10.2p1 Ubuntu 2ubuntu3.2
+  操作系统类型   Ubuntu Linux
+
+Step 2.2 扫描所有端口（1-65535）
+──────────────────────────────────────────────────────────────────────────────
+【Kali 上执行】
+
+  # 默认只扫1000个常用端口，用 -p- 扫全部65535个
+
+  sudo nmap -p- -T4 <UBUNTU_IP> -oN /tmp/all_ports.txt
+
+  # 查看结果
+  cat /tmp/all_ports.txt
+
+  Step 2.3 用 NSE 脚本做漏洞探测
+──────────────────────────────────────────────────────────────────────────────
+【Kali 上执行】
+
+  # NSE = Nmap Script Engine，内置漏洞检测脚本
+  # --script vuln → 运行所有漏洞检测脚本
+  sudo nmap --script vuln -T4 <UBUNTU_IP>
+
+  # 脚本会检测常见漏洞
+  XSS,SQL,CSRF全部未发现漏洞，因为没有开任何应用
+
+Step 3.1 在 Kali 上用 searchsploit 查漏洞
+──────────────────────────────────────────────────────────────────────────────
+    searchsploit OpenSSH 10.2 CVE   没有结果，版本太新了，然后我在网上搜索了一下，
+    CVE-2026-35385,但是searchsploit --cve 2026-35385也没有
+    searchsploit Apache 2.4.66  可以搜索出来
+
+    # 查看具体利用脚本的路径
+    searchsploit -p 52577   #翻译了一下，漏洞类型是 Double-Free（双重释放内存漏洞），危害：DoS 拒绝服务攻击
+    效果：执行脚本后目标 Apache 网页服务直接崩溃宕机，用户无法访问网站
+    # 删除临时文件
+    sudo rm -f /tmp/all_ports.txt
+
+### 总结收尾
+进行渗透测试的第一步是什么？
+"第一步是信息收集。用 Nmap 做端口扫描（-sS）、版本探测（-sV）、
+操作系统识别（-O）。跑完看开放的端口和服务版本，然后去
+searchsploit 找对应 CVE 漏洞（找不到网上搜索看看）。信息收集越充分，后面的利用越顺利。"
+
+Nmap 扫描中 open、closed、filtered 的区别？
+"open 表示服务在监听，closed 表示没有服务，
+filtered 表示防火墙拦截了。做渗透测试时重点关注 open 端口。"
+
+CVE 和 CVSS 分别是什么？
+"CVE 是漏洞编号，格式 CVE-年份-顺序号。
+CVSS 是漏洞评分，0-10分，越高越严重。
+两者配合使用：CVE 定位漏洞，CVSS 判断优先级。"
