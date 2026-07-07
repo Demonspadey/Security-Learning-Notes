@@ -1,0 +1,68 @@
+## 第 3-4 周 综合练习（50 词总复习）
+
+### 一、中英配对（每题 1 分，共 10 分）
+
+```
+1. buffer overflow        A. 拒绝服务    （D）
+2. privilege escalation   B. 跨站脚本    （E）
+3. XSS                    C. 概念验证    （B）
+4. denial of service      D. 缓冲区溢出    （A）
+5. session                E. 权限提升    （G）
+6. PoC                    F. 注册表      （C）
+7. registry               G. 会话        （F）
+8. zero-day               H. 执行摘要      （I）
+9. certificate            I. 零日漏洞    （J）
+10. executive summary     J. 证书        （H）
+```
+
+### 二、选择题（每题 1 分，共 10 分）
+
+```
+11. "SQL injection" 的主要危害是？    （A）
+    A. 绕过认证或导出数据库    B. 执行系统命令
+    C. 窃取 cookie    D. 使服务器崩溃
+
+12. "RFI" 和 "LFI" 的区别是？    （A）
+    A. RFI加载远程文件，LFI加载本地文件    B. 没有区别
+    C. RFI更快    D. LFI更危险
+
+13. "SSH" 的默认端口是？    （B）
+    A. 21   B. 22   C. 23   D. 443
+
+14. "Netstat" 命令用于查看什么？    （B）
+    A. 磁盘空间    B. 网络连接和端口    C. 用户列表    D. 进程信息
+
+15. "Cron job" 在提权中常被利用的原因是什么？    （A）
+    A. 可能以 root 权限运行    B. 执行速度快
+    C. 无法被修改    D. 不需要输入密码
+
+16. "SMB" 常用于什么操作？    （A）
+    A. 文件共享    B. 远程登录    C. 邮件发送    D. Web 服务
+
+17. "Token" 在 Windows 安全中包含了什么？    （A）
+    A. 用户身份和权限    B. 密码    C. 加密密钥    D. IP 地址
+
+18. "CVE" 编号的作用是？    （A）
+    A. 唯一标识一个公开漏洞    B. 标识一台计算机
+    C. 表示病毒名称    D. 表示加密算法
+
+19. "Public key" 和 "Private key" 的正确使用方式是？    （A）
+    A. 公钥加密，私钥解密    B. 私钥加密，公钥解密
+    C. 两者都可以加解密    D. A 和 B 都正确（取决于用途）
+
+20. 在渗透测试报告中，"Risk level: Critical" 表示什么？    （A）
+    A. 最严重的风险等级    B. 中等风险
+    C. 低风险    D. 无需处理
+```
+
+### 三、翻译题（每题 2 分，共 10 分）
+
+```
+21. The file upload function does not validate the file type.    文件上传功能未验证文件类型
+22. Use netstat -an to check all listening ports.    使用 netstat -an 查看所有监听端口
+23. Never share your private key with anyone.    永远不要把私钥泄露给任何人
+24. 检查定时任务中有没有以 root 运行的。        Check the cron jobs to see if any run as root #写不完整
+25. 扫描器在 Web 服务器上发现了一个严重漏洞。    The scanner found a critical vulnerability on the web server.#写不完整
+```
+
+---
