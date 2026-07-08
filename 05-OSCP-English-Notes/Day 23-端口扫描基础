@@ -1,0 +1,31 @@
+1. scan
+   中文：扫描
+   例句：Nmap is the most popular port scanning tool used for network discovery.
+   翻译：Nmap 是最流行的端口扫描工具，用于网络发现。
+
+2. port
+   中文：端口
+   例句：A port is a virtual point where network connections start and end.
+   翻译：端口是网络连接开始和结束的虚拟点。
+
+3. open port
+   中文：开放端口
+   例句：An open port indicates that a service is listening and accepting connections.
+   翻译：开放端口表示某个服务正在监听并接受连接。
+
+4. closed port
+   中文：关闭端口
+   例句：A closed port means no application is listening on that port.
+   翻译：关闭端口表示没有应用程序在该端口上监听。
+
+5. filtered port
+   中文：被过滤端口
+   例句：A filtered port suggests that a firewall is blocking access to that port.
+   翻译：被过滤端口表示防火墙正在阻止对该端口的访问。
+
+📝 小练习：
+  ① "开放端口" 的英文是？    open ports
+  ② port scanning 的中文是？     端口扫描
+  ③ 填空：A __closed___ port means no application is listening.
+  ④ 判断：filtered port 表示端口开放可以连接。（对/错）    错，防火墙拦截
+  ⑤ 翻译：Nmap can detect open, closed, and filtered ports.     Nmap 能够识别开放、关闭以及被过滤的端口。
