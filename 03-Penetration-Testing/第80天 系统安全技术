@@ -1,0 +1,96 @@
+## 一、Windows安全核心子系统（高频软考考点）
+### 1 四大核心模块分工
+1. Winlogon：提供Ctrl+Alt+Del登录交互界面，接收用户账号密码，传递凭据给LSASS
+2. LSASS（lsass.exe进程）：本地安全认证，核对账户凭据，生成访问令牌
+3. SAM（安全账户管理器）：本地账户哈希存储载体
+   - 文件路径：%SystemRoot%\system32\config\SAM
+   - 权限限制：仅SYSTEM账号可读取，管理员无直接访问权限
+4. SRM（安全引用监视器）：权限校验核心，依据ACL判定资源访问权限
+记忆口诀：Winlogon画界面、LSASS管登录、SAM存哈希、SRM审权限
+
+### 2 Windows完整登录流程
+用户按下Ctrl+Alt+Del → Winlogon弹出登录框 → 输入账号密码传给LSASS → LSASS查询SAM哈希比对校验 → 认证成功生成访问令牌 → SRM依据ACL控制所有资源访问
+
+## 二、Windows ACL访问控制体系
+### 1 安全描述符四要素（所有文件/注册表/对象自带）
+1. Owner：对象所有者，拥有修改权限的最高权限
+2. Group：对象归属用户组（老式NT兼容）
+3. DACL（自主访问控制列表）：管控谁能读写执行，定义允许/拒绝规则
+4. SACL（系统访问控制列表）：审计专用，记录对象操作日志（对应4688、4624等事件）
+区分：DACL=管权限，SACL=管审计日志
+
+### 2 ACE访问控制项
+ACL由多条ACE规则组成，单条格式：(允许/拒绝, 用户/组, 权限)
+核心考试陷阱：Windows拒绝ACE优先级高于允许ACE，与Linux权限逻辑相反
+示例：先允许Users读取，再拒绝Guest完全控制，Guest依旧无法访问
+
+### 3 RID与克隆后门账户
+1. RID定义：SID末尾数字标识本地账户类型
+   - RID 500：内置管理员Administrator
+   - RID 501：Guest来宾账户
+   - RID 502：KRBTGT Kerberos服务账号
+   - RID ≥1000：普通新建用户
+2. 克隆账户原理：新建普通用户，注册表替换F键值为Administrator数据，登录后具备管理员权限，whoami却显示普通账号，隐蔽后门
+3. 检测路径：regedit打开 `HKLM\SAM\SAM\Domains\Account\Users`，对比各子键F二进制值，普通用户F与500管理员一致即为克隆账户
+4. 权限限制：SAM注册表仅SYSTEM可读取，管理员无查看权限
+
+## 三、Windows系统安全配置实操
+### 1 UAC用户账户控制
+- 机制：管理员默认以标准权限运行，修改系统配置需弹窗提权
+- 四级档位：始终通知(最安全) > 仅程序弹窗 > 不锁定桌面通知 > 从不通知(高危)
+- 作用：无法彻底杜绝提权攻击，但大幅提升入侵难度
+
+### 2 secpol.msc本地安全策略
+1. 密码策略：复杂度、最长最短有效期、历史密码复用限制
+2. 审核策略：开启登录、进程、文件访问审计，对应4624登录成功/4625登录失败/4688新建进程
+3. 用户权限分配：管控本地登录、远程访问、关机权限
+
+## 四、Linux账户与权限安全
+### 1 两大账户配置文件
+1. /etc/passwd（全局可读）
+   字段：用户名:x:UID:GID:注释:家目录:登录Shell
+   UID划分：0=root超级管理员；1~999系统服务账号；≥1000普通用户
+2. /etc/shadow（仅root可读，存储加密密码哈希）
+   字段：用户名:加密密码:修改时间:最短间隔:最长有效期:预警:过期:保留
+实操风险：shadow泄露可离线暴力破解密码
+
+### 2 特殊权限SUID/SGID/Sticky
+- SUID(4)：执行时拥有文件所有者权限，后门高频载体
+  检索命令：find / -perm -4000 全盘查找SUID程序
+- SGID(2)：执行继承文件所属组权限
+  检索命令：find / -perm -2000
+- Sticky(1)：目录仅文件所有者可删除，典型/tmp目录
+
+### 3 sudo权限管理
+配置文件：/etc/sudoers，专用编辑工具visudo（语法校验防损坏）
+示例：alice ALL=(ALL) ALL 任意sudo；bob ALL=(ALL) NOPASSWD:/bin/systemctl免密执行指定服务
+
+### 4 PAM可插拔认证模块
+配置目录：/etc/pam.d
+核心优势：模块化切换认证方式（密码/LDAP/谷歌二次验证），无需重构登录程序
+
+## 五、Windows & Linux 系统加固清单
+### Windows加固
+1. 禁用无用系统服务（打印服务等）
+2. 防火墙收紧，关闭闲置高危端口
+3. 全部开启本地审核策略
+4. 强制复杂密码，定期轮换
+5. 持续系统补丁更新
+
+### Linux加固
+1. sshd配置PermitRootLogin no禁止root远程登录
+2. 修改默认22SSH端口，限制登录IP白名单
+3. iptables配置内网放行策略
+4. 定期last/lastb排查暴力登录
+5. AIDE/Tripwire文件完整性监控，防篡改
+
+## 六、今日注册表&抓包过滤
+1 SAM克隆账户注册表：HKLM\SAM\SAM\Domains\Account\Users
+2 审核策略注册表：HKLM\SECURITY\Policy\PolAdtEv
+3 Wireshark SMB流量过滤：tcp.port == 445（永恒之蓝攻击端口）
+
+## 七、轮回复习速记
+轮回18：CVE/CNVD/CNNVD三类漏洞编号，CVSS分级，漏扫仅识别已知漏洞
+轮回17：PDCERF六步应急响应，MTTD/MTTR越小越好，4625暴力破解日志
+轮回16：Snort规则content区分大小写，sid唯一，三种运行模式
+轮回15：IDS旁路、IPS串联，PDCERF应急处置流程
