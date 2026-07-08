@@ -1,0 +1,93 @@
+## 1 脚本用途
+读取类passwd账户文本，自动识别UID=0的非法后门账号，统计可登录用户，格式化表格输出审计报告；用于服务器基线安全巡检。
+## 2 新增语法知识点
+1. 文件异常捕获try/except，防止文件缺失程序崩溃
+2. 字符串格式化对齐 f"{变量:宽度s}" 输出规整表格
+3. 标志位flag变量（found_risk）标记是否检出风险
+4. 列表append()收集目标用户，join拼接打印
+5. 字符串乘法"-"*N快速生成分割线
+
+## 3 数据源 passwd_data.txt
+用户名，UID, 组，家目录，Shell
+root,0,root,/root,/bin/bash
+bin,1,bin,/bin,/sbin/nologin
+daemon,2,daemon,/sbin,/sbin/nologin
+alice,1001,alice,/home/alice,/bin/bash
+bob,1002,bob,/home/bob,/bin/bash
+mallory,0,mallory,/home/mallory,/bin/bash
+
+
+## 4 v1基础脚本 
+```python
+# v1 异常UID后门检测
+try:
+    # 只读模式打开账户文件，utf8防乱码
+    with open(r"D:\_agent_tmp\passwd_data.txt", "r", encoding="utf-8") as f:
+        # 读取全部内容，去除首尾空行，按换行分割每行
+        lines = f.read().strip().split("\n")
+# 文件不存在捕获异常，直接退出程序
+except FileNotFoundError:
+    print("错误：找不到 passwd_data.txt 文件")
+    exit()
+
+# 打印表头，固定字符宽度对齐
+print("=== 用户账户安全检查 ===")
+print(f"{'用户名':10s} {'UID':5s} {'组':12s} {'家目录':20s} {'Shell':15s}")
+print("-" * 62)
+
+found_risk = False # 风险标记，初始无风险
+
+# 循环跳过第一行表头，遍历数据行
+for line in lines[1:]:
+    parts = line.split(",") # 逗号分割每行字段
+    if len(parts) >= 5: # 过滤残缺空行
+        # 一次性解包赋值五个字段
+        name, uid, group, home, shell = parts
+        # 格式化打印单条账户信息
+        print(f"{name:10s} {uid:5s} {group:12s} {home:20s} {shell:15s}")
+        # 核心风险判断：UID为0且不是root账号
+        if uid == "0" and name != "root":
+            print(f"  ⚠️  非root用户({name})的UID=0！\n")
+            found_risk = True
+
+# 最终审计结论
+if not found_risk:
+    print("\n✅ 未发现异常UID=0账户")
+else:
+    print("\n❌ 发现异常账户，建议立即检查！")
+
+### 修改版 v2
+try:
+    with open(r"D:\_agent_tmp\passwd_data.txt", "r", encoding="utf-8") as f:
+        lines = f.read().strip().split("\n")
+except FileNotFoundError:
+    print("错误：找不到文件"); exit()
+
+print("=== 用户账户安全检查 ===")
+print(f"{'用户名':10s} {'UID':5s} {'组':12s} {'家目录':20s} {'Shell':15s}")
+print("-" * 62)
+
+found_risk = False
+normal_users = [] # 存储可登录普通用户
+
+for line in lines[1:]:
+    parts = line.split(",")
+    if len(parts) >= 5:
+        name, uid, group, home, shell = parts
+        print(f"{name:10s} {uid:5s} {group:12s} {home:15s}")
+        # 检测UID=0后门
+        if uid == "0" and name != "root":
+            print(f"  ⚠️  非root用户({name})的UID=0！\n")
+            found_risk = True
+        # 筛选/bin/bash可登录普通账号，排除系统账号
+        if shell.strip() == "/bin/bash" and uid not in ["0","1","2"]:
+            normal_users.append(name)
+
+# 风险提示
+if not found_risk:
+    print("\n✅ 未发现异常UID=0账户")
+else:
+    print("\n❌ 发现异常账户，建议立即检查！")
+# 打印所有可登录用户
+if normal_users:
+    print(f"\n📋 可登录账户: {', '.join(normal_users)}")
