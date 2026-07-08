@@ -1,0 +1,164 @@
+## 一、核心背诵答题卡片
+### 卡片1 Windows四大安全组件
+理论：Winlogon登录界面、LSASS认证进程、SAM存账户哈希、SRM校验ACL权限
+答题话术：登录流程由Winlogon接收凭据，转交LSASS，LSASS读取SAM哈希验证，通过后由SRM根据ACL管控资源访问。SAM仅SYSTEM可访问，管理员无权限读取。
+
+### 卡片2 DACL与SACL区分
+理论：DACL管控资源允许/拒绝访问权限；SACL负责记录操作审计日志；Windows拒绝ACE优先级高于允许ACE，Linux相反。
+答题话术：DACL控制用户访问权限，SACL开启行为审计；规则冲突时拒绝权限优先生效。
+
+### 卡片3 RID与克隆账户考点
+理论：RID500管理员，501来宾，502Kerberos；克隆账户修改注册表F键值伪装管理员权限。
+答题话术：检测克隆账户进入SAM注册表Users项，对比普通用户与RID500管理员的F二进制数据，一致即为隐藏后门。
+
+### 卡片4 Linux passwd与shadow
+理论：passwd所有人可读，仅存账户基础信息；shadow仅root可读，存放加密密码哈希，泄露可离线爆破。UID=0为超级root账号。
+答题话术：普通用户可读取passwd，但加密密码存储于受保护shadow文件，禁止普通用户访问。
+
+### 卡片5 SUID后门与加固
+理论：SUID程序运行继承属主权限，攻击者利用高权限SUID文件提权；find命令全盘检索SUID程序定期排查。
+答题话术：系统加固需定期执行find / -perm -4000扫描可疑SUID可执行文件，删除非必要高权限程序。
+
+## 二、30道选择题（题干+答案+解析）
+1. Windows安全子系统中负责校验ACL权限的是（）
+A. SAM　B. LSASS　C. SRM　D. Winlogon
+答案：C 解析：SRM安全引用监视器，权限校验核心组件
+
+2. SAM文件存储内容为（）
+A. 明文密码　B. 用户密码哈希　C. 系统日志　D. 网络配置
+答案：B 解析：SAM仅保存加密哈希，无明文密码
+
+3. Windows ACE优先级规则（）
+A. 允许优先　B. 拒绝优先　C. 按书写顺序　D. 随机
+答案：B 解析：Windows拒绝规则优先级高于允许，Linux相反
+
+4. Administrator账户RID值（）
+A.500 B.501 C.502 D.1000
+答案：A
+
+5. 克隆账户检测依据（）
+A.用户名一致 B.F键值相同 C.UID一致 D.组相同
+答案：B 解析：F键存储账户权限标识，复制管理员F实现权限伪装
+
+6. Linux UID=0代表（）
+A.普通用户 B.系统账号 C.root超级用户 D.匿名账号
+答案：C
+
+7. /etc/shadow存储内容（）
+A.账户名 B.加密密码哈希 C.用户组 D.登录Shell
+答案：B
+
+8. 不属于Windows安全组件的是（）
+A.SRM B.SAM C.LSASS D.IIS
+答案：D IIS是Web服务
+
+9. DACL作用（）
+A.审计日志 B.访问权限控制 C.账户存储 D.密码管理
+答案：B
+
+10. SACL作用（）
+A.操作审计记录 B.权限分配 C.用户创建 D.哈希存储
+答案：A
+
+11. 安全描述符不含（）
+A.Owner B.DACL C.密码哈希 D.SACL
+答案：C
+
+12. Linux查找SUID文件命令（）
+A.find / -perm -4000 B.find -uid 0 C.ls -la D.chmod u+s
+答案：A
+
+13. PAM模块核心优势（）
+A.运行快 B.可插拔扩展认证 C.免费 D.开源
+答案：B
+
+14. Guest账户RID（）
+A.500 B.501 C.502 D.1001
+答案：B
+
+15. 可直接读取SAM文件的账号（）
+A.管理员 B.SYSTEM C.普通用户 D.Guest
+答案：B
+
+16. SSH禁止root远程配置（）
+A.PermitRootLogin no B.AllowUsers root C.DenyUsers root D.RootLogin no
+答案：A
+
+17. Windows登录失败事件ID（）
+A.4624 B.4625 C.4720 D.4688
+答案：B
+
+18. 不属于系统加固操作（）
+A.关闭闲置端口 B.禁用无用服务 C.全开端口 D.配置强密码策略
+答案：C
+
+19. Winlogon功能（）
+A.存哈希 B.登录交互界面 C.权限校验 D.审计
+答案：B
+
+20. 安全描述符Owner含义（）
+A.访问者 B.资源所有者 C.审计账户 D.管理员
+答案：B
+
+21. Linux普通用户UID范围（）
+A.0 B.1-999 C.≥1000 D.任意
+答案：C
+
+22. SAM默认访问权限（）
+A.全员可读 B.仅SYSTEM访问 C.管理员读写 D.全员可写
+答案：B
+
+23. UAC作用描述正确（）
+A.完全杜绝提权 B.增加提权攻击难度 C.无安全作用 D.仅服务器可用
+答案：B
+
+24. LSASS进程名称（）
+A.winlogon.exe B.lsass.exe C.svchost.exe D.explorer.exe
+答案：B
+
+25. 克隆账户注册表路径（）
+A.HKLM\SAM\SAM\Domains\Account\Users
+B.HKLM\SYSTEM\Services C.HKLM\SOFTWARE D.HKLM\SECURITY
+答案：A
+
+26. Linux账户配置文件（）
+A./etc/passwd B./etc/resolv.conf C./etc/hostname D./etc/fstab
+答案：A
+
+27. 安全编辑sudoers工具（）
+A.vi B.visudo C.nano D.edit
+答案：B 自带语法检查，避免配置损坏
+
+28. 新建进程事件ID（）
+A.4624 B.4625 C.4688 D.4720
+答案：C
+
+29. KRBTGT账户RID（）
+A.500 B.501 C.502 D.1000
+答案：C
+
+30. Linux SUID加固描述正确（）
+A.SUID越多越安全 B.定期扫描SUID程序 C.全部文件加SUID D.无安全风险
+答案：B
+
+## 三、下午案例标准答题模板
+场景：Windows服务器发现RID1003普通用户F键与500管理员一致；Linux服务器检出UID=0普通账号
+1、该行为是克隆后门账户，原理：复制管理员注册表F权限标识，登录拥有管理员权限，常规查询无法识别；检测对比SAM注册表Users子键F二进制数据。
+2、Linux UID=0非root风险：拥有完整系统最高权限，攻击者可篡改文件、植入后门；排查命令find / -uid 0。
+3、Windows加固三点：开启登录/进程审核策略、关闭闲置端口服务、强制密码复杂度+定期轮换。
+4、Linux加固三点：SSH禁止root登录、配置iptables访问白名单、定期全盘检索SUID可疑程序。
+
+## 四、轮回背诵清单
+轮回18：CVE国际MITRE、CNVD国内CNCERT、CNNVD测评中心；CVSS分级标准
+轮回17：PDCERF应急六步，MTTD/MTTR越小越好，4625登录失败日志
+轮回16：Snort规则语法，content区分大小写，-T校验配置
+轮回15：IDS旁路仅告警，IPS串联阻断；DNS隧道UDP53端口
+轮回8：DAC/MAC/RBAC三种访问控制，SUID=4 SGID=2 Sticky=1
+
+## 五、自检清单
+□ Windows四大组件分工、登录流程完整默写
+□ DACL/SACL、ACE拒绝优先牢记
+□ RID对应账户、克隆账户检测方法熟记
+□ passwd/shadow权限、UID划分区分
+□ SUID检索命令、visudo工具考点
+□ Windows/Linux系统加固措施背诵
