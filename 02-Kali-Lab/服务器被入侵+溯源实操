@@ -1,0 +1,78 @@
+接到告警：一台服务器对外发起异常连接。
+需要登录服务器排查是否被入侵，并溯源攻击路径。
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Part 1｜Kali 模拟攻击者
+──────────────────────────────────────────────────────────────────────────────
+【Kali 上执行】
+
+  # ① 先确认两台 VM 互通
+  ping -c 4 <UBUNTU_IP>
+
+  # ② SSH 爆破（造失败登录记录）
+  for i in $(seq 1 15); do
+    sshpass -p "wrongpass$i" ssh -o StrictHostKeyChecking=no \
+      root@<UBUNTU_IP> 2>/dev/null
+  done
+  
+  # ③ 成功登录一次
+  ssh <ubuntu用户名>@<UBUNTU_IP>
+  
+Part 2｜Ubuntu 上溯源排查
+──────────────────────────────────────────────────────────────────────────────
+
+第1步：查失败登录记录
+──────────────────────────────────────────────────────────────────────────────
+  # 用 journalctl -u ssh 看 SSH 服务日志
+  sudo journalctl -u ssh | grep "Failed password" | tail -15
+  # 看到 15 行 Failed password 记录，来源 IP 都是 Kali 的 
+
+第2步：查成功登录记录
+──────────────────────────────────────────────────────────────────────────────
+  sudo journalctl -u ssh | grep "Accepted" | tail -10
+  # 应该看到 1 行 Accepted 记录，来源 IP 是 Kali
+  # 说明攻击者成功登录了！
+
+第3步：从日志中提取攻击者 IP
+──────────────────────────────────────────────────────────────────────────────
+  # 先看一条日志的完整格式，数一下 IP 在第几列
+  sudo journalctl -u ssh | grep "Failed password" | tail -1
+  # 假设输出如：
+  # ... Failed password for root from 192.168.x.x port xx ssh2
+  # 数一下 IP 在哪个位置，然后提取
+
+  # IP 在第11列：
+  sudo journalctl -u ssh | grep "Failed password" | awk '{print $11}' | sort | uniq -c | sort -nr
+
+  # 也可以使用（正则提取IP）：
+  sudo journalctl -u ssh | grep "Failed password" | grep -oP '\d+\.\d+\.\d+\.\d+' | sort | uniq -c | sort -nr
+
+  # 还可以直接查看日志（这里要加-a，不加之前显示的对不上，加-a忽略二进制警告，读取全部日志）
+  grep -a "Failed password" /var/log/auth.log | grep -oP '\d+\.\d+\.\d+\.\d+' | sort | uniq -c | sort -nr
+
+第4步：查异常账户
+──────────────────────────────────────────────────────────────────────────────
+  awk -F: '$3 == 0 {print $1, "UID=0"}' /etc/passwd
+  # 只有 root
+  # 如果多了别的 → 克隆账户后门
+
+  grep "/bin/bash" /etc/passwd
+  # 正常只有 root 和自己
+  # 如果多了不认识的可登录账户 → 后门
+
+第5步：查 SUID 后门
+──────────────────────────────────────────────────────────────────────────────
+  find / -perm -4000 2>/dev/null
+  # 正常 SUID 都在 /usr/bin/、/usr/sbin/
+  # 如果 /tmp/ 或 /home/ 下有 SUID → 后门
+
+第6步：查网络连接
+──────────────────────────────────────────────────────────────────────────────
+  sudo ss -tlnp
+  # 看哪些端口在监听，有没有不认识的端口号
+
+  sudo ss -tnp | grep ESTAB
+  # 看当前已建立的连接，有没有连到陌生 IP
+
+第7步：写报告
+报告需要多加练习写作水平！
