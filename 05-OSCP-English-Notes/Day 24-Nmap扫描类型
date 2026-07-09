@@ -1,0 +1,32 @@
+1. SYN scan
+   中文：SYN 扫描（半开扫描）
+   例句：SYN scan is the default Nmap scan type, also known as half-open scan.
+   翻译：SYN 扫描是 Nmap 默认的扫描类型，也称为半开扫描。
+
+2. TCP connect scan
+   中文：TCP 全连接扫描
+   例句：TCP connect scan completes the full three-way handshake to determine port status.
+   翻译：TCP 全连接扫描通过完成完整的三次握手来判断端口状态。
+
+3. UDP scan
+   中文：UDP 扫描
+   例句：UDP scan is slower than TCP scan because UDP is a connectionless protocol.
+   翻译：UDP 扫描比 TCP 扫描慢，因为 UDP 是无连接协议。
+
+4. ping sweep
+   中文：Ping 探测（主机发现）
+   例句：A ping sweep is used to discover which hosts are alive on a network.
+   翻译：Ping 探测用于发现网络上有哪些主机是存活的。
+
+5. version detection
+   中文：版本探测
+   例句：Version detection identifies the software version running on an open port.
+   翻译：版本探测识别开放端口上运行的软件版本。
+
+📝 小练习：
+  ① "SYN 扫描" 的英文是？   SYN scan
+  ② version detection 的中文是？   版本探测
+  ③ 填空：__TCP_connect__ scan completes the full three-way handshake.
+  ④ 判断：UDP scan is faster than TCP scan.（对/错）     错，UDP无协议连接协议，无应答机制，扫描慢于TCP扫描
+  ⑤ 翻译：A ping sweep discovers which hosts are alive.     ping探测用于发现主机存活状态    #Ping 探测可找出网段内存活的主机。更好
+   
