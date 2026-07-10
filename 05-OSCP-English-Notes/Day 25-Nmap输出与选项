@@ -1,0 +1,31 @@
+1. verbose output
+   中文：详细输出
+   例句：Using the -v flag enables verbose output, showing more details during scan.
+   翻译：使用 -v 参数启用详细输出，扫描过程中显示更多细节。
+
+2. target
+   中文：目标
+   例句：You can specify a single target, a range, or a subnet as the scan target.
+   翻译：你可以指定单个目标、一个范围或一个子网作为扫描目标。
+
+3. port range
+   中文：端口范围
+   例句：The -p option allows you to specify a custom port range to scan.
+   翻译：-p 选项允许你指定一个自定义的端口范围进行扫描。
+
+4. OS detection
+   中文：操作系统识别
+   例句：OS detection attempts to identify the operating system based on network fingerprint.
+   翻译：操作系统识别基于网络指纹尝试识别操作系统类型。
+
+5. aggressive scan
+   中文：激进扫描
+   例句：The -A flag enables aggressive scan, which includes OS detection and version detection.
+   翻译：-A 参数启用激进扫描，包括操作系统识别和版本探测。
+
+📝 小练习：
+  ① "详细输出" 的英文是？  verbose output
+  ② OS detection 的中文是？  系统识别
+  ③ 填空：The -p option specifies a custom ___port__ range.
+  ④ 判断：Aggressive scan includes both OS and version detection.（对/错）  对，激进扫描包含内容完整但容易被拦截。
+  ⑤ 翻译：You can specify a subnet as the scan target.  你可以指定一个网段作为扫描目标。
