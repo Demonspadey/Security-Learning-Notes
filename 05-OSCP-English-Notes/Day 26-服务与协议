@@ -1,0 +1,31 @@
+1. service
+   中文：服务
+   例句：Each open port is associated with a service, such as HTTP or SSH.
+   翻译：每个开放端口都与一个服务关联，例如 HTTP 或 SSH。
+
+2. protocol
+   中文：协议
+   例句：TCP and UDP are the two most common transport layer protocols.
+   翻译：TCP 和 UDP 是两个最常见的传输层协议。
+
+3. banner grabbing
+   中文：横幅抓取
+   例句：Banner grabbing retrieves service banner information to identify software and version.
+   翻译：横幅抓取获取服务横幅信息以识别软件及版本。
+
+4. fingerprinting
+   中文：指纹识别
+   例句：Fingerprinting involves analyzing network responses to identify the target system.
+   翻译：指纹识别通过分析网络响应来识别目标系统。
+
+5. service discovery
+   中文：服务发现
+   例句：Service discovery identifies running services and their configurations on the target.
+   翻译：服务发现识别目标上运行的服务及其配置。
+
+📝 小练习：
+  ① "横幅抓取" 的英文是？    banner grabbing
+  ② service 的中文是？    服务
+  ③ 填空：___banner__ grabbing retrieves version information from network services.
+  ④ 判断：TCP and UDP are both transport layer protocols.（对/错）    对
+  ⑤ 翻译：Fingerprinting helps identify the target operating system.    指纹识别能够识别目标操作系统。
