@@ -1,0 +1,165 @@
+### 📝 Part 1：典型案例题集训
+
+#### 🔥 案例题1：iptables FORWARD过滤（三区隔离型）
+
+```
+某公司网络拓扑如下：
+  ┌──────────┐     ┌──────────┐     ┌──────────┐
+  │  外网    │─────│  防火墙  │─────│  内网    │
+  │ eth0     │     │          │     │ 192.168.1.0/24 │
+  └──────────┘     └──────────┘     └──────────┘
+                        │
+                   ┌────┴────┐
+                   │  DMZ    │
+                   │ 172.16.1.0/24  │
+                   └─────────┘
+
+DMZ区：Web(172.16.1.10:80)、DNS(172.16.1.20:53)
+内网：数据库(192.168.1.100:3306)
+
+需求：
+1. 外网可以访问DMZ的Web(80)和DNS(53)
+2. 内网可以访问DMZ的Web
+3. 内网可以出外网
+4. 外网不能主动访问内网
+5. DMZ不能主动访问内网
+```
+
+**问题1**：用 iptables FORWARD 规则实现
+
+
+```
+# ① 默认拒绝所有转发
+iptables -P FORWARD DROP
+
+# ② 放行已建立连接的回程包
+iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# ③ 外网→DMZ Web(80)：从外网口进来，去往Web服务器80端口
+iptables -A FORWARD -i eth0 -d 172.16.1.10 -p tcp --dport 80 -j ACCEPT
+
+# ④ 外网→DMZ DNS(53)：同上，协议用 udp（DNS用UDP）
+iptables -A FORWARD -i eth0 -d 172.16.1.20 -p udp --dport 53 -j ACCEPT
+
+# ⑤ 内网→DMZ Web(80)：从内网来，去DMZ的Web服务器
+iptables -A FORWARD -s 192.168.1.0/24 -d 172.16.1.10 -p tcp --dport 80 -j ACCEPT
+
+# ⑥ 内网出外网：用 ! -d 排除内网目标，只放行去往非内网段（外网）的流量
+iptables -A FORWARD -s 192.168.1.0/24 ! -d 192.168.1.0/24 -j ACCEPT
+
+# ⑦ 拒绝外网→内网（满足需求4：外网不能主动访问内网）
+iptables -A FORWARD -i eth0 -d 192.168.1.0/24 -j DROP    #不写也可以，默认拒绝了已经
+
+# ⑧ 拒绝DMZ→内网：DMZ区不能主动向内网发起连接（安全隔离原则）
+iptables -A FORWARD -s 172.16.1.0/24 -d 192.168.1.0/24 -j DROP
+```
+
+**💡 规则顺序为什么这么排？**
+```
+①② 在最前面（ESTABLISHED要优先放行）
+③④⑤ 具体的放行规则（外→DMZ、内→DMZ）
+⑥ 宽泛的放行规则（内→外网）
+⑦ 最后的拒绝规则（DMZ→内网）
+顺序经验：DROP默认策略 → ESTABLISHED → 具体放行 → 宽泛放行 → 特殊拒绝
+```
+
+---
+
+#### 🔥 案例题2：iptables白名单策略（进阶型）
+
+```
+某服务器需要配置iptables白名单策略，要求：
+
+1. 默认策略：INPUT DROP、FORWARD DROP、OUTPUT ACCEPT
+2. 放行本地回环（lo）通信
+3. 放行已建立的连接（ESTABLISHED,RELATED）
+4. 放行SSH服务（仅限管理员IP：192.168.1.100）
+5. 放行Web服务（80端口，所有人可访问）
+6. 放行HTTPS服务（443端口，所有人可访问）
+7. 记录并拒绝所有来自 203.0.113.5 的访问
+8. 放行内网段 192.168.1.0/24 的ICMP（ping）
+```
+
+**问题2**：请写出完整的 iptables 规则
+
+```
+答案：
+
+# Step 1：设置默认策略
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+# Step 2：放行本地回环
+iptables -A INPUT -i lo -j ACCEPT
+
+# Step 3：放行已建立连接
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Step 4：封禁恶意IP（放行前先拒绝，减少日志量）
+iptables -A INPUT -s 203.0.113.5 -j LOG --log-prefix "BLOCKED_IP: "
+iptables -A INPUT -s 203.0.113.5 -j DROP
+
+# Step 5：放行SSH（仅管理员IP）
+iptables -A INPUT -s 192.168.1.100 -p tcp --dport 22 -j ACCEPT
+
+# Step 6：放行Web服务和HTTPS服务
+iptables -A INPUT -p tcp -m multiport --dports 80,443 -j ACCEPT
+
+# Step 7：放行内网ICMP
+iptables -A INPUT -s 192.168.1.0/24 -p icmp -j ACCEPT
+```
+
+**iptables ACL 答题口诀**：
+```
+默认策略先定好，DROP放前面
+回环ESTABLISHED先放行（经验法则）
+特殊IP先封禁，再放服务端口   （这里开始写错了，把封禁IP写下面了，然后查询后反应过来封禁放前面，自上而下匹配，不然流量先通过了）
+具体规则放前面，宽泛规则放后面
+顺序写错全盘输 ⚠️（iptables按顺序匹配！）
+```
+
+---
+
+#### 🔥 案例题3：NAT+ACL综合（考试型）
+
+```
+某公司网络：
+  内网：192.168.1.0/24
+  DMZ：172.16.1.0/24（Web服务器 172.16.1.10:80）
+  外网：eth0 接口IP 203.0.113.10
+  内网口：eth1 接口IP 192.168.1.1
+
+需求：
+1. 内网主机访问外网时做SNAT（源地址转换）
+2. 外网用户访问Web服务器时需要DNAT（目的地址转换）
+3. 只允许外网访问Web服务的80端口
+4. 内网可以访问DMZ的Web服务
+```
+
+**问题3**：请写出 iptables NAT 规则 + 过滤规则
+
+<解答区>
+
+```
+# ---- Step 1：默认策略 ----
+iptables -P FORWARD DROP
+# 所有转发的流量默认拒绝，只放行下面明确允许的
+
+# ---- Step 2：放行已建立连接的回程包 ----
+iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+# 内网访问外网后，外网回复的包属于ESTABLISHED状态
+
+# ---- Step 3：SNAT（内网→外网时改源地址） ----
+iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o eth0 -j SNAT --to-source 203.0.113.10
+
+# ---- Step 4：DNAT（外网→Web时改目标地址） ----
+iptables -t nat -A PREROUTING -i eth0 -d 203.0.113.10 -p tcp --dport 80 -j DNAT --to-destination 172.16.1.10:80
+
+# ---- Step 5：放行外网→DMZ Web ----
+iptables -A FORWARD -d 172.16.1.10 -p tcp --dport 80 -j ACCEPT
+# DNAT在Step4已经把目标IP改成172.16.1.10了
+# 所以FORWARD链直接匹配172.16.1.10即可
+
+# ---- Step 6：放行内网→DMZ Web ----
+iptables -A FORWARD -s 192.168.1.0/24 -d 172.16.1.10 -p tcp --dport 80 -j ACCEPT
