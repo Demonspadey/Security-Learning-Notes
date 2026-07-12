@@ -1,0 +1,31 @@
+1. firewall
+   中文：防火墙
+   例句：A firewall is a network security device that monitors and controls incoming traffic.
+   翻译：防火墙是一种监控和控制入站流量的网络安全设备。
+
+2. IDS / Intrusion Detection System
+   中文：入侵检测系统
+   例句：An IDS monitors network traffic for suspicious activity and generates alerts.
+   翻译：入侵检测系统监控网络流量中的可疑活动并生成告警。
+
+3. IPS / Intrusion Prevention System
+   中文：入侵防御系统
+   例句：An IPS can actively block detected threats in real time.
+   翻译：入侵防御系统可以实时主动阻止检测到的威胁。
+
+4. evasion
+   中文：规避
+   例句：Evasion techniques attempt to bypass security controls without being detected.
+   翻译：规避技术尝试在不被检测到的情况下绕过安全控制。
+
+5. decoy
+   中文：诱饵
+   例句：Nmap's decoy option sends fake scan traffic to hide the real attacker's IP.
+   翻译：Nmap 的诱饵选项发送虚假扫描流量以隐藏真实攻击者的 IP。
+
+📝 小练习：
+  ① "防火墙" 的英文是？  firewall
+  ② evasion 的中文是？  规避
+  ③ 填空：An __IPS___ can actively block threats in real time.
+  ④ 判断：Decoy scans help hide the real attacker's IP.（对/错）  对，诱饵IP可以隐藏攻击者真实IP
+  ⑤ 翻译：A firewall monitors and controls incoming and outgoing traffic.    防火墙用来监控管控进出站流量。
