@@ -1,0 +1,31 @@
+1. web server
+   中文：Web 服务器
+   例句：A web server hosts websites and responds to HTTP requests from clients.
+   翻译：Web 服务器托管网站并响应客户端的 HTTP 请求。
+
+2. HTTP method
+   中文：HTTP 方法
+   例句：Common HTTP methods include GET, POST, PUT, DELETE, and OPTIONS.
+   翻译：常见的 HTTP 方法包括 GET、POST、PUT、DELETE 和 OPTIONS。
+
+3. status code
+   中文：状态码
+   例句：HTTP status codes indicate the result of a request, such as 200 OK or 404 Not Found.
+   翻译：HTTP 状态码指示请求的结果，例如 200 OK 或 404 Not Found。
+
+4. directory listing
+   中文：目录列出
+   例句：Directory listing exposes all files in a web directory, which is a security risk.
+   翻译：目录列出会暴露 Web 目录中的所有文件，这是一个安全风险。
+
+5. robots.txt
+   中文：爬虫协议文件
+   例句：The robots.txt file tells search engine crawlers which directories to exclude.
+   翻译：robots.txt 文件告诉搜索引擎爬虫排除哪些目录。
+
+📝 小练习：
+  ① "Web 服务器" 的英文是？  Web server
+  ② status code 的中文是？    状态码
+  ③ 填空：HTTP method __GET___ requests data from a server.
+  ④ 判断：Directory listing is considered a security risk.（对/错）   对，目录遍历漏洞是安全风险
+  ⑤ 翻译：The robots.txt file can reveal hidden directories.   爬虫文件可能泄露隐藏目录。（开始写成了可以隐藏目录，应该是泄露）
