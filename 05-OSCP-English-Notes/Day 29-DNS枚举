@@ -1,0 +1,31 @@
+1. DNS / Domain Name System
+   中文：域名系统
+   例句：The DNS translates domain names into IP addresses.
+   翻译：DNS 将域名转换为 IP 地址。
+
+2. DNS enumeration
+   中文：DNS 枚举
+   例句：DNS enumeration is the process of gathering DNS records to map a target's infrastructure.
+   翻译：DNS 枚举是收集 DNS 记录以映射目标基础设施的过程。
+
+3. subdomain
+   中文：子域名
+   例句：Subdomain enumeration helps discover hidden services and applications.
+   翻译：子域名枚举有助于发现隐藏的服务和应用。
+
+4. zone transfer
+   中文：区域传输
+   例句：A DNS zone transfer copies all DNS records from one server to another.
+   翻译：DNS 区域传输将一个服务器的所有 DNS 记录复制到另一个服务器。
+
+5. DNS brute force
+   中文：DNS 暴力枚举
+   例句：DNS brute force attempts to discover subdomains by trying a wordlist of common names.
+   翻译：DNS 暴力枚举通过尝试常见名称的字典来发现子域名。
+
+📝 小练习：
+  ① "子域名" 的英文是？ subdomain
+  ② DNS enumeration 的中文是？ DNS枚举
+  ③ 填空：A DNS __zone___ transfer copies all records from one server to another.
+  ④ 判断：DNS brute force uses a wordlist to find subdomains.（对/错）  对
+  ⑤ 翻译：DNS translates domain names into IP addresses.    DNS把域名转换为IP地址。
