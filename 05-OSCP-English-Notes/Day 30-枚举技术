@@ -1,0 +1,31 @@
+1. enumeration
+   中文：枚举
+   例句：Enumeration is the process of extracting detailed information from a target system.
+   翻译：枚举是从目标系统中提取详细信息的过程。
+
+2. NetBIOS
+   中文：网络基本输入输出系统
+   例句：NetBIOS enumeration can reveal shared resources and user accounts on Windows systems.
+   翻译：NetBIOS 枚举可以揭示 Windows 系统上的共享资源和用户账户。
+
+3. SNMP / Simple Network Management Protocol
+   中文：简单网络管理协议
+   例句：SNMP enumeration can expose detailed system information if the community string is weak.
+   翻译：如果团体字符串较弱，SNMP 枚举可能暴露详细的系统信息。
+
+4. SMTP enumeration
+   中文：SMTP 枚举
+   例句：SMTP enumeration uses VRFY and EXPN commands to verify user accounts on a mail server.
+   翻译：SMTP 枚举使用 VRFY 和 EXPN 命令验证邮件服务器上的用户账户。
+
+5. banner
+   中文：横幅/标识
+   例句：A service banner often reveals the software name and version running on a port.
+   翻译：服务横幅通常揭示端口上运行的软件名称和版本。
+
+📝 小练习：
+  ① "枚举" 的英文是？ enumeration    (enumerration多写一个r)
+  ② SMTP enumeration 的中文是？  SMTP枚举  (专业术语统一：SMTP 枚举，不叫邮件协议枚举)
+  ③ 填空：__NetBIOS___ enumeration can reveal shared resources on Windows.    (NetBIOS 枚举 → Windows 共享、账号；SNMP 枚举 → 交换机 / 服务器设备信息)
+  ④ 判断：A service banner can reveal software version information.（对/错）  对
+  ⑤ 翻译：Enumeration extracts detailed information from the target.  枚举探测可以获取目标主机的详细信息。
