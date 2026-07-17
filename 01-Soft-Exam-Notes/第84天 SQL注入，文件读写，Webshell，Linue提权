@@ -1,0 +1,122 @@
+## 一、20道专项选择题（含题干+标准答案）
+1. sqlmap中 --dump 参数的作用是？（  ）
+   A. 列出数据库  B. 导出表数据  C. 删除数据  D. 备份数据库
+   答：B
+
+2. 以下哪个是SQL注入写入一句话木马的正确语法？（  ）
+   A. SELECT 'code' INTO OUTFILE '/path/shell.php'
+   B. INSERT INTO '/path/shell.php'
+   C. LOAD_FILE '/path/shell.php'
+   D. CREATE TABLE shell
+   答：A
+
+3. MySQL中查看 secure_file_priv 配置的命令是？（  ）
+   A. show variables  B. show variables like 'secure_file_priv'
+   C. select @@secure_file_priv  D. B和C都可以
+   答：D
+
+4. whoami返回www-data说明？（  ）
+   A. 已经是root  B. Web服务器运行用户  C. 管理员  D. 数据库用户
+   答：B
+
+5. SUID提权的原理是？（  ）
+   A. 利用普通用户的sudo权限  B. 以文件所有者身份运行程序
+   C. 利用内核漏洞  D. 利用弱口令
+   答：B
+
+6. find / -perm -4000 中 -4000 表示？（  ）
+   A. SUID  B. SGID  C. 粘滞位  D. 隐藏文件
+   答：A
+
+7. 以下哪个不是蚁剑的功能？（  ）
+   A. 文件管理  B. 虚拟终端  C. 漏洞扫描  D. 数据库管理
+   答：C
+
+8. 一句话木马中eval的作用是？（  ）
+   A. 输出字符串  B. 执行PHP代码  C. 连接数据库  D. 写入文件
+   答：B
+
+9. secure_file_priv=NULL表示？（  ）
+   A. 可以写文件  B. 禁止写文件  C. 只能写/tmp  D. 无限制
+   答：B
+
+10. sqlmap --os-shell的原理是？（  ）
+    A. 写入一句话木马+模拟蚁剑  B. SSH登录
+    C. Telnet连接  D. 远程桌面
+    答：A
+
+11. 查看Linux内核版本的命令是？（  ）
+    A. uname -a  B. lsb_release -a  C. cat /etc/issue  D. 以上都可以
+    答：D
+
+12. Web服务器默认根目录通常是？（  ）
+    A. /var/www/html  B. /etc/apache2  C. /usr/share  D. /root
+    答：A
+
+13. MySQL FILE权限允许做什么？（  ）
+    A. 读写服务器文件  B. 创建数据库  C. 删除表  D. 修改配置
+    答：A
+
+14. 拿到低权限Shell后应该先做什么？（  ）
+    A. 直接跑exp  B. 信息收集（用户/内核/SUID/sudo）
+    C. 删除日志  D. 修改密码
+    答：B
+
+15. searchsploit的作用是？（  ）
+    A. 扫描端口  B. 搜索漏洞利用代码  C. 破解密码  D. 安装软件
+    答：B
+
+16. 渗透测试完成后不需要做的是？（  ）
+    A. 清除WebShell  B. 删除系统日志  C. 保留截图  D. 写报告
+    答：B
+
+17. CVSS评分9.8属于什么级别？（  ）
+    A. Low  B. Medium  C. High  D. Critical
+    答：D
+
+18. DVWA用sqlmap需带什么参数保持登录？（  ）
+    A. --data  B. --cookie  C. --header  D. --auth
+    答：B
+
+19. 时间盲注和布尔盲注的关键区别是？（  ）
+    A. 时间盲注用sleep()看响应延迟  B. 布尔盲注更快
+    C. 时间盲注不需要发请求  D. 没有区别
+    答：A
+
+20. /etc/passwd文件可写意味着什么？（  ）
+    A. 可以提权  B. 可以创建新用户  C. 配置有问题  D. 以上都是
+    答：D
+
+## 二、软考核心背诵考点（下午案例高频）
+### 1. INTO OUTFILE写入WebShell三大必要条件（案例简答题必背）
+1）数据库账号拥有FILE全局权限；
+2）攻击者掌握网站服务器Web绝对物理路径；
+3）MySQL配置项secure_file_priv未限制文件导出。
+
+### 2. secure_file_priv三种取值软考考点区分
+1）NULL：禁止所有文件导入导出，无法写马；
+2）空值：无目录限制，任意路径读写文件；
+3）/tmp/：仅允许临时目录读写，无法写入Web根目录。
+
+### 3. sqlmap --os-shell 工作流程（案例默写）
+1. 检测SQL注入漏洞；
+2. 检测MySQL FILE权限、secure_file_priv状态；
+3. 自动拼接INTO OUTFILE语句写入PHP一句话木马；
+4. 生成交互式命令行终端，实现服务器命令执行。
+
+### 4. Linux三类提权考点对比
+1. SUID提权：文件带4000权限位，运行时继承文件所有者权限；查询命令find / -perm -4000；
+2. sudo提权：sudo -l查看免密执行程序，利用程序漏洞越权；
+3. 内核提权：uname -a查看内核版本，searchsploit匹配对应漏洞EXP。
+
+### 5. 软考答题规范（渗透测试流程简答题模板）
+SQL注入完整攻击链标准答案：
+漏洞判断 → 脱库查询数据 → INTO OUTFILE写入WebShell → 工具连接Shell获取低权限 → 信息收集执行权限提升 → 获取服务器最高权限
+
+## 三、易混淆错题汇总
+1. 误区：secure_file_priv为空=不能写文件
+纠正：空代表无限制，NULL才是禁止读写
+2. 误区：--dump作用是拿系统Shell
+纠正：--dump导出数据库表数据，--os-shell获取交互式系统终端
+3. 误区：蚁剑具备漏洞扫描功能
+纠正：蚁剑仅管理已上传WebShell，无漏洞扫描能力
