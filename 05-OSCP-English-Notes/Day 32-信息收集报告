@@ -1,0 +1,31 @@
+1. report
+   中文：报告
+   例句：After enumeration, you should document your findings in a penetration testing report.
+   翻译：枚举之后，你应该将发现记录到渗透测试报告中。
+
+2. finding
+   中文：发现项
+   例句：Each finding in the report should include a description, impact, and remediation.
+   翻译：报告中的每个发现项都应包括描述、影响和修复建议。
+
+3. impact
+   中文：影响
+   例句：The impact describes the potential damage if a vulnerability is exploited.
+   翻译：影响描述了漏洞被利用时可能造成的损害。
+
+4. remediation
+   中文：修复建议
+   例句：Remediation provides steps to fix or mitigate the identified vulnerability.
+   翻译：修复建议提供了修复或缓解已识别漏洞的步骤。
+
+5. evidence
+   中文：证据
+   例句：Screenshots and command outputs serve as evidence to support your findings.
+   翻译：截图和命令输出作为证据来支持你的发现。
+
+📝 小练习：
+  ① "发现项" 的英文是？  finding
+  ② remediation 的中文是？  修复建议
+  ③ 填空：Each finding should include a description, impact, and _remediation___.
+  ④ 判断：Evidence includes screenshots and command outputs.（对/错）  对
+  ⑤ 翻译：The report documents all findings from the penetration test.  渗透测试报告应包含所有漏洞点。
