@@ -1,0 +1,31 @@
+1. vulnerability
+   中文：漏洞
+   例句：A vulnerability is a weakness in a system that can be exploited by an attacker.
+   翻译：漏洞是系统中的弱点，可能被攻击者利用。
+
+2. vulnerability scanner
+   中文：漏洞扫描器
+   例句：A vulnerability scanner automates the process of identifying security weaknesses.
+   翻译：漏洞扫描器自动识别安全弱点的过程。
+
+3. CVE / Common Vulnerabilities and Exposures
+   中文：通用漏洞披露
+   例句：Each CVE entry has a unique identifier, such as CVE-2024-12345.
+   翻译：每个 CVE 条目都有一个唯一标识符，例如 CVE-2024-12345。
+
+4. CVSS / Common Vulnerability Scoring System
+   中文：通用漏洞评分系统
+   例句：CVSS provides a numerical score from 0 to 10 to rate vulnerability severity.
+   翻译：CVSS 提供 0 到 10 的数值评分来评估漏洞严重程度。
+
+5. patch
+   中文：补丁
+   例句：A patch is a software update that fixes a security vulnerability or bug.
+   翻译：补丁是修复安全漏洞或错误的软件更新。
+
+📝 小练习
+  ① "漏洞" 的英文是？  vulnerability
+  ② CVE 的中文全称是？  通用漏洞披露
+  ③ 填空：CVSS scores range from 0 to __10___.
+  ④ 判断：A patch is a type of attack.（对/错）   错，补丁是修复手段
+  ⑤ 翻译：A vulnerability scanner identifies security weaknesses.   漏洞扫描可以识别系统安全缺陷。
