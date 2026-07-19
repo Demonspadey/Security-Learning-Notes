@@ -1,0 +1,39 @@
+一、中英配对（每题2分）
+
+  1. port                  A. 操作系统识别    C
+  2. SYN scan              B. 通用漏洞披露    H
+  3. banner grabbing       C. 端口           E
+  4. OS detection          D. 修复建议        A
+  5. enumeration           E. 横幅抓取        F
+  6. vulnerability         F. 枚举            G
+  7. CVE                   G. 漏洞           B
+  8. remediation           H. SYN 扫描        D
+  9. patch                 I. 补丁            I
+  10. evidence             J. 证据            J
+
+二、句子翻译（每题4分）
+
+  11. Nmap is the most popular port scanning tool.
+      翻译：Nmap是一款常用的端口扫描工具
+
+  12. Enumeration extracts detailed information from the target system.
+      翻译：枚举，探测可以获取目标系统的详细信息。
+
+  13. A vulnerability scanner identifies security weaknesses automatically.
+      翻译：漏洞扫描可以自动识别系统安全风险
+
+  14. Each finding in the report should include remediation steps.
+      翻译：渗透测试报告发现项中应该包含修复建议
+
+  15. DNS enumeration helps discover hidden subdomains.
+      翻译：DNS枚举可以发现隐藏的子域名
+
+三、填空（每题3分）
+
+  16. An __open___ port indicates a service is listening.
+  17. The -A flag enables ___aggressive__ scan.      (没填写出来，这里为激进扫描)
+  18. __banner___ grabbing retrieves version information.
+  19. A DNS __zone___ transfer copies all records.  (没填写出来，DNS 区域传输)
+  20. CVSS scores range from 0 to __10___.
+
+---
