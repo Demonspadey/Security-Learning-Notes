@@ -1,0 +1,31 @@
+directory
+中文：目录
+例句：Directory busting reveals hidden paths that are not linked from the homepage.
+翻译：目录爆破能发现首页未链接的隐藏路径。
+
+bust
+中文：爆破、暴力枚举
+例句：We can bust directories using gobuster or dirb with a common wordlist.
+翻译：我们可以用 gobuster 或 dirb 配合常见字典来爆破目录。
+
+wordlist
+中文：字典、词表
+例句：A good wordlist like SecLists contains thousands of common directory names.
+翻译：像 SecLists 这样的好字典包含数千个常见目录名。
+
+crawl
+中文：爬取
+例句：A web crawler automatically follows links to map out the site structure.
+翻译：Web 爬虫会自动跟踪链接来绘制网站结构。
+
+hidden
+中文：隐藏的
+例句：Hidden directories often contain admin panels or backup files.
+翻译：隐藏目录通常包含管理后台或备份文件。
+
+📝 小练习：
+① "目录爆破" 的英文是？  directory busting
+② SecLists 是什么？  安全专用字典
+③ 填空：Directory busting __reveals___ hidden paths on a web server.
+④ 判断：gobuster 只能用来爆破目录，不能爆破子域名。（对/错）  错 （选错了，gobuster 支持目录爆破、子域名爆破、虚拟主机爆破，加对应参数即可扫描子域名）
+⑤ 翻译：Hidden directories often contain backup files.  隐藏目录通常存放备份文件
