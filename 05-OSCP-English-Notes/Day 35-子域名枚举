@@ -1,0 +1,46 @@
+1. subdomain
+subdomain — 子域名
+谐音助记：萨布多梅因
+例句：Subdomain enumeration helps find staging servers and internal applications.
+单词拆分：
+subdomain enumeration 子域名枚举；staging servers 测试服务器；internal applications 内部业务系统
+整句总结：子域名枚举能够挖掘测试站点、内部后台这类不对外公开的资产。
+
+2. resolve
+resolve — 解析
+谐音助记：瑞佐夫
+例句：The DNS server resolves the subdomain to an IP address.
+单词拆分：
+DNS server 域名服务器；subdomain 子域名；IP address IP 地址
+整句总结：DNS 解析工作，就是把域名转换成对应的服务器 IP 地址。
+
+3. wildcard
+wildcard — 通配符
+谐音助记：外尔德卡德
+例句：A wildcard DNS record responds to any subdomain, making enumeration harder.
+单词拆分：
+wildcard DNS record DNS 通配记录；respond to 响应；enumeration 枚举探测
+整句总结：配置 DNS 泛域名（通配符），随便输入任意子域名都会解析出 IP，干扰子域名爆破。
+
+4. zone transfer
+zone transfer — 区域传输
+谐音助记：宗 川斯佛
+例句：A misconfigured DNS zone transfer reveals all subdomains at once.
+单词拆分：
+misconfigured 配置错误；reveal 泄露；at once 一次性
+整句总结：DNS 区域传输若对外开放，攻击者可以一次性拉取全部域名、子域名记录。
+
+5. brute force
+brute force — 暴力破解
+谐音助记：布鲁特 佛斯
+例句：Brute forcing subdomains uses a wordlist to try common names.
+单词拆分：
+brute forcing subdomains 子域名暴力枚举；wordlist 字典；try common names 尝试常见名称
+整句总结：加载子域名字典批量请求 DNS，探测存活的子域名资产。
+
+📝 小练习：
+① "子域名" 的英文是？  subdomain
+② DNS zone transfer 配置错误会导致什么问题？  攻击者可以拉取全部子域名记录
+③ 填空：A __wildcard___ DNS record responds to any subdomain.
+④ 判断：wildcard 记录会让子域名枚举变得更简单。（对/错）   错，会变得更难
+⑤ 翻译：Subdomain enumeration helps find internal applications.  子域名枚举有助于发现内部应用程序
