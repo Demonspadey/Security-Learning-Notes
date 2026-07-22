@@ -1,0 +1,46 @@
+1. service
+service — 服务
+谐音助记：瑟维斯
+例句：Service enumeration identifies which applications are running on each port.
+单词拆分：
+Service enumeration 服务枚举；identify 识别；application 应用程序；port 端口
+整句总结：端口开放只是基础，服务枚举用来查清端口上跑着什么程序。
+
+2. version
+version — 版本
+谐音助记：沃申
+例句：Version detection reveals outdated software that may have public exploits.
+单词拆分：
+version detection 版本探测；outdated software 老旧软件；public exploits 公开漏洞利用程序
+整句总结：拿到软件版本号，就可以去检索是否存在可利用漏洞。
+
+3. banner
+banner — 横幅、服务旗标
+谐音助记：班纳
+例句：Banner grabbing shows the software name and version running on a service.
+单词拆分：
+Banner grabbing 旗标抓取；software name 软件名称
+整句总结：连接端口时服务主动返回的欢迎信息，是最简单获取服务版本的方式。
+
+4. fingerprint
+fingerprint — 指纹识别
+谐音助记：芬格普林特
+例句：OS fingerprinting determines the target operating system based on network responses.
+单词拆分：
+OS fingerprinting 操作系统指纹识别；determine 判断；network responses 网络响应包
+整句总结：依靠 TCP/IP 协议特征辨别目标是 Windows 还是 Linux，不靠 banner。
+
+5. probe
+probe — 探测
+谐音助记：普若布
+例句：Nmap sends carefully crafted probes to determine service details.
+单词拆分：
+carefully crafted 精心构造；probe 探测数据包；service details 服务详细信息
+整句总结：Nmap 发送特制数据包，和目标交互，完成操作系统、服务版本识别。
+
+📝 小练习：
+① "横幅抓取" 的英文是？ banner grabbing
+② OS fingerprinting 的口的是什么？   系统指纹识别根据网络响应特征判断目标操作系统
+③ 填空：Banner grabbing shows the software __name___ running on a service.
+④ 判断：版本检测能帮助找到已知漏洞的利用代码。（对/错） 对
+⑤ 翻译：Service enumeration identifies which applications are running.  服务枚举识别正在运行的应用程序
