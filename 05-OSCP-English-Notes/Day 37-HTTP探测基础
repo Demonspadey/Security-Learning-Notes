@@ -1,0 +1,46 @@
+1. parameter
+parameter — 参数
+谐音助记：帕瑞麦特
+例句：URL parameters are often entry points for injection attacks.
+单词拆分：
+URL parameters URL 参数；entry points 入口点；injection attacks 注入攻击
+整句总结：网址后携带的参数（?id=1 这类），是 SQL 注入、XSS 等攻击最常见测试位置。
+
+2. endpoint
+endpoint — 端点、API 接口
+谐音助记：恩德波因特
+例句：API endpoints can leak sensitive data if authentication is missing.
+单词拆分：
+API endpoints API 接口；leak sensitive data 泄露敏感数据；authentication 身份认证
+整句总结：后端提供的各类访问接口，未做权限校验极易泄露数据。
+
+3. header
+header — 请求头、头部
+谐音助记：海德
+例句：Security headers like CSP and HSTS help prevent common web attacks.
+单词拆分：
+security headers 安全响应头；prevent 防御；web attacks Web 攻击
+整句总结：HTTP 请求 / 响应头部，配置安全头能够缓解 XSS、劫持等漏洞。
+
+4. status code
+status code — 状态码
+谐音助记：斯戴特斯 扣德
+例句：A 403 status code means access is forbidden, while 404 means not found.
+单词拆分：
+access forbidden 禁止访问；not found 未找到
+整句总结：服务器返回的数字编码，快速判断访问结果（200 成功、3xx 重定向、4xx 客户端错误、5xx 服务端错误）。
+
+5. redirect
+redirect — 重定向
+谐音助记：瑞戴瑞克特
+例句：A 302 redirect may lead to a login page or an external site.
+单词拆分：
+302 redirect 临时重定向；login page 登录页面；external site 外部站点
+整句总结：服务器引导浏览器跳转至另外一个地址，存在开放重定向漏洞风险。
+
+📝 小练习：
+① 403 状态码表示什么？  禁止访问
+② API endpoint 缺少认证会有什么风险？  泄露敏感数据
+③ 填空：URL __parameters___ are often entry points for attacks.
+④ 判断：302 redirect 和 301 redirect 含义相同。（对/错）  错#（开始选错）301：永久重定向；302：临时重定向，二者缓存机制、业务意义不一样
+⑤ 翻译：Security headers help prevent common web attacks.  安全响应头有助于防范常见的网络攻击
