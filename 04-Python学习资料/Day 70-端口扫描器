@@ -1,0 +1,66 @@
+import socket       # ① socket是Python内置的网络模块，不需要pip安装
+import sys          # ② sys用来读取命令行参数
+
+def check_port(ip, port):
+    """
+    ③ def = 定义一个函数，叫 check_port
+       这个函数做一件事：测试"给定的ip:port能不能连上"
+    """
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # ④ socket.socket() 创建一个TCP socket
+    #    AF_INET = IPv4 地址
+    #    SOCK_STREAM = TCP 协议（不是UDP）
+    #    如果没这行，你根本建不了TCP连接
+
+    s.settimeout(2)
+    # ⑤ 超时2秒，意思是如果2秒内没回应就放弃
+    #    如果不设超时，对面没回应你程序会卡死在那
+    #    什么时候不用：你知道对面一定通的时候可以不设
+
+    result = s.connect_ex((ip, port))
+    # ⑥ connect_ex = 尝试连接 (ip, port)
+    #    返回值 0 = 连接成功（端口开放）
+    #    返回值非0 = 连接失败（端口关闭或过滤）
+    #    为什么不用 connect()？ connect()失败直接报错程序就挂了
+    #    connect_ex()失败了不会挂，返回一个错误码让你判断
+
+    s.close()
+    # ⑦ 用完socket要关闭，不然系统资源会泄露
+
+    return result
+    # ⑧ 把这个连接结果返回给调用者
+
+# ========== 以下是主程序 ==========
+
+if len(sys.argv) < 2:
+    print("用法: python scan.py <目标IP>")
+    print("例: python scan.py 192.168.163.128")
+    sys.exit()
+    # ⑨ sys.argv 是命令行参数的列表
+    #    sys.argv[0] = scan.py（脚本名）
+    #    sys.argv[1] = 你输入的第一个参数（目标IP）
+    #    如果只有一个参数说明你没输IP，提示正确用法
+
+target = sys.argv[1]
+# ⑩ 把命令行第一个参数赋值给 target
+
+ports = [22, 80, 443, 3306, 8080]
+# ⑪ 要扫描的端口列表，你可以自行增减
+#     22 = SSH, 80 = HTTP, 443 = HTTPS, 3306 = MySQL, 8080 = 常见Web
+
+print(f"扫描目标: {target}")
+print("─" * 30)
+# ⑫ f"..." 是 f-string，花括号里可以直接放变量
+#    等价于 print("扫描目标: " + target)
+
+for port in ports:
+    # ⑬ 循环遍历 ports 列表，每次拿出一个端口号
+    r = check_port(target, port)
+    # ⑭ 调用刚才定义的函数，把结果存到 r
+
+    if r == 0:
+        print(f"[+] {port}/open      (端口开放)")
+    else:
+        print(f"[-] {port}/closed    (端口关闭)")
+    # ⑮ r == 0 表示连接成功（端口开放）
+    #    r != 0 表示连接失败（端口关闭或被防火墙过滤）
