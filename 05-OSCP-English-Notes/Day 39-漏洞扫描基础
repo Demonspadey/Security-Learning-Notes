@@ -1,0 +1,46 @@
+1. vulnerability
+vulnerability — 漏洞
+谐音助记：瓦勒讷若比勒提
+例句：A vulnerability is a security weakness that can be exploited by an attacker.
+单词拆分：
+security weakness 安全弱点；exploit 利用；attacker 攻击者
+整句总结：系统、代码里存在的安全缺陷，黑客可借助缺陷实施攻击。
+
+2. scanner
+scanner — 扫描器
+谐音助记：斯坎纳
+例句：A vulnerability scanner automates the detection of known security issues.
+单词拆分：
+vulnerability scanner 漏洞扫描器；automate 自动化；detection 检测；known security issues 已知安全问题
+整句总结：自动化工具，批量探测目标是否存在公开漏洞。
+
+3. CVE (Common Vulnerabilities and Exposures)
+CVE — 通用漏洞披露
+谐音助记：西维
+例句：Each vulnerability in the database is assigned a unique CVE identifier.
+单词拆分：
+assign 分配；unique 唯一的；identifier 编号、标识符
+整句总结：给每一个公开漏洞分配全球统一编号，例如 CVE-2021-41773。
+
+4. CVSS (Common Vulnerability Scoring System)
+CVSS — 通用漏洞评分系统
+谐音助记：西维斯
+例句：A critical CVSS score of 9.0 or higher requires immediate attention.
+单词拆分：
+critical 严重级别；score 分值；immediate attention 立即处置
+整句总结：0～10 分量化漏洞风险，分数越高危害越大。
+
+5. false positive
+false positive — 误报
+谐音助记：佛斯 坡贼提夫
+例句：False positives are alerts that incorrectly indicate a vulnerability exists.
+单词拆分：
+alert 告警；incorrectly 错误地；indicate 标示
+整句总结：扫描器报出漏洞，但目标实际不存在该漏洞，渗透测试中需要人工复核排除。
+
+📝 小练习：
+① "漏洞" 的英文是？  vulnerability
+② CVE 和 CVSS 的区别是什么？  CVE是通用漏洞披露，CVSS是漏洞评分
+③ 填空：A ___False__ positive incorrectly indicates a vulnerability exists.
+④ 判断：CVSS 评分 10.0 表示没有风险。（对/错）  错，严重风险
+⑤ 翻译：A vulnerability scanner automates the detection of security issues.  漏洞扫描器可以自动检测系统安全隐患
