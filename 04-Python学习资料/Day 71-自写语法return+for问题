@@ -1,0 +1,49 @@
+ 练习1：return 之后，代码还跑不跑？
+
+
+def test_return():
+    print("这行会输出")      # ← 这行在 return 之前
+    return 1
+    print("这行会输出吗？")   # 这行在 return 之后
+
+result = test_return()
+print(f"拿到返回值: {result}")
+
+  "这行会输出" → 打了
+  "这行会输出吗？" → 没打，return之后不返回输出了。
+
+🔴 练习2：for 到底能遍历什么？
+
+你之前写过 for all_port in port（port=22）。
+数字不能遍历。知道为什么吗？试一下：
+
+test_number = 22
+test_list = [22, 80, 443, 3306]
+
+# 下面两个 for 哪个能跑通？哪个会报错？
+for item in test_list:    # 这是列表
+    print(f"列表遍历: {item}")
+
+for item in test_number:  # 这是数字
+    print(f"数字遍历: {item}")   # ✏️ 这行会报错。
+
+✏️ 复制上面代码跑一次：
+  test_list 那个 for → 正常打印
+  test_number 那个 for → 报错：TypeError: 'int' object is not iterable
+  "int" = 数字，"not iterable" = 不能遍历
+  → 这就是不能 for 22
+
+🧠 一句话记住：
+  for 只能遍历"有多个东西的容器"——列表、字典、字符串。
+  一个单纯的数字（比如 22）是单个数，不能 for。
+
+✏️ 改2行：
+  第①行：把 test_number = 22 改成 test_number = [22]
+    再跑 → 数字遍历那个 for 还报错吗？为什么不报了？
+    不报错了，因为加了[]，变成了列表，不是数字，正常遍历。
+  第②行：在 test_list 后面追加一个端口 8080
+    输出多了一行8080
+```
+```
+
+---
