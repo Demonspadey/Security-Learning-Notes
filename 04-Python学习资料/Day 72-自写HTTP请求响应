@@ -1,0 +1,30 @@
+import requests
+def check_request(url, params):
+    """
+    发送GET请求，返回(状态码，响应内容长度)
+    """
+    r=requests.get(url,params=params)
+    return r.status_code, len(r.text)
+target_url="http://127.0.0.1:8989/pikachu/vul/sqli/sqli_str.php"
+normal_params={"name":"kobe","submit":"查询"}
+status1,len1=check_request(target_url,normal_params)
+print(f"正常 name=kobe →状态码:{status1} 响应长度:{len1}")
+attack_params={"name":"kobe' or '1'='1","submit":"查询"}
+status2,len2=check_request(target_url,attack_params)
+print(f"攻击 name=kobe' or '1'='1 状态码:{status2} 响应长度:{len2}")
+if len1 == len2:
+    print("两个请求的响应长度相同，注入可能被忽略或执行成功了")
+elif len2 < len1:
+    print("攻击者请求的响应变短了，WAF可能拦截了")
+else:
+    print("攻击者请求的响应变长了，可能注入成功了")
+
+# 第一次测试没有开启WAF，返回打印状态如下
+正常 name=kobe →状态码:200 响应长度:33284
+攻击 name=kobe' or '1'='1 状态码:200 响应长度:33722
+攻击者请求的响应变长了，可能注入成功了
+
+# 第二次测试开启了WAF，返回打印状态如下
+正常 name=kobe →状态码:200 响应长度:33284
+攻击 name=kobe' or '1'='1 状态码:200 响应长度:2747
+攻击者请求的响应变短了，WAF可能拦截了             （这里就明显被拦截了）
