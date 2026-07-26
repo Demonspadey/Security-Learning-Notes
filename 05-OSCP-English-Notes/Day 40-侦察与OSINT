@@ -1,0 +1,46 @@
+1. recon (reconnaissance)
+recon(reconnaissance) — 侦察
+谐音助记：瑞肯 / 瑞康尼森斯
+例句：Reconnaissance is the most important phase of a penetration test.
+单词拆分：
+penetration test 渗透测试；phase 阶段
+整句总结：渗透测试第一步侦察，信息收集充分与否直接决定后续攻击能否成功。
+
+2. footprint
+footprint（footprinting） — 足迹、信息足迹收集
+谐音助记：福特普林特
+例句：Footprinting gathers technical details like IP ranges, DNS records, and email addresses.
+单词拆分：
+gather details 收集信息；IP ranges IP 段；DNS records DNS 记录；email addresses 邮箱地址
+整句总结：被动 + 主动方式采集目标资产信息，绘制目标网络轮廓。
+
+3. OSINT (Open-Source Intelligence)
+OSINT — 开源情报
+谐音助记：欧辛特
+例句：OSINT techniques gather information from publicly available sources without interacting with the target.
+单词拆分：
+publicly available sources 公开数据源；interact with the target 和目标产生交互
+整句总结：不发包、不扫描目标，仅利用互联网公开资料搜集信息，属于被动侦察。
+
+4. whois
+whois — 域名信息查询
+谐音助记：呼艾斯
+例句：A whois lookup reveals domain registration details and administrative contacts.
+单词拆分：
+lookup 查询；domain registration 域名注册信息；administrative contacts 管理员联系信息
+整句总结：查询域名注册人、注册商、注册时间、域名服务商等信息。
+
+5. certificate transparency
+certificate transparency — 证书透明（CT 日志）
+谐音助记：瑟提菲凯特 川斯帕润西
+例句：Certificate transparency logs can be used to discover subdomains of a target.
+单词拆分：
+logs 日志；discover subdomains 发现子域名
+整句总结：SSL 证书公开日志，大量子域名证书会被记录，常用于被动枚举子域名。
+
+📝 小练习：
+① OSINT 的全称和中文分别是什么？  open source intelligence 开源情报
+② 为什么侦察是渗透测试最重要的阶段？  不然不知道目标信息和可利用漏洞资源
+③ 填空：__Certificate transparency___ logs can be used to discover subdomains.    （证书透明，拼写不全）
+④ 判断：whois 查询需要与目标系统直接连接。（对/错） 错
+⑤ 翻译：Reconnaissance is the most important phase of a penetration test.  侦察是渗透测试最重要阶段
