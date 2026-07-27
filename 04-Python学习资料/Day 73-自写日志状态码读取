@@ -1,0 +1,27 @@
+# 1、创建一个空字典，名字叫status_count，用来存放【状态码:出现次数】
+status_count={}
+
+# 2、定义变量log，保存日志文件完整路径
+log=r"d:\_agent_tmp\log.txt"
+
+# 3、打开这个日志文件，以只读模式读取，文本编码utf-8，文件操作简写为f
+with open(log,"r",encoding="utf-8") as f:
+    # 4、一次性读取文件所有行，全部放进列表lines里面
+    lines=f.readlines()
+
+# 5、循环：依次取出lines里面的每一行日志，临时变量叫line
+for line in lines:
+    # 6、去掉一行日志首尾多余空格、换行符；再按照空格切割，切成一小段一小段，存入列表parts
+    parts=line.strip().split()
+    # 7、判断：如果切割后的片段数量大于等于9段
+    # 含义：这条日志是完整标准日志，不是残缺垃圾数据
+    if len(parts) >= 9:
+        # 8、从切割好的片段中，取出第9个片段（下标8），就是HTTP状态码，赋值给status
+        status=parts[8]
+        # 9、字典计数：
+        # 如果status（状态码）已经在字典里，取出原有数字+1；
+        # 如果不存在，默认数字是0，再加1
+        status_count[status]=status_count.get(status,0) + 1
+
+# 10、循环全部结束后，打印最终统计结果
+print(status_count)
