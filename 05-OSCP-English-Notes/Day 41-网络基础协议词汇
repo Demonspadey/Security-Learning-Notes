@@ -1,0 +1,46 @@
+1. handshake
+handshake — 握手
+谐音助记：汉德谢克
+例句：The TCP three-way handshake establishes a connection before sending data.
+单词拆分：
+TCP three-way handshake TCP 三次握手；establish a connection 建立连接；send data 传输数据
+整句总结：TCP 通过三次握手完成通信双方协商，正式建立可靠数据连接。
+
+2. flag
+flag — 标志位
+谐音助记：弗拉格
+例句：TCP flags such as SYN, ACK, and RST control the state of a connection.
+单词拆分：
+TCP flags TCP 标志位；control connection state 控制连接状态
+整句总结：SYN、ACK、RST、FIN 等标识放在 TCP 头部，用来发起连接、确认、断开、重置会话。
+
+3. packet
+packet — 数据包
+谐音助记：派克特
+例句：Each packet contains a header with routing information and the payload.
+单词拆分：
+header 头部；routing information 路由信息；payload 载荷
+整句总结：网络传输的数据被切分成一个个数据包，由头部信息 + 实际传输内容组成。
+
+4. capture
+capture — 捕获
+谐音助记：开普彻
+例句：Wireshark can capture network traffic for analysis of protocols and payloads.
+单词拆分：
+network traffic 网络流量；protocol 协议；analysis 分析
+整句总结：抓包工具捕获网卡所有流量，方便排查漏洞、分析请求与攻击载荷。
+
+5. proxy
+proxy — 代理
+谐音助记：普若克西
+例句：A proxy intercepts traffic between the attacker and target to allow modification of requests.
+单词拆分：
+intercept traffic 拦截流量；modification of requests 修改请求
+整句总结：代理充当中间人，转发客户端与服务器流量，渗透常用 Burp Proxy 篡改 HTTP 数据包。
+
+📝 小练习：
+① TCP 三次握手是哪三步？  SYN→SYN-ACK→ACK三步握手
+② proxy 在渗透测试中有什么作用？  中间代理，可以用burpsuite抓包
+③ 填空：Wireshark can __capture___ network traffic for analysis.
+④ 判断：SYN flag 用于终止连接。（对/错）   错，SYN是建立连接
+⑤ 翻译：Each packet contains a header with routing information.  数据包都带有路由头部信息
