@@ -1,0 +1,46 @@
+1. exploit
+exploit — 漏洞利用代码 / EXP
+谐音助记：伊克斯普洛伊特
+例句：An exploit takes advantage of a vulnerability to gain unauthorized access.
+单词拆分：
+take advantage of 利用；vulnerability 漏洞；unauthorized access 未授权访问
+整句总结：一段能够触发漏洞、实现攻击行为的代码或指令，用来突破目标权限。
+
+2. proof of concept (PoC)
+PoC（proof of concept） — 概念验证
+谐音助记：普鲁夫 奥夫 康塞普特
+例句：A PoC demonstrates that a vulnerability is exploitable without causing damage.
+单词拆分：
+demonstrate 证明；exploitable 可被利用；without causing damage 不产生破坏性影响
+整句总结：仅用来证实漏洞真实存在，一般不实现完整控制目标，区别于完整 EXP。
+
+3. metasploit
+metasploit — Metasploit 渗透框架
+谐音助记：麦塔斯普洛伊特
+例句：Metasploit is a framework that contains pre-built exploits and payloads.
+单词拆分：
+framework 框架；pre-built 预编译 / 内置；exploits 利用模块；payloads 攻击载荷
+整句总结：知名渗透工具平台，集成大量漏洞利用模块、载荷、监听器。
+
+4. listener
+listener — 监听器
+谐音助记：利森纳
+例句：A reverse shell connects back to the attacker's listener on a specified port.
+单词拆分：
+reverse shell 反弹 shell；connect back 回连；specified port 指定端口
+整句总结：攻击者本机开启端口监听，等待目标主动发起连接，接收反弹 Shell。
+
+5. shell
+shell — Shell、命令交互终端
+谐音助记：晒欧
+例句：Gaining a shell allows the attacker to execute commands on the target system.
+单词拆分：
+gain a shell 获取 shell；execute commands 执行命令；target system 目标主机
+整句总结：拿到 Shell 代表获得在目标机器执行系统命令的交互权限。
+
+📝 小练习：
+① exploit 和 vulnerability 的区别是什么？  一个是漏洞利用，一个是漏洞介绍
+② PoC 的全称和中文是什么？  proof of concept   概念验证
+③ 填空：A reverse shell connects back to the attacker's __listener___.
+④ 判断：Metasploit 只能用于攻击 Windows 系统。（对/错）  错
+⑤ 翻译：An exploit takes advantage of a vulnerability to gain access. 利用安全漏洞获取权限
