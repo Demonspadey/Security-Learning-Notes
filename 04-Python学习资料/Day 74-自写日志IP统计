@@ -1,0 +1,11 @@
+ip_count = {}  # 创建空字典，用来存储【IP地址:访问次数】的对应数据
+log=r"d:\_agent_tmp\log.txt"
+with open(log, "r", encoding="utf-8") as f:  # 以只读模式打开log.txt文件，指定utf-8编码，with语法执行结束自动关闭文件
+    for line in f.readlines():  # 循环读取日志文件中的每一行，每次循环line代表单行文本
+        parts = line.strip().split()  # strip去除行首尾空格换行，split按空格切割文本，结果存入列表parts
+        if len(parts) >= 1:  # 判断切割后的列表至少存在1段内容，规避空行导致程序报错
+            ip = parts[0]  # 取出列表第一个元素，也就是每行开头的IP地址
+            ip_count[ip] = ip_count.get(ip, 0) + 1  # get查询IP现有次数，不存在则默认0，次数自增1再存入字典
+print("各IP访问次数：")
+for ip, count in ip_count.items():  # 遍历字典中所有IP和对应的访问次数
+    print(f"{ip} → {count}次")  # 格式化输出IP地址以及统计到的访问次数
