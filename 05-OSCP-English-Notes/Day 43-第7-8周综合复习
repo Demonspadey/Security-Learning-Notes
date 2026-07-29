@@ -1,0 +1,32 @@
+📝 阶段性综合练习
+
+一、中英配对（每题2分）
+directory busting         A. 子域名枚举  B
+zone transfer             B. 目录爆破  C 
+certificate transparency  C. 区域传输  E
+payload                   D. 误报  F
+exploit                   E. 证书透明  H
+footprint                 F. 载荷  I
+subdomain enumeration     G. 漏洞  A
+vulnerability             H. 漏洞利用代码  G
+false positive            I. 足迹收集  D
+banner grabbing          J. 横幅抓取  J
+
+二、句子翻译（每题4分）
+Directory busting reveals hidden paths on a web server.
+翻译：目录爆破可以发现 Web 服务器上的隐藏路径
+Subdomain enumeration helps find staging servers and internal apps.
+翻译：子域名枚举有助于找到预发布服务器和内部应用  （开始翻译不齐全）
+Banner grabbing shows the software version running on a service.
+翻译：横幅抓取可以显示哪些软件版本在服务器上运行
+A vulnerability scanner automates the detection of known security issues.
+翻译：漏洞扫描器可以自动化检测已知的安全风险
+Certificate transparency logs can be used to discover subdomains.
+翻译：证书透明可以用于发现子域名
+三、填空（每题3分） #只填写正确3,4题
+
+A good ____wordlist______ like SecLists contains thousands of common directory names.
+A DNS __zone transfer________ reveals all subdomains if misconfigured.
+The TCP three-way ___handshake_______ establishes a connection before sending data.
+A _____CVSS_____ score of 9.0 or higher requires immediate attention.
+OSINT stands for Open-source Intelligence.
