@@ -1,0 +1,46 @@
+1. exploit
+exploit — 漏洞利用程序 / EXP
+谐音助记：伊克斯普洛伊特
+例句：The Metasploit framework contains thousands of exploits for known vulnerabilities.
+单词拆分：
+known vulnerabilities 已知漏洞
+整句总结：一段触发漏洞的攻击代码，用来突破目标系统权限，Metasploit 内置大量 exploit 模块。
+
+2. vulnerability
+vulnerability — 漏洞
+谐音助记：沃尔讷拉比勒提
+例句：A vulnerability is a weakness that can be exploited to compromise a system.
+单词拆分：
+weakness 弱点；compromise a system 攻陷系统
+整句总结：系统本身存在的安全弱点，是 exploit 所要攻击的对象。
+
+3. payload
+payload — 载荷
+谐音助记：佩洛德
+例句：After the exploit runs, the payload executes on the target machine.
+单词拆分：
+target machine 目标机器；executes 执行
+整句总结：exploit 打通漏洞之后，payload 在目标主机真正执行代码，用来获取 shell。
+
+4. remote
+remote — 远程的
+谐音助记：瑞莫特
+例句：A remote exploit allows an attacker to compromise a system over the network.
+单词拆分：
+over the network 通过网络
+整句总结：远程利用，不需要提前拥有目标权限，直接通过网络发起攻击。
+
+5. local
+local — 本地的
+谐音助记：楼扣
+例句：A local exploit requires the attacker to have existing access to the system.
+单词拆分：
+existing access 已有访问权限
+整句总结：本地利用多用于权限提升，前提是攻击者已经拿到目标普通用户 shell。
+
+📝 练习1：配对题（英→中）
+exploit      A. 漏洞      C
+vulnerability B. 载荷     A
+payload      C. 漏洞利用程序     B
+remote       D. 本地的     E
+local        E. 远程的     D
