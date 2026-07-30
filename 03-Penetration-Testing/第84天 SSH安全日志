@@ -1,0 +1,28 @@
+Part 1：先学原理——SSH加固 + 日志分析命令
+
+``
+  ① Port 22 → 改端口  (Port 2222)
+  ② PermitRootLogin yes → prohibit-password（禁止root密码登录）
+  ③ PasswordAuthentication yes → no（禁用密码认证，只允许密钥）
+  ④ PubkeyAuthentication yes → 启用密钥登录
+  ⑤ 公钥文件 authorized_keys 权限 600，.ssh目录权限 700
+
+  配置文件：/etc/ssh/sshd_config
+  重启服务：systemctl restart ssh
+
+ Part 2：SSH日志分析实操
+
+```
+🔧Ubuntu上执行以下命令，查看Ubuntu SSH爆破：
+
+# ① 查看登录失败记录
+sudo grep "Failed password" /var/log/auth.log | tail -10
+
+# ② 查看登录成功记录
+sudo grep "Accepted" /var/log/auth.log | tail -10
+
+# ③ 统计哪些IP在爆破你（按次数排序）
+sudo grep "Failed password" /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -rn | head -5
+
+# ④ 统计哪些用户被尝试登录
+sudo grep "Failed password" /var/log/auth.log | awk '{print $9}' | sort | uniq -c | sort -rn
