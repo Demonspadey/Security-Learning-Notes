@@ -1,0 +1,31 @@
+dns_log = [  # 定义DNS日志列表，存放每条【IP 域名】日志数据
+    "192.168.1.100 www.baidu.com",
+    "192.168.1.100 www.google.com",
+    "192.168.1.101 www.baidu.com",
+    "192.168.1.100 api.weixin.com",
+    "192.168.1.102 www.baidu.com",
+    "192.168.1.100 V21uZG93.humen.com",  # ← 可疑DNS隧道
+    "192.168.1.100 cyBTUCDp.humen.com",   # ← 可疑DNS隧道
+    "192.168.1.101 www.baidu.com",
+    "192.168.1.103 www.example.com",
+    "192.168.1.100 hY3nva4K.humen.com",   # ← 可疑DNS隧道
+]
+dns_count={}  # 创建空字典，用来统计每个IP发起DNS请求的次数
+suspicious=[]  # 创建空列表，存放识别出来的可疑DNS记录（ip,域名）
+for line in dns_log:  # 循环读取每一条DNS日志
+    ip, domain = line.strip().split()  # 去除首尾空格，按空格分割，拆出IP和域名
+    dns_count[ip]=dns_count.get(ip,0) + 1  # 对应IP计数+1；不存在则默认初始值0
+    # 判断可疑域名条件：域名长度>20 或者域名前5位包含数字，判定疑似DNS隧道
+    if len(domain) > 20 and ("hum" in domain or any(c.isdigit() for c in domain[:5])):      #这里用or就比较宽松，但容易误报
+        suspicious.append((ip,domain))  # 满足条件，把这条记录存入可疑列表
+print("DNS请求统计：")
+# 按请求次数从高到低排序，循环输出IP和访问次数
+for ip, count in sorted(dns_count.items(), key=lambda x: x[1], reverse=True):
+    print(f"{ip} → {count}次")
+print("\n可疑DNS隧道请求：")
+for ip, domain in suspicious:  # 遍历可疑列表，打印所有疑似隧道记录
+    print(f"{ip} → {domain}")
+# 遍历统计字典，找出请求次数大于3的IP，标记高频访问风险
+for ip, count in dns_count.items():
+    if count > 3:
+        print(f"{ip} 高频DNS请求 ({count}次)， 可能是CC攻击")
