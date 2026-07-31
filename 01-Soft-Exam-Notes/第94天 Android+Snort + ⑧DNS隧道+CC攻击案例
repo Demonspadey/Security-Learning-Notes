@@ -1,0 +1,163 @@
+1. Android安全沙箱在哪个层？（ B ）  A.内核层 B.系统运行层 C.应用框架层 D.应用程序层
+2. ASLR在哪个层？（A  ）  A.内核层 B.系统运行层 C.应用框架层 D.应用程序层
+3. Android权限声明机制在哪个层？（ C ）  A.内核层 B.系统运行层 C.应用框架层 D.应用程序层
+4. 应用程序签名机制在哪个层？（ D ）  A.内核层 B.系统运行层 C.应用框架层 D.应用程序层
+5. Snort属于哪种检测？（ B ）  A.异常检测 B.误用检测 C.行为检测 D.统计检测
+6. 【2020Q13】属于硬件Sniffer的是（  D）  A.NetXray B.Packetboy C.Netmonitor D.协议分析仪
+7. 【2020Q14】信息未经授权不能修改的特性（ A ）  A.完整性 B.可用性 C.保密性 D.不可抵赖性
+8. 【2020Q15】Windows下查看端口对应程序的命令（ C ）  A.ipconfig B.traceroute C.netstat D.nslookup
+9. 【2020Q16】报文认证码产生方式不包括（ B ）  A.报文加密 B.数字水印 C.MAC D.HMAC
+10.【2020Q17】关于VPN说法错误的是（D  ）  A.用隧道技术 B.L2TP由LAC/LNS构成 C.IPSec加密 D.PPTP身份验证包括RAP/CHAP/MPPE
+11.【2020Q18】不具有雪崩效应的是（ D ）  A.AES B.MD5 C.RC4 D.RSA
+12.【2020Q19】Android支持的数据存储方式（A  ）  A.全支持 B.文件+SQLite C.Shared+网络 D.文件+网络
+13.【2020Q21】不属于僵尸网络传播方式的是（ C ）  A.漏洞攻击 B.恶意脚本 C.字典攻击 D.邮件病毒
+14.【2020Q22】发现WebShell应首先查（A  ）  A.Web日志 B.系统日志 C.防火墙日志 D.交换机日志
+15.【2020Q23】操作系统安全机制不包括（ C ）  A.标识鉴别 B.访问控制 C.密钥管理 D.安全审计
+16.【2020Q24】脚本病毒前缀（D  ）  A.Worm B.Trojan C.Binder D.Script
+17.【2020Q25】蜜罐中在特定IP端口侦听应答属于（A  ）  A.诱骗服务 B.弱化系统 C.强化系统 D.用户模式
+18.【2020Q27】最早顶级域名中非营利组织域名（ B ）  A.net B.org C.mil D.biz
+19.【2020Q28】SMTP传送报文文本的指令（D  ）  A.HELO B.HELP C.SEND D.DATA
+20.【2020Q29】WEP采用的加密算法（ C ）  A.DES B.AES C.RC4 D.RSA
+21.【2020Q31】X.509证书不包括（ A ）  A.加密算法标识 B.签名算法标识 C.版本号 D.主体公钥
+22.【2020Q32】SM4分组长度和密钥长度（ B ）  A.128/64 B.128/128 C.256/128 D.256/256
+23.【2020Q33】RA功能不包括（ A ）  A.签发证书 B.认证注册信息 C.批准证书申请 D.批准撤销申请
+24.【2020Q34】关于数字签名正确的是（  B）  A.验证和解密相同 B.不可改变 C.需要私钥验证 D.不可信
+25.【2020Q35】AES密钥长度不包括（ D ）  A.256 B.192 C.128 D.64
+26.【2020Q36】关于BLP说法错误的是（ C ）  A.自主+强制访问控制 B.形式化证明 C.信息由高向低流动 D.多级安全策略
+27.【2020Q38】不属于远程控制型木马的是（D ）  A.冰河 B.彩虹桥 C.PCShare D.Trojan-Ransom
+28.【2020Q39】定期复制整个数据库到磁带保存的技术（ A ）  A.基于数据转储 B.基于日志 C.基于检测点 D.基于镜像
+29.【2020Q40】IPSec属于哪一层？（ B ）  A.应用层 B.网络层 C.传输层 D.数据链路层
+30.【2020Q43】网络地址翻译NAT中实现多对一映射的是（C  ）  A.静态NAT B.动态NAT C.PAT D.BGP
+答案：1B 2A 3C 4D 5B 6D 7A 8C 9B 10D 11D 12A 13C 14A 15C 16D 17A 18B 19D 20C 21A 22B 23A 24B 25D 26C 27D 28A 29B 30C
+```
+
+---
+
+### 🔴 Part 3：10道错题重做（15min）
+
+```
+2020: 外部网关协议=BGP / 认证加密说法错误的是=C.两者都能阻止被动攻击
+2021: 震网=SCADA / 数据安全法=9月1日
+2022: IDC R2=99.9% / SSH三层=传输+认证+连接
+2023: GB17859恢复=5级 / 宏病毒=Melissa
+2024: promiscuous / CFB=先加密后异或
+```
+
+---
+
+### 🖊️ Part 4：案例题——真题下午卷2道手写（60min）
+
+```
+🖊️ 案例⑦：2021真题 试题一 Snort + 试题四 Android（30min）
+
+题目：
+  【背景】某政府单位网站服务器192.168.70.140，数据库服务器192.168.70.141。
+  网络拓扑图（图1-1）如下：
+  ```
+  互联网
+    ↓
+  前端防火墙
+    ↓
+  交换机2
+   ├──── DMZ区域
+   │     ├── 网站服务器 192.168.70.140
+   │     └── 数据库服务器 192.168.70.141
+   └──── 后端防火墙
+          ↓
+        交换机1
+          ├── 人事部 192.168.12.2
+          └── 信息安全部 192.168.11.2（王工电脑）
+  ```
+
+  [Snort部分（试题一）]
+  (1) 以下有关Snort入侵检测系统的描述哪两项是正确的？（2分）
+      A. 基于异常的检测系统  B. 基于误用的检测系统
+      C. 基于网络的入侵检测系统  D. 基于主机的入侵检测系统
+  (2) 为了部署Snort，应把入侵检测系统连接到图1-1网络拓扑中的哪台交换机？（1分）
+  (3) 华为交换机要将网口GigabitEthernet1/0/2的流量镜像到部署Snort的
+      GigabitEthernet1/0/1上，应选择下列哪一个配置？（2分）
+      A. observe-port 1 interface GigabitEthernet1/0/2
+         interface GigabitEthernet1/0/1
+         port-mirroring to observe-port 1 inbound/outbound/both
+      B. observe-port 2 interface GigabitEthernet1/0/2
+         interface GigabitEthernet1/0/1
+         port-mirroring to observe-port 1 inbound/outbound/both
+      C. port-mirroring to observe-port 1 inbound/outbound/both
+         observe-port 1 interface GigabitEthernet1/0/2 interface
+         GigabitEthernet1/0/1
+      D. observe-port 1 interface GigabitEthernet1/0/1
+         interface GigabitEthernet1/0/2
+         port-mirroring to observe-port 1 inbound/outbound/both
+  (4) 李工打开攻击分组查看，发现很多字符不像正常字母（如图1-2），
+      请问该用哪种编码方式去解码该网络分组内容？（1分）
+  (5) 请完善Snort检测规则，填充(a)、(b)处内容：（2分）
+      (a) tcp any any -> any any (msg:"XXX";content:"(b)";nocase;sid:1106;)
+
+  [Android部分（试题四）]
+  (6) Android四种安全措施（安全沙箱/应用程序签名/权限声明/地址空间布局随机化）
+      按层次填入表：内核层/系统运行层/应用框架层/应用程序层（4分）
+  (7) Android系统应用程序权限声明信息在哪个配置文件中？（1分）
+
+答案（红笔标采分点）：
+  (1) B + C → Snort是基于规则的误用检测（B），且是基于网络的IDS（C）
+  (2) 交换机2 → 它连接DMZ区和内网区，能旁路监听核心流量
+  (3) D → observe-port 1 定义在G1/0/1（Snort所在口），
+      在interface G1/0/2下 port-mirroring to observe-port 1
+      即把G1/0/2流量镜像到观察端口G1/0/1
+      ⚠️ 关键判断：observe-port必须是"目的地"（放Snort的G1/0/1），
+      不是被镜像的源口。A/B把observe-port放错了口
+  (4) Base64编码 ← 攻击payload常用Base64编码（也可能是Hex/URL编码，需结合字符特征）
+  (5) (a) alert  (b) 特征字符串（如攻击payload特征）
+      ⚠️ 注意规则结构：alert 协议 源 源端口 -> 目的 目的端口 (规则选项)
+  (6) ASLR→内核层；安全沙箱→系统运行层；权限声明→应用框架层；应用程序签名→应用程序层
+  (7) AndroidManifest.xml
+
+
+🖊️ 案例⑧：2021真题 试题三 DNS隧道+CC攻击（30min）
+
+题目：
+  李工监控到可疑DNS流量：大量含随机字符子域名的DNS查询
+  如"V21uZG93.humen.com" "cyBTUCDp.humen.com"等（Base64编码的隐藏信道）
+
+  (1) 域名系统的服务端程序工作在网络的哪一层？（4分）
+  (2) 第一个网络分组要解析的域名是什么？
+  (3) 给出上述域名在DNS查询包中的16进制表示形式。
+  (4) 由图3-1可知李工所在单位的域名服务器IP地址是什么？
+  (5) Windows下应执行哪条命令以确定上述DNS流量来源？（2分）
+  (6) 上述流量最有可能对应的恶意程序类型是什么？（2分）
+  (7) 上述流量中隐藏的异常行为是什么？（2分）
+  (8) 上述攻击违反了信息安全目标的哪一个？（2分）
+  (9) iptables中：(1)默认实现数据包过滤的表？(2)查看现有过滤规则命令？
+      (3)禁止该计算机(192.168.229.1)继续发送DNS数据包的规则？（6分）
+  (10) 请说明导致DNS成为CC攻击首选隐蔽传输通道协议的原因。（2分）
+
+答案（红笔标采分点）：
+  (1) 应用层 ← DNS是应用层协议
+  (2) www.humen.com ← 第一个Standard query对应的域名
+  (3) 03 77 77 77 05 68 75 6d 65 6e 03 63 6f 6d 00
+     ← DNS报文域名编码（wire format），不是普通ASCII
+     规则：每个标签前加1字节长度 + 结尾00（根结束符）
+     www = 03 77 77 77
+     humen = 05 68 75 6d 65 6e
+     com = 03 63 6f 6d
+     结束 = 00
+     ⚠️ 易错：不能写成"77 77 77 2e..."（那是普通字符串ASCII），
+     DNS报文用长度前缀，点号用长度字节表示
+  (4) 192.168.229.133 ← 从DNS响应分组中查到的DNS服务器IP
+  (5) netstat -ano | findstr 53 ← 53是DNS端口，-ano显示进程PID
+  (6) CC攻击/僵尸网络（木马）← 通过DNS隧道做C2通信
+  (7) 大量含随机Base64编码子域名的DNS查询，异常子域名
+  (8) 违反可控性（+可用性）← 主机被控制丧失可控性；占用DNS资源影响可用性
+     ⚠️ 2021标准答案：可控性（部分解析补充可用性）
+  (9) ①filter表；默认INPUT/FORWARD/OUTPUT三条链
+      ②iptables -L（查看规则）
+      ③iptables -A OUTPUT -s 192.168.229.1 -p udp --dport 53 -j DROP
+     ⚠️ OUTPUT链对应该主机自己发出的DNS出站包
+  (10) DNS是CC攻击首选隐蔽信道原因：
+      ① 防火墙默认放行DNS（UDP 53）
+      ② DNS报文可携带数据（子域名/TXT记录等）
+      ③ 包体小易伪装，不易被安全设备察觉
+      ④ UDP无连接状态，流量特征隐蔽
+```
+
+---
