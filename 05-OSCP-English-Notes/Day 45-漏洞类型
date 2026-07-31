@@ -1,0 +1,46 @@
+1. SQL injection
+SQL injection — SQL 注入
+谐音助记：艾斯丘 因杰克深
+例句：SQL injection occurs when user input is directly concatenated into an SQL query.
+单词拆分：
+user input 用户输入；concatenated 拼接；SQL query SQL 查询语句
+整句总结：用户可控输入未做过滤，直接拼接进 SQL 语句，导致攻击者操纵数据库查询。
+
+2. XSS (Cross-Site Scripting)
+XSS (Cross-Site Scripting) — 跨站脚本
+谐音助记：克若斯赛特 斯克瑞普挺
+例句：XSS allows attackers to inject malicious scripts into web pages viewed by other users.
+单词拆分：
+malicious scripts 恶意脚本；viewed by other users 被其他用户访问
+整句总结：注入恶意 JS 脚本，在受害者浏览器执行，常用于窃取 Cookie、会话劫持。
+
+3. buffer overflow
+buffer overflow — 缓冲区溢出
+谐音助记：巴佛 欧沃弗楼
+例句：A buffer overflow happens when a program writes more data to a buffer than it can hold.
+单词拆分：
+buffer 缓冲区；overflow 溢出；hold 容纳
+整句总结：程序向固定大小缓冲区写入超额数据，覆盖内存，可执行任意代码（OSCP 重点考点）。
+
+4. privilege escalation
+privilege escalation — 权限提升
+谐音助记：普瑞维利之 艾斯凯蕾深
+例句：After gaining initial access, the attacker performs privilege escalation to become root.
+单词拆分：
+initial access 初始权限；root 最高权限
+整句总结：攻击者拿到普通权限后，利用漏洞、错误配置获取管理员 /root 权限。
+
+5. denial of service (DoS)
+denial of service (DoS) — 拒绝服务
+谐音助记：迪奈欧 奥夫 瑟维斯
+例句：A denial of service attack floods a server with traffic to make it unavailable.
+单词拆分：
+floods with traffic 流量洪泛；unavailable 无法访问
+整句总结：消耗服务器资源，让正常用户无法访问服务；分布式攻击称为 DDoS。
+
+📝 练习2：根据中文写英文
+SQL 注入 → SQL Injection
+缓冲区溢出 → buffer overflow
+权限提升 → privilege escalation      （没拼写出来）
+跨站脚本 → XSS
+拒绝服务 → DOS
