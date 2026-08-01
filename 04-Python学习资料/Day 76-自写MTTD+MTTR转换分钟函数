@@ -1,0 +1,35 @@
+def calc_mttd(start, detect): # 定义函数calc_mttd，参数start事件发生时间，detect发现时间
+    """
+    计算MTTD（平均检测时间）
+    start = 事件发生时间（字符串 "14:00"）
+    detect = 发现时间（字符串 "14:45"）
+    返回：分钟数（int）
+    """
+    #拆分起始时间
+    h1,m1 = start.split(":") # 将start时间字符串按冒号切割，解包赋值给小时h1、分钟m1
+    start_total = int(h1)*60 + int(m1) # 把起始时间统一换算成总分钟数
+    #拆分检测时间
+    h2,m2 = detect.split(":") # 将detect时间字符串按冒号切割，解包赋值给小时h2、分钟m2
+    detect_total = int(h2)*60 + int(m2) # 把发现时间统一换算成总分钟数
+    return detect_total - start_total # 发现总分钟减去起始总分钟，得到耗时并返回
+
+
+def calc_mttr(detect, recover): # 定义函数calc_mttr，参数detect发现时间，recover恢复时间
+    """
+    计算MTTR（平均修复时间）
+    detect = 发现时间
+    recover = 恢复时间
+    返回：分钟数（int）
+    """
+    h1,m1 = detect.split(":") # 将detect时间字符串按冒号切割，解包赋值给小时h1、分钟m1
+    detect_total = int(h1)*60 + int(m1) # 把发现时间统一换算成总分钟数
+    h2,m2 = recover.split(":") # 将recover时间字符串按冒号切割，解包赋值给小时h2、分钟m2
+    recover_total = int(h2)*60 + int(m2) # 把恢复时间统一换算成总分钟数
+    return recover_total - detect_total # 恢复总分钟减去发现总分钟，得到修复耗时并返回
+
+# ========== 主程序（已经写好，不用改） ==========
+if __name__ == "__main__": # 判断当前文件直接运行时，执行下方代码
+    mttd = calc_mttd("14:00", "14:45") # 调用函数计算MTTD结果，存入变量mttd
+    mttr = calc_mttr("14:45", "17:30") # 调用函数计算MTTR结果，存入变量mttr
+    print(f"MTTD = {mttd} 分钟") # 格式化输出平均检测时长
+    print(f"MTTR = {mttr} 分钟") # 格式化输出平均修复时长
