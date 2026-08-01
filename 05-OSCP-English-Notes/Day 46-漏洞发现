@@ -1,0 +1,46 @@
+1. scan
+scan — 扫描
+谐音助记：斯坎
+例句：The first step in penetration testing is to scan the target for open ports.
+单词拆分：
+penetration testing 渗透测试；open ports 开放端口；target 目标
+整句总结：主动探测目标端口、服务，初步摸清目标表面资产。
+
+2. enumeration
+enumeration — 枚举
+谐音助记：伊纽莫瑞深
+例句：Enumeration involves extracting detailed information from the target system.
+单词拆分：
+extract detailed information 提取详细信息；target system 目标系统
+整句总结：扫描之后更深一层信息收集，获取账号、共享、子域名等深层数据。
+
+3. fingerprint
+fingerprint — 指纹识别
+谐音助记：芬格普林特
+例句：Fingerprinting helps identify the operating system and software versions running on a target.
+单词拆分：
+operating system 操作系统；software versions 软件版本
+整句总结：根据网络数据包特征判断系统、服务类型，区分不同设备与程序。
+
+4. banner
+banner — 横幅信息
+谐音助记：班纳
+例句：Banner grabbing can reveal the version of a service running on an open port.
+单词拆分：
+banner grabbing 横幅抓取；open port 开放端口；service version 服务版本
+整句总结：服务响应返回的标识信息，经常直接泄露软件版本，用于寻找对应漏洞。
+
+5. CVE (Common Vulnerabilities and Exposures)
+CVE (Common Vulnerabilities and Exposures) — 通用漏洞披露
+谐音助记：康门 沃勒纳比利提斯 安的 伊克斯波泽斯
+例句：Each vulnerability is assigned a unique CVE identifier for tracking purposes.
+单词拆分：
+vulnerability 漏洞；unique identifier 唯一编号；tracking 追踪
+整句总结：全球统一的漏洞编号标准，通过 CVE 编号快速查询漏洞详情与利用方式。
+
+📝 练习3：填空
+Nmap is used to (scan for) open ports on a target. 
+(Banner grabbing) helps identify the version of a service. 
+(Enumeration)is the process of extracting detailed information. 
+Each vulnerability has a unique (CVE) ID. 
+OS (fingerprinting) helps identify the operating system. 
