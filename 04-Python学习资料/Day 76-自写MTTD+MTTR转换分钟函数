@@ -27,7 +27,7 @@ def calc_mttr(detect, recover): # 定义函数calc_mttr，参数detect发现时�
     recover_total = int(h2)*60 + int(m2) # 把恢复时间统一换算成总分钟数
     return recover_total - detect_total # 恢复总分钟减去发现总分钟，得到修复耗时并返回
 
-# ========== 主程序（已经写好，不用改） ==========
+# ========== 主程序 ==========
 if __name__ == "__main__": # 判断当前文件直接运行时，执行下方代码
     mttd = calc_mttd("14:00", "14:45") # 调用函数计算MTTD结果，存入变量mttd
     mttr = calc_mttr("14:45", "17:30") # 调用函数计算MTTR结果，存入变量mttr
