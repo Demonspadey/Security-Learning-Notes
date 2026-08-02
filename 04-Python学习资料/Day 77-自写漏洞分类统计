@@ -1,0 +1,22 @@
+def classify_vuln(severity): # 定义函数classify_vuln，接收参数severity漏洞等级字符串
+    if severity == "Critical" or severity == "High": # 判断等级是否为严重或者高危
+        return "高危" # 满足条件，返回中文高危
+    elif severity == "Medium": # 判断等级是否为中危
+        return "中危" # 满足条件，返回中文中危
+    elif severity == "Low": # 判断等级是否为低危
+        return "低危" # 满足条件，返回中文低危
+    else: # 上面条件全都不匹配
+        return "未知" # 返回未知风险等级
+
+if __name__ == "__main__": # 程序入口，只有直接运行本文件才执行下方代码
+    vuln_list = [ # 漏洞等级模拟列表，模拟扫描器导出的漏洞风险等级数据
+        "Critical", "High", "Medium", "Low",
+        "High", "Medium", "Critical", "Low", "Low"
+    ]
+    status = {"高危": 0, "中危": 0, "低危": 0, "未知": 0} # 创建统计字典，初始化四类漏洞数量为0
+    for sev in vuln_list: # 循环取出列表里每一条漏洞等级，存入sev变量
+        level = classify_vuln(sev) # 调用分类函数，得到中文风险级别
+        status[level] = status.get(level, 0) + 1 # 对应等级计数 +1
+    print("漏洞统计结果:") # 打印标题
+    for level, count in status.items(): # 遍历统计字典，取出级别名称和对应数量
+        print(f" {level} → {count}个") # 格式化输出每一类漏洞统计结果
