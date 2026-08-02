@@ -1,0 +1,47 @@
+1. Metasploit
+Metasploit — Metasploit 框架
+谐音助记：梅塔斯普洛伊特
+例句：Metasploit is one of the most popular penetration testing frameworks.
+单词拆分：
+penetration testing 渗透测试；framework 框架
+整句总结：知名渗透测试综合框架，内置扫描、漏洞利用、载荷、监听全套功能。
+
+2. module
+module — 模块
+谐音助记：莫丢
+例句：Each Metasploit module performs a specific task such as scanning or exploitation.
+单词拆分：
+perform task 执行任务；scanning 扫描；exploitation 漏洞利用
+整句总结：Metasploit 内部功能单元，分为扫描器、exp、载荷、编码器等不同类型。
+
+3. listener
+listener — 监听器
+谐音助记：利森纳
+例句：A listener waits for a reverse connection from the target machine.
+单词拆分：
+wait for 等待；reverse connection 反弹连接；target machine 目标主机
+整句总结：持续监听指定端口，等待目标主动发起反弹连接。
+
+4. handler
+handler — 处理程序
+谐音助记：汉德勒
+例句：The multi/handler module in Metasploit is used to catch reverse shells.
+单词拆分：
+catch reverse shells 接收反弹 shell；module 模块
+整句总结：msf 中的连接处理器，专门接收外部产生的反弹会话，常与 listener 搭配理解。
+
+5. POC (Proof of Concept)
+POC（Proof of Concept） — 概念验证
+谐音助记：普鲁夫 奥夫 康塞普特
+例句：A POC demonstrates that a vulnerability exists and can be exploited.
+单词拆分：
+demonstrate 证明；vulnerability 漏洞；exploited 被利用
+整句总结：仅证明漏洞可复现，大多不具备完整控制目标能力，区别于完整 Exploit。
+
+📝 练习4：选择题
+Which tool is most commonly associated with exploit modules?（ B ）
+A. Nmap  B. Metasploit  C. Wireshark  D. Burp Suite
+What waits for a reverse connection?（ B ）
+A. Payload  B. Listener  C. Scanner  D. Wordlist
+What does a POC prove?（ B ）
+A. The system is fast  B. A vulnerability exists  C. The network is secure  D. The patch works
