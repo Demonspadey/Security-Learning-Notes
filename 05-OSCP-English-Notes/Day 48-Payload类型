@@ -1,0 +1,45 @@
+1. bind shell
+bind shell — 绑定 Shell
+谐音助记：拜恩德 谢尔
+例句：A bind shell opens a port on the target machine for the attacker to connect to.
+单词拆分：
+open a port 开启端口；target machine 目标主机；attacker 攻击者；connect to 连接
+整句总结：在目标主机开放端口，攻击者主动发起连接，容易被防火墙拦截。
+
+2. reverse shell
+reverse shell — 反弹 Shell
+谐音助记：瑞沃斯 谢尔
+例句：A reverse shell connects back from the target to the attacker's machine.
+单词拆分：
+connect back 回连；target 目标；attacker's machine 攻击者主机
+整句总结：目标主动向外连接攻击者机器，是渗透最常用的 Shell 类型，更容易绕过防火墙出站规则。
+
+3. stageless
+stageless — 无阶段载荷
+谐音助记：斯泰吉勒斯
+例句：A stageless payload contains the entire shellcode in a single package.
+单词拆分：
+entire shellcode 完整机器码；single package 单个程序包
+整句总结：载荷内置全部执行代码，一次性下发，体积更大，容易触发杀毒检测。
+
+4. staged
+staged — 分阶段载荷
+谐音助记：斯泰吉德
+例句：A staged payload sends a small initial shellcode that downloads the rest.
+单词拆分：
+initial shellcode 初始小段代码；downloads the rest 下载剩余载荷
+整句总结：先传输短小引导代码，上线后再下载主体载荷，文件体积小，隐蔽性相对更高。
+
+5. shellcode
+shellcode — Shellcode（机器码载荷）
+谐音助记：谢尔扣德
+例句：Shellcode is a small piece of machine code that executes a shell on the target.
+单词拆分：
+machine code 机器码；execute a shell 执行命令终端
+整句总结：原始二进制机器指令，不依赖编译程序，漏洞利用中直接在内存运行。
+
+📝 练习5：判断正误（T/F）
+A bind shell connects back to the attacker. ( F )
+A reverse shell is often easier through firewalls. ( T )
+Stageless payloads download code in multiple stages. ( F )
+Shellcode is written in machine code. ( T )
