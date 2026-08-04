@@ -1,0 +1,46 @@
+1. foothold
+foothold — 立足点
+谐音助记：富特侯德
+例句：Gaining a foothold is the first step after successfully exploiting a vulnerability.
+单词拆分：
+gain a foothold 获取立足点；exploit a vulnerability 利用漏洞
+整句总结：攻击者拿到目标机器最初的访问权限，就是获得立足点。
+
+2. persistence
+persistence — 持久化
+谐音助记：珀西斯腾斯
+例句：Attackers establish persistence to maintain access even after a reboot.
+单词拆分：
+establish persistence 建立持久化；maintain access 维持权限；reboot 重启
+整句总结：配置后门、计划任务等，机器重启后依旧可以连接目标。
+
+3. lateral movement
+lateral movement — 横向移动
+谐音助记：莱特若 穆夫门特
+例句：Lateral movement allows an attacker to expand access to other systems on the network.
+单词拆分：
+expand access 扩大权限；other systems 其他主机；on the network 在网络内
+整句总结：拿下一台主机后，以此为基础攻击内网其他设备，扩大控制范围。
+
+4. pivot
+pivot — 跳板 / 转向
+谐音助记：皮沃特
+例句：Using the compromised machine as a pivot, the attacker can reach internal networks.
+单词拆分：
+compromised machine 已沦陷主机；as a pivot 作为跳板；internal networks 内网
+整句总结：把已经攻破的主机当跳板，访问原本不能直接连通的内网网段。
+
+5. clean up
+clean up — 清理痕迹
+谐音助记：克林 阿普
+例句：After completing the test, the penetration tester must clean up all tools and backdoors.
+单词拆分：
+penetration tester 渗透测试人员；backdoors 后门
+整句总结：渗透结束删除上传工具、后门、日志，消除测试留下的痕迹。
+
+📝 练习6：连线题（英→英解释）
+foothold      A. maintaining access after reboot    D
+persistence   B. using a compromised host to reach others    A
+lateral movement C. removing traces after test    E （和pivot选反了，大范围、扩散到内网其他系统）
+pivot         D. first access on a target    B  （核心动作是拿沦陷主机当中介去访问别的机器）
+clean up      E. expanding to other systems    C
