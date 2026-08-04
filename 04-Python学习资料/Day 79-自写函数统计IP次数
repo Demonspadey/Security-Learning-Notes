@@ -1,0 +1,38 @@
+def count_failures(log_entries):                          # 定义函数count_failures，接收参数log_entries（日志列表）
+    ip_count={}                                            # 创建空字典ip_count，用来保存IP和对应的失败次数
+    for item in log_entries:                               # 循环遍历log_entries，每一条日志赋值给item
+        if item["result"] == "failed":                     # 判断：如果这条日志的result键的值等于failed（登录失败）
+            ip = item["ip"]                                # 取出字典item中键"ip"对应的值，赋值给ip变量
+            ip_count[ip] = ip_count.get(ip, 0) +1          # get获取ip原有计数，没有则取0，计数加1，写回字典
+    return ip_count                                        # 将统计完成的ip_count字典，返回给函数调用处
+
+
+def is_bruteforce(ip, fail_count):                        # 定义函数is_bruteforce，接收ip、fail_count两个参数
+    if fail_count >= 5:                                    # 判断：失败次数大于或等于5次
+        return True                                         # 返回布尔值True，代表疑似暴力破解
+    else:                                                   # 否则（失败次数小于5）
+        return False                                        # 返回布尔值False，不属于暴力破解
+
+
+if __name__ == "__main__":                                 # 如果当前是直接运行本py文件，执行下面主程序代码
+    logs = [                                               # 定义logs列表，存放多条模拟登录日志（每条是字典）
+        {"ip": "192.168.1.10", "result": "failed"},        # 日志：IP192.168.1.10，登录失败
+        {"ip": "192.168.1.10", "result": "failed"},        # 日志：IP192.168.1.10，登录失败
+        {"ip": "10.0.0.5", "result": "failed"},             # 日志：IP10.0.0.5，登录失败
+        {"ip": "192.168.1.10", "result": "failed"},        # 日志：IP192.168.1.10，登录失败
+        {"ip": "10.0.0.5", "result": "failed"},             # 日志：IP10.0.0.5，登录失败
+        {"ip": "192.168.1.10", "result": "failed"},        # 日志：IP192.168.1.10，登录失败
+        {"ip": "192.168.1.10", "result": "failed"},        # 日志：IP192.168.1.10，登录失败
+        {"ip": "10.0.0.5", "result": "success"},           # 日志：IP10.0.0.5，登录成功（不统计失败）
+        {"ip": "172.16.1.1", "result": "failed"},          # 日志：IP172.16.1.1，登录失败
+    ]
+    fail_counts = count_failures(logs)                     # 调用统计函数，传入logs，接收返回的统计字典存入fail_counts
+    print("各IP失败次数：")                                 # 打印输出文字：各IP失败次数：
+    for ip, cnt in fail_counts.items():                    # 遍历字典，items同时取出字典的键(ip)、值(cnt次数)
+        print(f"  {ip} → {cnt}次")                         # 格式化打印IP以及对应的失败次数
+    print("\n暴力破解判断：")                               # 换行，打印输出文字：暴力破解判断：
+    for ip, cnt in fail_counts.items():                    # 再次循环遍历统计后的IP和失败次数
+        if is_bruteforce(ip, cnt):                         # 调用爆破判断函数，传入ip和次数，判断返回True还是False
+            print(f"  ⚠️ {ip} 失败{cnt}次 → 疑似暴力破解！") # 如果返回True，打印告警信息
+        else:                                              # 否则
+            print(f"  ✅ {ip} 失败{cnt}次 → 暂不判定")      # 打印正常提示
