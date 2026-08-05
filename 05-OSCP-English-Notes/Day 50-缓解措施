@@ -1,0 +1,46 @@
+1. patch
+patch — 补丁
+谐音助记：派奇
+例句：Vendors release patches to fix known vulnerabilities.
+单词拆分：
+vendors 厂商；release 发布；fix vulnerabilities 修复漏洞
+整句总结：厂商推出的程序更新包，从根源修补代码里存在的安全漏洞。
+
+2. mitigation
+mitigation — 缓解措施
+谐音助记：米提给深
+例句：Mitigation strategies reduce the risk of a vulnerability being exploited.
+单词拆分：
+strategy 策略；reduce risk 降低风险；exploited 被利用
+整句总结：无法立刻打补丁时使用的临时防护手段，只能降低攻击风险，不能彻底根除漏洞。
+
+3. sandbox
+sandbox — 沙箱
+谐音助记：桑德博克斯
+例句：A sandbox isolates a running program from the rest of the system.
+单词拆分：
+isolate 隔离；running program 运行程序；system 操作系统
+整句总结：独立隔离运行环境，恶意程序在沙箱内无法读取、篡改真实系统文件。
+
+4. WAF (Web Application Firewall)
+WAF (Web Application Firewall) — Web 应用防火墙
+谐音助记：维布 艾普利尅深 法尔沃
+例句：A WAF filters incoming HTTP traffic to block common web attacks.
+单词拆分：
+filter traffic 过滤流量；HTTP 流量；block attacks 拦截攻击
+整句总结：部署在 Web 前端的防护设备，拦截 SQL 注入、XSS、命令注入等 Web 层攻击。
+
+5. EDR (Endpoint Detection and Response)
+EDR (Endpoint Detection and Response) — 端点检测与响应
+谐音助记：恩德波因特 迪泰克深 安的 瑞斯庞斯
+例句：EDR solutions monitor endpoint activities to detect suspicious behavior.
+单词拆分：
+monitor activities 监控行为；endpoint 终端主机；suspicious behavior 可疑行为
+整句总结：安装在电脑、服务器等终端上，实时监控进程、文件、网络异常，发现恶意行为自动告警处置。
+
+📝 练习7：配对题
+patch         A. isolates a program   C
+sandbox       B. detects endpoint threats    A
+WAF           C. fixes a vulnerability    D
+EDR           D. filters HTTP traffic    B
+mitigation    E. reduces risk    E
