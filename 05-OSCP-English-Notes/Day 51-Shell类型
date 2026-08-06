@@ -1,0 +1,45 @@
+1. interactive shell
+interactive shell — 交互式 Shell
+谐音助记：因特瑞克提夫 谢尔
+例句：An interactive shell allows the attacker to execute commands and see output in real time.
+单词拆分：
+execute commands 执行命令；real time 实时；output 输出结果
+整句总结：具备完整终端交互能力，支持上下翻命令、Ctrl+C、vim/top 等交互式程序，操作体验和本地终端一致。
+
+2. non-interactive shell
+non-interactive shell — 非交互式 Shell
+谐音助记：农因特瑞克提夫 谢尔
+例句：A non-interactive shell can execute commands but does not provide a full terminal experience.
+单词拆分：
+full terminal experience 完整终端体验；execute commands 执行简单命令
+整句总结：仅能执行单条简单命令，无法运行 vim、ssh 等交互程序，无命令历史、快捷键功能，普通反弹 shell 默认都是该类型。
+
+3. TTY shell
+TTY shell — TTY 完整终端
+谐音助记：提提外 谢尔
+例句：Spawning a TTY shell from a reverse shell gives better terminal control.
+单词拆分：
+spawn 生成；reverse shell 反弹 shell；terminal control 终端操控权限
+整句总结：拥有标准 TTY 设备的交互式 shell，解决非交互 shell 卡顿、快捷键失效问题，渗透中常用 python/script 命令升级获取。
+
+4. web shell
+web shell — Web Shell（网页后门）
+谐音助记：维布 谢尔
+例句：A web shell is a script that executes commands through a web server.
+单词拆分：
+script 脚本；web server Web 服务器；execute commands 执行系统命令
+整句总结：php/jsp/asp 等网页脚本后门，通过 80/443 端口访问，可执行系统命令、上传下载文件，维持网站服务器持久控制。
+
+5. command injection
+command injection — 命令注入
+谐音助记：康曼德 因杰克深
+例句：Command injection occurs when user input is passed directly to the system shell.
+单词拆分：
+user input 用户可控输入；pass directly 直接传递；system shell 系统命令解释器
+整句总结：高危 Web 漏洞，输入未过滤直接拼接系统命令，攻击者可注入分隔符执行任意系统指令，常用来获取 webshell 或反弹 shell。
+
+📝 练习8：填空
+A ( web  ) ( shell  ) executes commands through a web server.   Web Shell（网页后门）依托 Web 服务器执行系统命令
+The ( command  ) ( injection  ) passes user input to the system shell.   命令注入将用户输入直接传入系统命令解释器
+An ( interactive  ) (  shell ) shows output in real time.   交互式 Shell 可以实时输出命令执行结果
+A ( TTY  ) shell provides a full terminal experience.   TTY 终端 Shell 提供完整、流畅的终端操作体验
