@@ -1,0 +1,14 @@
+ip_count={}                                     # 创建空字典，key存IP，value存失败次数
+log=r"d:\_agent_tmp\sample.txt"                 # Windows原始字符串，指定日志文件路径
+with open(log, "r", encoding="utf-8") as f:     # 以只读模式打开文件，with结束自动关闭文件
+    for line in f:                              # 逐行迭代读取文件每一行
+        if "Failed password" in line:           # 判断该行是否为SSH登录失败日志
+            parts = line.split()                # 按空格切割一行日志，得到字符串列表
+            idx = parts.index("from")           # 在列表找到单词from，返回它的下标数字
+            ip = parts[idx+1]                   # from下标+1，对应位置就是源IP地址
+            ip_count[ip] = ip_count.get(ip, 0) + 1 # IP失败次数累加，没有该IP默认0
+
+print("\n==== SSH失败IP Top5 ====")                         # 打印标题换行
+top5 = sorted(ip_count.items(), key=lambda x:x[1], reverse=True)[:5] # 按次数降序，取前5
+for ip, cnt in top5:                                        # 循环遍历排序后的(IP,次数)元组
+    print(f"{ip} → {cnt}次")                                # f-string格式化输出结果
