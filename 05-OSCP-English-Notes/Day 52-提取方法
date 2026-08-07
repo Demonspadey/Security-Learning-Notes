@@ -1,0 +1,44 @@
+1. SUID (Set User ID)
+SUID (Set User ID) — SUID 权限位
+谐音助记：苏伊德
+例句：SUID allows a program to run with the permissions of its owner, often root.
+单词拆分：
+program 程序；permissions of owner 文件所有者权限；root 系统最高权限
+整句总结：Linux 特殊文件权限标记，普通用户执行带 SUID 的文件时，临时拥有文件属主权限，大量本地提权依靠错误配置的 SUID 程序。
+
+2. sudo
+sudo — sudo（切换身份执行命令）
+谐音助记：苏杜
+例句：The sudo command allows a user to execute commands as another user, typically root.
+单词拆分：
+execute commands 执行命令；as another user 以其他用户身份
+整句总结：授权普通用户临时使用管理员权限，若 sudo 配置不当、存在漏洞，可直接提权至 root。
+
+3. kernel exploit
+kernel exploit — 内核漏洞利用
+谐音助记：科诺 伊克斯普洛伊特
+例句：A kernel exploit targets vulnerabilities in the operating system kernel to gain root access.
+单词拆分：
+operating system kernel 操作系统内核；gain root access 获取 root 权限
+整句总结：利用操作系统底层内核缺陷突破权限限制，不受普通系统权限管控，是强力本地提权手段。
+
+4. capability
+capability — Linux 权能（细粒度权限）
+谐音助记：开普比勒提
+例句：Linux capabilities allow granting specific privileges without giving full root access.
+单词拆分：
+specific privileges 单独权限；full root access 完整 root 权限
+整句总结：Linux 用来拆分 root 超级权限的机制，只分配程序需要的单项特权，若过度分配 capability 会造成权限逃逸。
+
+5. Docker escape
+Docker escape — Docker 容器逃逸
+谐音助记：道克 伊斯开普
+例句：Docker escape allows an attacker to break out of a container and access the host system.
+单词拆分：
+break out of container 逃出容器；host system 宿主机系统
+整句总结：攻击者突破容器隔离限制，从容器内部读取、控制宿主机，属于云环境常见高危提权风险。
+
+📝 练习9：选择
+Which permission allows a script to run as root?（ B ） A. chmod 777 B. SUID C. sticky bit
+What command checks available sudo privileges?（ B ） A. whoami B. sudo -l C. id
+Docker escape targets（ A ） A. containers B. firewalls C. web apps
