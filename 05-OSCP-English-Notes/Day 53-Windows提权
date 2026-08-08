@@ -1,0 +1,46 @@
+1. token
+token — 令牌
+谐音助记：托肯
+例句：Windows uses tokens to store a user's security context and privileges.
+单词拆分：
+security context 安全上下文；privileges 权限
+整句总结：Windows 系统令牌，保存用户身份、权限信息；窃取令牌可直接复用该用户权限，常用于 Windows 本地提权。
+
+2. service
+service — 服务
+谐音助记：瑟维斯
+例句：A vulnerable Windows service with weak permissions can be abused for privilege escalation.
+单词拆分：
+weak permissions 脆弱权限；abuse 滥用；privilege escalation 权限提升
+整句总结：Windows 后台运行服务，如果服务配置、文件权限不当，普通用户可篡改服务程序实现提权。
+
+3. DLL hijacking
+DLL hijacking — DLL 劫持
+谐音助记：迪艾尔艾尔 海杰金
+例句：DLL hijacking occurs when a program loads a malicious DLL instead of the legitimate one.
+单词拆分：
+malicious DLL 恶意动态链接库；legitimate 合法的；load 加载
+整句总结：Windows 程序按照搜索顺序加载 DLL，攻击者放置同名恶意 DLL，程序运行就会执行恶意代码，实现提权。
+
+4. AlwaysInstallElevated
+AlwaysInstallElevated — AlwaysInstallElevated（MSI 提权）
+谐音助记：奥维兹因斯托尔艾勒维提德
+例句：AlwaysInstallElevated allows any user to install programs with elevated privileges.
+单词拆分：
+install programs 安装程序；elevated privileges 高权限
+整句总结：Windows 注册表危险配置，开启后普通用户运行 msi 安装包会以系统高权限执行，可构造恶意 MSI 完成提权。
+
+5. UAC (User Account Control)
+UAC (User Account Control) — 用户账户控制
+谐音助记：优瑟 阿康特 肯戳
+例句：UAC prompts for administrator approval when changes require system‑level access.
+单词拆分：
+prompt 弹出提示；administrator approval 管理员批准；system‑level access 系统级访问权限
+整句总结：Windows 安全机制，执行需要管理员权限操作时弹窗确认；存在 Bypass UAC（UAC 绕过）漏洞可绕过弹窗直接获取高权限。
+
+📝 练习10：连线英→中
+token          A. DLL 劫持     C
+DLL hijacking  B. 用户账户控制    A
+UAC            C. 令牌    B
+service        D. 服务    D
+
