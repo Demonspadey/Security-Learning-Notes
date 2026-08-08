@@ -1,0 +1,41 @@
+user_count={}                                     # 空字典，key=用户名，value=失败次数
+log=r"d:\_agent_tmp\sample.txt"                   # 指定日志文件路径
+with open(log, "r", encoding="utf-8") as f:       # 打开日志文件
+    for line in f:                                # 逐行读取
+        if "Failed password" in line:              # 筛选登录失败日志
+            parts = line.split()                  # 按空格切分成列表
+            idx = parts.index("for")               # 找到单词for所在下标
+            user = parts[idx+1]                   # for后面紧跟的就是用户名
+            user_count[user] = user_count.get(user, 0) + 1 # 统计次数累加
+
+print("\n=== 爆破失败用户名统计TOP3 ===")
+top3 = sorted(user_count.items(), key =lambda x:x[1], reverse=True)[:3] # 按失败次数降序取前3
+for user, cnt in top3:                            # 遍历排序后的结果
+    print(f"{user} → 失败{cnt}次")                 # 格式化打印输出
+
+
+sample_log=[                                 # 模拟SSH日志列表，内存数据，不用读文件
+    "Failed password for root from 192.168.1.100 port 40231 ssh2",
+    "Failed password for humen from 10.0.0.5 port 37223 ssh2",
+    "Failed password for root from 192.168.1.100 port 41365 ssh2",
+    "Failed password for admin from 172.16.1.1 port 45149 ssh2",
+    "Failed password for root from 192.168.1.100 port 42271 ssh2",
+    "Failed password for humen from 10.0.0.5 port 45627 ssh2",
+    "Accepted password for root from 192.168.1.10 port 45671 ssh2",
+    ]
+def count_failed_user(log_lines):            
+    user_count={}                              
+    for line in log_lines:                    
+        if "Failed password" in line:      
+            parts = line.split()               
+            idx = parts.index("for")        
+            user = parts[idx+1]              
+            user_count[user] = user_count.get(user, 0) + 1 
+    top3_list=sorted(user_count.items(), key=lambda x:x[1], reverse=True)[:3] 
+    return top3_list                           
+
+if __name__ == "__main__":
+    top3= count_failed_user(sample_log)        
+    print("\n=== 被爆破最多的用户名 ===")
+    for user, cnt in top3:                    
+        print(f"{user} 失败 → {cnt}次")
