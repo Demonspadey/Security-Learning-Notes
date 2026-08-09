@@ -1,0 +1,44 @@
+1. brute force
+brute force — 暴力破解
+谐音助记：布鲁特 佛斯
+例句：Brute force attacks try every possible combination until the correct password is found.
+单词拆分：
+combination 组合；correct password 正确密码
+整句总结：枚举大量密码组合，逐个尝试登录认证，消耗时间长，依赖字典或者全字符集枚举。
+
+2. hash
+hash — 哈希值
+谐音助记：哈什
+例句：Windows stores password hashes in the SAM file.
+单词拆分：
+store 存储；password hashes 密码哈希；SAM file SAM 文件
+整句总结：密码经过单向加密运算得到的字符串，Windows 不会保存明文密码，只存放哈希。
+
+3. cracking
+cracking — 破解
+谐音助记：克瑞金
+例句：Hash cracking involves comparing captured hashes against pre‑computed values.
+单词拆分：
+captured hashes 获取到的哈希；pre‑computed values 预计算值
+整句总结：拿到哈希之后，使用字典、彩虹表比对，反向推导出原始明文密码。
+
+4. pass the hash
+pass the hash — 哈希传递
+谐音助记：帕斯 泽 哈什
+例句：Pass the hash allows an attacker to authenticate using a hash instead of a password.
+单词拆分：
+authenticate 身份认证；instead of 代替；password 明文密码
+整句总结：Windows 域环境经典攻击，不需要破解出明文，直接拿着获取到的 NTLM 哈希完成登录认证。
+
+5. wordlist
+wordlist — 字典
+谐音助记：沃德里斯特
+例句：A good wordlist is essential for successful brute force and cracking attacks.
+单词拆分：
+essential 必不可少；brute force 暴力破解；cracking attacks 破解攻击
+整句总结：存放候选密码的文本文件，暴力破解、哈希破解都依靠字典来提高成功率。
+
+📝 练习11：根据中文写英文
+暴力破解 → ( brute force  )
+哈希传递 → (  pass the hash )
+破解 → ( cracking  )
