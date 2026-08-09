@@ -1,0 +1,189 @@
+🔴 Part 1：案例⑦ Android安全（2021Q4 完整真题，40min）
+
+📌 纸笔计时30min，完整手写，然后对照答案红笔标采分点。
+   ⚠️ 你之前说Android不熟练，今天重点啃下来。
+
+```
+【2021年 下午案例 第4题 · 完整真题】
+
+【说明】近期，按照网络安全审查工作安排，国家网信办会同公安部、国家安全部、
+自然资源部、交通运输部、税务总局、市场监管总局等部门联合进驻某出行科技
+有限公司，开展网络安全审查。移动App安全检测和个人数据安全再次成为关注焦点。
+
+问题1（4分）Android系统在内核层、系统运行层、应用框架层以及应用程序层
+采取相应的安全措施。在提供的安全措施中有安全沙箱、应用程序签名机制、权限
+声明机制、地址空间布局随机化等。请将上述四种安全措施按照其所在层次填入
+下表的空(1)~(4)。
+
+  层级          填空编号
+  应用程序层    (1)
+  应用框架层    (2)
+  系统运行层    (3)
+  内核层        (4)
+
+问题2（6分）权限声明机制为操作权限和对象之间设定了一些限制。
+  (1) 请问Android系统的应用程序权限信息声明都在哪个配置文件中？
+      给出该配置文件名。
+  (2) Android权限组包括:CALENDAR、CAMERA、CONTACTS、LOCATION、
+      MICROPHONE、PHONE、SENSORS、SMS、STORAGE。按照《信息安全技术
+      移动互联网应用程序(App)收集个人信息基本规范》，运行在Android9.0
+      系统中提供网络约车服务的某出行App可以有的最小必要权限是哪几个？
+  (3) 假如移动应用A提供了服务AService，权限描述如下：
+      <permission android:name="USER_INFO" android:label="read user information"
+      android:description="get user information" android:ProtectionLevel="signature"/>
+      <service android:name="com.demo.AService" android:exported="true"
+      android:permission="com.demo.permission.USER_INFO"/>
+      如果应用B要访问该服务，应该申明使用该服务，将以下申明语句补充完整：
+      <__________ android:name="com.demo.AService"/>
+
+问题3（3分）Android四大组件：Activities、Broadcast Receiver、Services、
+Content Providers。请说明以下三种攻击分别针对哪个组件。
+  (1) 目录遍历攻击；
+  (2) 界面劫持攻击；
+  (3) 短信拦截攻击。
+
+问题4（2分）移动终端常见的数据存储方式包括：①SharedPreferences；
+②文件存储；③SQLite数据库；④ContentProvider；⑤网络存储。
+从以上5种方式中选出Android系统支持的数据存储方式，给出编号。
+
+【参考答案】
+问题1：(1)权限声明机制 (2)应用程序签名机制 (3)安全沙箱 (4)地址空间布局随机化(ASLR)
+问题2：(1) AndroidManifest.xml
+       (2) LOCATION + PHONE（定位、拨打电话）⭐网约车最小必要权限
+       (3) <service>（应用B声明引用该service组件）
+问题3：(1)目录遍历→ContentProvider (2)界面劫持→Activity (3)短信拦截→Broadcast Receiver
+问题4：①②③④⑤全部（5种都支持）
+```
+
+**✏️ 细致追问（口答，拓展思路）**：
+```
+① 为什么Android用"沙箱"隔离应用？
+   → 每个应用运行在独立沙箱中，默认无法访问其他应用数据 → 防越权
+② Android权限保护等级有哪几级？
+   → normal(正常) / dangerous(危险) / signature(签名) / signatureOrSystem(系统签名)
+③ APK本质和关键结构？
+   → APK=ZIP包：META-INF(签名CERT.RSA) / classes.dex(字节码) / AndroidManifest.xml(权限) / res
+④ 最小必要权限原则是什么？（个保法相关）
+   → App只申请实现基本功能所必需的权限，多余的不给（约车=定位+电话）
+⑤ 应用签名的作用？
+   → 保证APK完整性+来源可信，防止被篡改重打包
+⑥ 如果你做移动安全检测，第一步看什么？
+   → 解包APK→看AndroidManifest.xml的权限声明→找权限滥用/敏感接口
+```
+
+---
+
+### 🔴 Part 2：Android安全知识补强（30min）
+
+📌 结合2021Q4，把Android核心考点一次过全：
+
+```
+① Android分层架构（高层→低层）：
+   应用程序层 → 应用框架层 → 系统运行库层 → Linux核心层
+② 四层安全机制（必背）：
+   应用程序层=权限声明机制 / 框架层=应用签名机制 / 运行层=沙箱 / 内核层=ASLR+SELinux
+③ 四大组件：
+   Activity(界面) / Service(后台服务) / BroadcastReceiver(广播) / ContentProvider(数据共享)
+④ 对应攻击：
+   界面劫持→Activity / 短信拦截→BroadcastReceiver / 目录遍历→ContentProvider
+⑤ 权限配置文件：AndroidManifest.xml
+⑥ 恶意软件四类：远程控制木马 / 话费吸取 / 隐私窃取 / 系统破坏
+```
+
+---
+
+# 🌤️ 下午（2.5h）：案例⑧ Snort/网站安全综合 + 重做 + Python
+
+---
+
+### 🔴 Part 1：案例⑧ Snort/网站安全综合（2021Q1 完整真题，40min）
+
+📌 纸笔计时30min，完整手写，然后对照答案红笔标采分点。
+   ⚠️ 这道是🔴必考综合大题（等保+SQL注入+防火墙+Snort），一题顶四题。
+
+```
+【2021年 下午案例 第1题 · 完整真题】
+
+【说明】在某政府单位信息中心工作的李工主要负责网站的设计、开发工作。
+为确保新业务上线，李工邀请信息安全部的王工按照等级保护2.0的要求对其
+开展安全测评。李工提供网站所在的网络拓扑图：网站服务器IP 192.168.70.140，
+数据库服务器IP 192.168.70.141。
+
+拓扑结构：互联网 → 前端防火墙 → 交换机2
+  交换机2分两路：1. DMZ区(网站192.168.70.140、数据库192.168.70.141)
+                2. 后端防火墙 → 交换机1 → 内网办公区
+王工办公电脑IP：192.168.11.2
+
+问题1（2分）按照等级保护2.0的要求，政府网站的定级不应低于几级？
+该等级的测评每几年开展一次？
+
+问题2（6分）王工调阅网站后台代码，发现某页面数据库查询代码存在漏洞：
+  $id = $_GET['id'];
+  $getid = "SELECT first_name, last_name FROM users WHERE user_id = '$id'";
+  $result = mysql_query($getid) or die('<pre>' . mysql_error() . '</pre>');
+  ...
+  (1) 上述代码存在哪种漏洞？
+  (2) 王工在编辑框输入漏洞测试语句，最可能输入哪个？
+      A. or 1=1-- order by 1   B. 1 or'1'='1'=1 order by 1#
+      C. 1' or 1=1 order by 1#  D. 1' and'1'='2' order by 1#
+  (3) 网站后台使用的是哪种数据库系统？
+  (4) 数据库口令为明文保存，应改为哪种口令安全实践？
+      A. Base64  B. MD5  C. 哈希加盐  D. 加密存储
+
+问题3（2分）王工在命令行窗口运行了一条命令，端口开放情况一目了然。
+请给出该命令的名字。
+
+问题4（2分）防火墙防御体系结构有双宿主机/代理型/屏蔽子网三种。
+拓扑图中的防火墙布局属于哪种体系结构类型？
+
+问题5（8分）王工建议部署开源的Snort入侵检测系统。
+  (1) 以下有关Snort的描述哪两项是正确的？
+      A. 基于异常的检测系统  B. 基于误用的检测系统
+      C. 基于网络的入侵检测系统  D. 基于主机的入侵检测系统
+  (2) 为了部署Snort，李工应把入侵检测系统连接到图中的哪台交换机？
+  (3) 华为交换机端口镜像配置（把GE1/0/2流量镜像到GE1/0/1）应选哪个？
+      A. observe-port 1 interface GigabitEthernet1/0/2
+         interface GigabitEthernet1/0/1
+         port-mirroring to observe-port 1 inbound/outbound/both
+      B. observe-port 2 interface GigabitEthernet1/0/2
+         interface GigabitEthernet1/0/1
+         port-mirroring to observe-port 1 inbound/outbound/both
+      C. port-mirroring to observe-port 1 inbound/outbound/both
+         observe-port 1 interface GigabitEthernet1/0/2
+         interface GigabitEthernet1/0/1
+      D. observe-port 1 interface GigabitEthernet1/0/1
+         interface GigabitEthernet1/0/2
+         port-mirroring to observe-port 1 inbound/outbound/both
+  (4) Snort发现攻击，攻击分组里很多字符不像正常字母，该用哪种编码方式解码？
+  (5) 完善Snort检测规则，填充(a)(b)：
+      (a) tcp any any -> any any (msg:"XXX";content:"(b)";nocase;sid:1106;)
+
+【参考答案】
+问题1：第三级，测评每年一次 ⭐政府网站定级三级（公安部要求，涉及公共利益）
+问题2：(1) SQL注入 (2) C（1' or 1=1 order by 1#）(3) MySQL (4) C（哈希加盐）
+问题3：netstat（netstat -an 查看端口开放）
+问题4：屏蔽子网（双防火墙夹DMZ区）⭐
+问题5：(1) B + C（基于误用 + 基于网络）
+       (2) 交换机1（内网交换机，检测内网所有入侵行为）⭐
+       (3) D（observe-port 1 interface GE1/0/1 = 观察端口接Snort；interface GE1/0/2 = 被镜像源端口；port-mirroring to observe-port 1 完成镜像）⭐
+       (4) URL编码（百分号编码）——抓包大量%xx，URL解码还原union select注入语句
+       (5) (a)=alert (b)=union select（URL解码后攻击载荷，content匹配触发告警）
+```
+
+**✏️ 细致追问（口答，拓展思路）**：
+```
+① 等保2.0测评频率规则？
+   → 三级及以上每年一次；二级每两年一次
+② SQL注入的本质和防御？
+   → 本质：用户输入拼进SQL语句改变了原语义；防御：参数化查询/白名单过滤/预编译
+③ 为什么Snort要"旁路"接交换机1，而不是串联？
+   → IDS是旁路监听(只看不挡)，串联的是IPS；旁路不影响业务，靠端口镜像拿流量
+④ Snort vs 防火墙 区别？
+   → 防火墙：串联网关，基于规则放行/阻断；Snort：旁路监听，检测告警不阻断
+⑤ 误用检测 vs 异常检测？
+   → 误用=匹配已知攻击特征库(Snort)；异常=对比行为基线，能发现未知攻击但误报高
+⑥ 防火墙三种体系结构安全性排序？
+   → 双宿主机<屏蔽主机<屏蔽子网（屏蔽子网最安全，双防火墙夹DMZ）
+```
+
+---
