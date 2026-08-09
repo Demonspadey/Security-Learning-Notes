@@ -1,0 +1,26 @@
+sample_log = [
+    "07/23-09:33:41  [**] [1:2001219:6] ET WEB_SERVER Possible SQL Injection [**]",
+    "07/23-09:33:45  [**] [1:2001219:6] ET WEB_SERVER Possible SQL Injection [**]",
+    "07/23-09:33:52  [**] [1:2010935:4] ET SCAN Potential SSH Scan [**]",
+    "07/23-09:34:01  [**] [1:2001219:6] ET WEB_SERVER Possible SQL Injection [**]",
+    "07/23-09:34:10  [**] [1:2010935:4] ET SCAN Potential SSH Scan [**]",
+    "07/23-09:34:20  [**] [1:2015721:3] ET MALWARE Possible Malware [**]",
+]
+
+def count_alert_types(log_lines):                     # 统计各类告警出现次数，返回top3告警列表
+    alert_count={}                                    # 定义空字典，key告警名称，value告警次数
+    for line in log_lines:                            # 循环遍历每一条日志
+        if "[**]" not in line:                        # 判断是否包含snort告警标记[**]
+            continue                                  # 没有告警标记，跳过本行，处理下一行
+        parts = line.split("] ")                      # 以"] "为分隔符切割整行日志，得到列表
+        res = parts[2]                                # 取切割后列表下标为2的元素，得到sid之后的后半段字符串
+        alert = res.split(" [**]")[0].strip()         # 切割掉末尾告警标记，strip去除字符串前后多余空格，拿到告警名称
+        alert_count[alert] = alert_count.get(alert,0) + 1  # 对应告警次数+1，不存在则初始化为0再加1
+    top3_list = sorted(alert_count.items(), key=lambda x:x[1], reverse=True)[:3] # 按次数降序排序，取前3条
+    return top3_list                                  # 返回统计完成的top3告警结果
+
+if __name__ == "__main__":                            # 程序入口，直接运行本脚本才执行下面代码
+    top3=count_alert_types(sample_log)                # 调用统计函数，接收top3返回结果
+    print("\n=== 告警类型出现次数 ===")               # 打印输出标题
+    for alert, cnt in top3:                            # 循环遍历top3告警结果
+        print(f"{alert} 告警 → {cnt} 次")              # 格式化打印告警名称和对应次数
