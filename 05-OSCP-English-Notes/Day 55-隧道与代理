@@ -1,0 +1,45 @@
+1. tunnel
+tunnel — 隧道
+谐音助记：坦诺
+例句：SSH tunneling can be used to forward ports through an encrypted connection.
+单词拆分：
+SSH tunneling SSH 隧道；forward ports 转发端口；encrypted connection 加密连接
+整句总结：把网络流量封装在加密通道传输，渗透中常用来打通内网，穿透防火墙隔离。
+
+2. proxy
+proxy — 代理
+谐音助记：普若克西
+例句：A SOCKS proxy allows tools to route traffic through a compromised machine.
+单词拆分：
+route traffic 转发流量；compromised machine 已沦陷主机
+整句总结：以被攻陷主机作为中转，本机工具流量经由这台机器访问它能到达的内网资源，横向移动常用手段。
+
+3. port forwarding
+port forwarding — 端口转发
+谐音助记：波特 佛沃丁
+例句：Port forwarding redirects traffic from one port to another through a tunnel.
+单词拆分：
+redirect traffic 重定向流量；tunnel 隧道
+整句总结：将 A 主机端口流量转发到另一台主机的端口，分为本地端口转发、远程端口转发，是隧道的核心功能。
+
+4. SOCKS
+SOCKS — SOCKS 代理协议
+谐音助记：索克斯
+例句：Proxychains routes any tool's traffic through a SOCKS proxy.
+单词拆分：
+Proxychains 代理链工具；route traffic 转发流量；SOCKS proxy SOCKS 代理
+整句总结：通用代理协议，Proxychains 可以让 Nmap、curl 等工具全部走 SOCKS 代理，访问内网网段。
+
+5. TOR (The Onion Router)
+TOR (The Onion Router) — TOR 匿名网络
+谐音助记：托尔
+例句：TOR routes internet traffic through multiple layers of encryption for anonymity.
+单词拆分：
+multiple layers of encryption 多层加密；anonymity 匿名性
+整句总结：洋葱路由网络，流量经过多节点加密跳转，实现网络访问匿名；渗透测试实训环境一般不会使用。
+
+📝 练习12：配对题
+SSH tunnel    A. routes traffic through multiple layers    B
+SOCKS proxy   B. forwards ports through encryption      C
+TOR           C. routes tool traffic through compromised host     A
+port forwarding D. redirects traffic from one port to another    D
