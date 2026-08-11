@@ -1,0 +1,47 @@
+1. report
+report — 报告
+谐音助记：瑞泡特
+例句：A penetration testing report documents all findings, vulnerabilities, and remediation steps.
+单词拆分：
+penetration testing report 渗透测试报告；document 记录；findings 发现项；remediation steps 修复步骤
+整句总结：渗透测试最终输出文档，记录漏洞、复现步骤、危害、整改方案，就像你之前那份 DVWA RCE 文档。
+
+2. severity
+severity — 严重程度
+谐音助记：瑟维瑞提
+例句：Each vulnerability is assigned a severity level: critical, high, medium, or low.
+单词拆分：
+assign 分配；severity level 风险等级；critical 严重；high 高危；medium 中危；low 低危
+整句总结：对漏洞做风险分级，Critical（严重）危害最大，Low（低危）影响最小，SRC、渗透报告都要标注。
+
+3. remediation
+remediation — 修复、整改
+谐音助记：瑞米迪诶深
+例句：Remediation steps provide a clear path to fix each identified vulnerability.
+单词拆分：
+remediation steps 修复步骤；identified vulnerability 已确认漏洞
+整句总结：漏洞对应的整改措施，告诉开发 / 运维怎么修补漏洞（打补丁、增加过滤、配置 WAF 等）。
+
+4. executive summary
+executive summary — 执行摘要
+谐音助记：伊格泽库提夫 萨么瑞
+例句：The executive summary highlights the most critical findings for non‑technical management.
+单词拆分：
+highlight 重点突出；critical findings 关键发现；non‑technical management 非技术管理层
+整句总结：报告开篇简短摘要，不用复杂技术术语，给老板、管理层快速看懂整体风险。
+
+5. appendix
+appendix — 附录
+谐音助记：阿喷迪克斯
+例句：Raw scan results and detailed logs are often placed in the appendix.
+单词拆分：
+raw scan results 原始扫描结果；detailed logs 详细日志；appendix 附录
+整句总结：存放截图、原始日志、工具输出等大量原始材料，不放在正文，放在报告末尾。
+
+📝 练习13：排序题 — 渗透报告各部分按正确顺序排列
+A. Appendix  B. Executive Summary  C. Vulnerability Details  D. Methodology
+B→D→C→A
+B Executive Summary 执行摘要（文档开头，给管理层快速阅读）
+D Methodology 测试方法（说明本次用了什么测试流程、工具，怎么开展测试）
+C Vulnerability Details 漏洞详情（逐个展示漏洞、复现、危害、修复方案）
+A Appendix 附录（截图、原始扫描日志，放在整篇报告末尾）
