@@ -1,0 +1,31 @@
+📝 综合练习（10题）
+1.What is a reverse shell?（ B ）
+A. Opens a port for connection  B. Connects back to attacker  C. Scans for ports
+
+2.What does SUID do?（ B ）
+A. Removes file permissions  B. Runs program as owner  C. Encrypts the file
+
+3.What is the purpose of a WAF?（ B ）
+A. Blocks IP addresses  B. Filters HTTP traffic  C. Scans for malware
+
+4.What does CVE stand for?（ B ）
+A. Common Vulnerability Enumeration  B. Common Vulnerabilities and Exposures  C. Computer Virus Exploit
+
+5.Which describes pass the hash?（ B ）
+A. Using password to login  B. Using hash to authenticate  C. Cracking password
+
+6.Lateral movement means（ B ）   #开始选错A
+A. Moving between networks  B. Expanding access to other systems  C. Cleaning up traces
+lateral movement 横向移动：攻陷一台主机后，扩大权限访问内网其他系统。不是跨网络 (moving between networks)
+
+7.What is a POC?（ B ）
+A. A type of exploit  B. Proof that a vulnerability exists  C. A scanning tool
+
+8.What is DLL hijacking?（ A ）
+A. Loading malicious DLL  B. Deleting DLL files  C. Updating DLL
+
+9.What does EDR monitor?（ B ）
+A. Network traffic only  B. Endpoint activities  C. Web applications
+
+10.What is the purpose of an executive summary?（ B ）
+A. Technical details  B. Highlights for management  C. Raw scan data
