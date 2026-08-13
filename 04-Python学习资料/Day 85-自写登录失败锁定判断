@@ -1,0 +1,26 @@
+def user_fail_count(logs):                          # 统计每个用户失败登录次数
+    fail_count = {}                                 # 字典存放 {用户名:失败次数}
+    for line in logs:                               # 循环遍历每一条登录记录
+        if "fail" in line[1]:                       # 判断登录结果是否为失败
+            user = line[0]                          # 取出用户名
+            fail_count[user] = fail_count.get(user, 0) +1 # 次数累加，没有该用户就从0开始
+    return fail_count                               # 返回统计好的字典
+
+def id_lock(num):                                   # 判断是否需要锁定，返回布尔True/False
+    if num >= 5:                                    # 失败次数大于等于5
+        return True                                 # 返回真，需要锁定
+    else:
+        return False                                # 返回假，不需要锁定
+
+if __name__ == "__main__":                          # 脚本直接运行进入此处
+    logins = [                                      # 模拟登录记录 [用户名,结果]
+    ["admin", "fail"], ["admin", "fail"], ["user1", "success"],
+    ["admin", "fail"], ["admin", "fail"], ["user1", "fail"],
+    ["admin", "fail"], ["admin", "success"],
+]
+    fail_num = user_fail_count(logins)              # 调用统计函数，拿到结果字典
+    for u, num in fail_num.items():                  # 遍历字典，拿到用户名u、次数num
+        if id_lock(num):                             # 调用判断函数，得到True走锁定
+            print(f" {u} 失败 → {num}次 账户锁定")
+        else:                                        # 得到False走未锁定
+            print(f"{u} 失败 →{num}次 未锁定")
