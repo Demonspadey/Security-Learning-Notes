@@ -1,0 +1,46 @@
+1. HTTP request
+HTTP request — HTTP 请求
+谐音助记：艾奇提提皮 瑞奎斯特
+例句：Burp Suite intercepts the HTTP request so you can modify it before it reaches the server.
+单词拆分：
+intercept 拦截；modify 修改；server 服务器
+整句总结：客户端发给 Web 服务器的数据报文，Burp Suite 抓包改包就是操作 HTTP request。
+
+2. header
+header — 请求头 / 响应头
+谐音助记：海德
+例句：The HTTP header contains important information such as cookies, user agent, and content type.
+单词拆分：
+contain 包含；user‑agent 用户代理；content‑type 内容类型
+整句总结：HTTP 报文头部，存放 Cookie、浏览器信息、编码格式等元数据，不包含页面主体内容。
+
+3. cookie
+cookie — Cookie（会话凭证）
+谐音助记：库奇
+例句：Session cookies are often targeted for hijacking because they authenticate the user.
+单词拆分：
+session cookies 会话 Cookie；hijacking 劫持；authenticate 身份认证
+整句总结：浏览器保存在本地的数据，用来维持登录身份；XSS 漏洞经常用来窃取 Cookie。
+
+4. session
+session — 会话
+谐音助记：赛申
+例句：The server uses a session ID to track the state of each logged‑in user.
+单词拆分：
+session ID 会话 ID；track state 跟踪状态；logged‑in user 已登录用户
+整句总结：服务端保存的用户登录状态，浏览器只携带 sessionid，服务端依靠 ID 找到对应用户信息。
+
+5. parameter
+parameter — 参数
+谐音助记：帕瑞米特
+例句：Attackers manipulate URL parameters to test for injection vulnerabilities.
+单词拆分：
+manipulate 篡改；URL parameters URL 参数；injection vulnerabilities 注入漏洞
+整句总结：GET、POST 请求中的输入变量（url?xxx=123，post 表单字段），漏洞大多来自可控参数。
+
+📝 练习1：配对题（英→中）
+HTTP request   A. 请求头    D
+header         B. Cookie    A
+cookie         C. 参数    B
+session        D. HTTP 请求    E
+parameter      E. 会话    C
