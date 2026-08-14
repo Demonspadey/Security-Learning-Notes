@@ -1,0 +1,45 @@
+1. authentication
+authentication — 认证
+谐音助记：奥森提凯深
+例句：Authentication verifies that a user is who they claim to be.
+单词拆分：
+verify 验证；claim to be 声称的身份
+整句总结：核验用户身份，比如账号密码登录、Token 校验，确认 “你是谁”。
+
+2. default credentials
+default credentials — 默认凭据
+谐音助记：迪佛尔特 克瑞登休斯
+例句：Many devices ship with default credentials like admin/admin that are never changed.
+单词拆分：
+ship with 出厂自带；never changed 从未修改
+整句总结：设备、Web 系统出厂自带账号密码（admin/admin、root/root），不修改极易被暴力破解。
+
+3. session hijacking
+session hijacking — 会话劫持
+谐音助记：赛申 海杰金
+例句：Session hijacking occurs when an attacker steals a valid session ID to impersonate a user.
+单词拆分：
+steal session ID 窃取会话 ID；impersonate a user 冒充用户
+整句总结：盗取受害者有效的 SessionID/Cookie，不需要账号密码，直接冒用受害者身份登录系统，XSS 经常用来实现会话劫持。
+
+4. IDOR (Insecure Direct Object Reference)
+IDOR（不安全的直接对象引用）
+谐音助记：爱多尔
+例句：IDOR allows an attacker to access objects by modifying an ID parameter without authorization.
+单词拆分：
+modify ID parameter 修改 ID 参数；without authorization 未授权；access objects 访问对象数据
+整句总结：经典业务逻辑漏洞，修改请求里的 id、userid 参数，越权查看别人订单、他人信息。
+
+5. CAPTCHA
+CAPTCHA — 验证码
+谐音助记：卡普查
+例句：CAPTCHA is designed to prevent automated bots from submitting forms.
+单词拆分：
+automated bots 自动化机器人；submit forms 提交表单
+整句总结：人机校验机制，用来拦截暴力破解、爬虫批量提交请求。
+
+📝 练习2：根据中文写英文
+默认凭据 → ( default credentials  )
+会话劫持 → ( session hijacking  )
+不安全的直接对象引用 → (  IDOR )
+认证 → (  authentication )
