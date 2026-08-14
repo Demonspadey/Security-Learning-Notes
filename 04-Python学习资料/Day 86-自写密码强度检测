@@ -1,0 +1,14 @@
+def check_password(pwd):                              # 定义函数：检查密码强度，pwd接收传入的密码字符串
+    has_digit = any(c.isdigit() for c in pwd)          # 遍历密码每个字符c，判断是否包含数字，有则True
+    has_alpha = any(c.isalpha() for c in pwd)          # 遍历密码每个字符c，判断是否包含字母，有则True
+    if len(pwd) >=8 and has_digit and has_alpha:       # 条件：长度大于等于8 同时有数字 同时有字母
+        return "强"                                     # 返回密码等级：强
+    elif len(pwd) >=6 and (has_digit or has_alpha):    # 条件：长度大于等于6，有数字或者有字母其一即可
+        return "中"                                     # 返回密码等级：中
+    else:                                               # 不满足上面两个条件的其余情况
+        return "弱"                                     # 返回密码等级：弱
+
+if __name__ == "__main__":                             # 脚本直接运行时执行下面代码
+    passwords = ["abc12345", "password", "12345678","ccc123","P@sswOrd123"]  # 待检测的密码列表
+    for p in passwords:                                 # 循环取出每一个密码赋值给p
+        print(f"{p} → {check_password(p)}")             # 调用函数检测，打印密码以及对应强度
