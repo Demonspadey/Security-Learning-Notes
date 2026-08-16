@@ -1,0 +1,45 @@
+1. file upload
+file upload — 文件上传
+谐音助记：法伊尔 阿普洛德
+例句：A file upload vulnerability allows an attacker to upload malicious files to the server.
+单词拆分：
+upload malicious files 上传恶意文件；server 服务器
+整句总结：文件上传漏洞，未严格校验上传文件后缀、内容，攻击者上传脚本后门，获取服务器权限。
+
+2. directory traversal
+directory traversal — 目录遍历
+谐音助记：戴瑞克特瑞 垂沃索
+例句：Directory traversal uses ../sequences to escape the web root and read arbitrary files.
+单词拆分：
+../ 向上跳转目录符号；escape web‑root 逃出网站根目录；read arbitrary files 读取任意文件
+整句总结：也叫路径穿越，利用../跳出网站限定目录，读取服务器敏感文件，例如 /etc/passwd。
+
+3. LFI (Local File Inclusion)
+LFI (Local File Inclusion) — 本地文件包含
+谐音助记：艾尔艾菲
+例句：LFI allows an attacker to include local files on the server through a vulnerable parameter.
+单词拆分：
+include local files 包含本地文件；vulnerable parameter 存在漏洞的参数
+整句总结：利用漏洞参数加载服务器本机文件，可读取配置、日志文件，部分场景可结合日志写入实现 RCE。
+
+4. RFI (Remote File Inclusion)
+RFI (Remote File Inclusion) — 远程文件包含
+谐音助记：阿尔艾菲
+例句：RFI enables an attacker to include a remote file, often leading to remote code execution.
+单词拆分：
+remote file 远程文件；remote code execution 远程代码执行
+整句总结：服务器允许加载外部 URL 上的恶意脚本，直接执行远程恶意代码，高危漏洞，PHP 配置allow_url_include=On才会触发。
+
+5. webshell
+webshell — Web 后门脚本
+谐音助记：维布谢尔
+例句：After uploading a webshell, the attacker can execute commands through the web server.
+单词拆分：
+upload webshell 上传网页后门；execute commands 执行系统命令
+整句总结：php/jsp/aspx 脚本后门，上传到 web 目录，通过 web 访问执行系统命令，实现持久控制服务器。
+
+📝 练习3：填空
+( Directory traversal ) uses ../ to read files outside the web root. 
+( RFI  ) includes remote files, leading to RCE. 
+A ( webshell  ) executes commands through the web server. 
+Uploading malicious files exploits a ( file  ) ( upload  ) vulnerability. 
