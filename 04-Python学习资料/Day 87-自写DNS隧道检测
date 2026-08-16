@@ -1,0 +1,24 @@
+def check_subdomain(domain):                          # 检测子域名是否疑似DNS隧道
+    sub = domain.split(".")[0]                        # 切分域名，拿到最前面子域名
+    has_digit = any(c.isdigit() for c in sub)         # 判断子域名是否包含数字
+    has_upper = any(c.isupper() for c in sub)         # 判断子域名是否包含大写字母
+    if len(sub) > 5 and (has_digit or has_upper):     # 子域名长度大于5，并且（有数字或者大写）
+        return True                                    # 判定可疑
+    else:
+        return False                                   # 判定正常
+
+if __name__ == "__main__":                            # 直接运行脚本才执行下面测试代码
+    dns_log=[
+        "www.humen.com",
+        "test.humen.com",
+        "V21uZG93.humen.com",
+        "cyBTUCDp.humen.com",
+        "hY3nva4K.humen.com",
+        "5Lu!aSq.humen.com",
+        "mail.humen.com",
+    ]
+    for d in dns_log:                                 # 循环遍历每一条域名日志
+        if check_subdomain(d):
+            print(f"可疑: {d}")
+        else:
+            print(f"正常: {d}")
