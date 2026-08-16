@@ -1,0 +1,45 @@
+1. NoSQL injection
+NoSQL injection — NoSQL 注入
+谐音助记：诺思扣 因杰克深
+例句：NoSQL injection exploits unvalidated input in NoSQL databases like MongoDB.
+单词拆分：
+exploit 利用；unvalidated input 未校验输入；NoSQL databases 非关系型数据库（MongoDB）
+整句总结：针对 MongoDB 这类非关系数据库的注入漏洞，用户输入直接拼接 NoSQL 查询语句，可绕过登录、窃取数据，语法和传统 SQL 注入不一样。
+
+2. LDAP injection
+LDAP injection — LDAP 注入
+谐音助记：艾尔戴普 因杰克深
+例句：LDAP injection manipulates LDAP queries to bypass authentication or extract data.
+单词拆分：
+manipulate queries 操纵查询；bypass authentication 绕过认证；extract data 提取数据
+整句总结：输入未过滤直接拼接到 LDAP 查询过滤器，篡改查询逻辑，实现登录绕过、信息读取。
+
+3. XXE (XML External Entity)
+XXE (XML External Entity) — XML 外部实体注入
+谐音助记：艾克斯艾克斯伊
+例句：XXE allows an attacker to read local files or perform SSRF through XML entity expansion.
+单词拆分：
+XML entity expansion XML 实体解析；read local files 读取本地文件；perform SSRF 执行服务端请求伪造
+整句总结：后端解析 XML 时开启外部实体，攻击者构造恶意 XML，读取服务器本地文件，还能触发 SSRF 访问内网。
+
+4. SSTI (Server‑Side Template Injection)
+SSTI — 服务端模板注入
+谐音助记：艾斯艾斯提爱
+例句：SSTI occurs when user input is injected into a server‑side template and evaluated.
+单词拆分：
+server‑side template 服务端模板；evaluated 解析执行
+整句总结：用户可控输入直接塞进模板引擎，模板把输入当作模板代码执行，经常直接造成远程代码执行 RCE。
+
+5. deserialization
+deserialization — 反序列化
+谐音助记：迪瑟瑞莱泽深
+例句：Insecure deserialization can lead to remote code execution when untrusted data is deserialized.
+单词拆分：
+insecure deserialization 不安全反序列化；untrusted data 不可信数据；remote code execution 远程代码执行
+整句总结：程序接收外部不可信序列化字符串，直接做反序列化解析，触发魔术方法执行恶意代码，拿到 RCE 权限，OWASP Top10 高危漏洞。
+
+📝 练习4：选择题
+Which allows reading local files via XML?（ B ） A. XSS B. XXE C. CSRF
+Which injects into server templates?（ A  ） A. SSTI B. SQLi C. LDAPi
+Insecure ( B  ) can cause RCE. A. encryption B. deserialization C. caching
+Which targets MongoDB?（ B ） A. SQL injection B. NoSQL injection C. command injection
