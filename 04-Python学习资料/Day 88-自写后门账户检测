@@ -1,0 +1,20 @@
+passwd_data=[
+    "root:x:0:0:root:/root:/bin/bash",
+    "hacker:x:0:0:hacker:/root:/bin/bash",
+    "user1:x:1000:1000:user:/home/user1:/bin/bash",
+    "daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin"
+]
+def check_backdoor(lines):                          # lines：传入完整passwd账号列表
+    backdoor=[]                                     # 初始化空列表，存储后门账号名
+    for line in lines:                               # 循环取出每一行账号字符串
+        parts = line.split(":")                     # 使用冒号切割passwd字段
+        user = parts[0]                             # parts[0] 用户名
+        uid = parts[2]                              # parts[2] UID编号
+        if uid == "0" and user != "root":           # UID=0，但用户名不是root，判定后门
+            backdoor.append(user)                   # 将后门用户名追加进列表
+    return backdoor                                  # 返回收集到的后门账号列表
+
+if __name__ == "__main__":
+    res = check_backdoor(passwd_data)               # 将完整列表传入函数，拿到后门结果列表
+    for user in res:                                 # 遍历结果列表，打印告警
+        print(f"后门账户: {user} (UID=0)")
