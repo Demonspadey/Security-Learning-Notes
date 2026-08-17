@@ -1,0 +1,45 @@
+1. SSRF (Server‑Side Request Forgery)
+SSRF — 服务端请求伪造
+谐音助记：艾斯艾斯阿尔艾夫
+例句：SSRF tricks the server into making requests to internal resources that should not be accessible.
+单词拆分：
+trick … into doing 诱使… 做；internal resources 内部资源；accessible 可访问的
+整句总结：欺骗服务器代为发起请求，核心访问内网、元数据接口，探测内网资产。
+
+2. open redirect
+open redirect — 开放重定向
+谐音助记：欧喷 瑞迪瑞克特
+例句：An open redirect lets an attacker redirect users to a malicious website via a vulnerable parameter.
+单词拆分：
+redirect 重定向；malicious website 恶意网站；vulnerable parameter 漏洞参数
+整句总结：网站参数可控跳转，被利用做钓鱼，跳转至恶意站点，本身一般不能拿服务器权限。
+
+3. CORS misconfiguration
+CORS misconfiguration — CORS 配置错误
+谐音助记：扣斯 米斯康菲格瑞深
+例句：A CORS misconfiguration may allow malicious websites to read sensitive data from the API.
+单词拆分：
+misconfiguration 配置错误；malicious websites 恶意网站；sensitive data 敏感数据
+整句总结：跨域资源共享配置出错，外部恶意网站可以读取用户浏览器返回的接口敏感数据。
+
+4. subdomain takeover
+subdomain takeover — 子域名接管
+谐音助记：萨布多梅因 忒克欧沃
+例句：Subdomain takeover happens when a dangling DNS record points to a service the attacker controls.
+单词拆分：
+dangling DNS record 悬空 DNS 记录；point to 指向；attacker controls 攻击者控制
+整句总结：DNS 解析记录存在，但后端服务已经注销，攻击者可以接管该子域名。
+
+5. business logic
+business logic — 业务逻辑
+谐音助记：比兹尼斯 劳吉克
+例句：Business logic flaws bypass intended rules, such as modifying prices or bypassing payment.
+单词拆分：
+business logic flaws 业务逻辑漏洞；bypass intended rules 绕过既定规则；bypassing payment 绕过支付
+整句总结：业务设计层面缺陷，不是代码语法漏洞，比如篡改价格、越权下单、绕过验证码。
+
+📝 练习5：配对题（英→英解释）
+SSRF            A. redirect users to malicious site    （B）服务器代替攻击者发起请求，访问内网资源。
+open redirect   B. server makes internal requests    （A）开放重定向，将用户跳转至恶意网站，多用于钓鱼。
+CORS misconfig  C. dangling DNS to attacker service    （D）CORS 头配置错误，恶意站点在浏览器读取接口敏感数据。
+subdomain takeover D. read data via misconfigured headers    （C）悬空 DNS 记录，攻击者接管子域名。
