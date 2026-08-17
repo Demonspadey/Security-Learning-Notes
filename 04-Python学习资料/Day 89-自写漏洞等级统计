@@ -1,0 +1,19 @@
+vulns = [                                                         # 漏洞列表，[]代表列表，列表里面每一项是{}字典
+    {"name": "SQL注入", "severity": "High"},                      
+    {"name": "XSS", "severity": "Medium"},                       
+    {"name": "弱口令", "severity": "High"},                        
+    {"name": "信息泄露", "severity": "Low"},                       
+    {"name": "CSRF", "severity": "Medium"},                       
+    {"name": "未授权访问", "severity": "High"},                    
+]
+
+def count_severity(vulns):                                        # 定义统计漏洞等级数量的函数，接收漏洞列表参数
+    counts = {"High":0, "Medium":0, "Low":0}                      # 计数字典，初始化高危、中危、低危的统计数量全部为0
+    for v in vulns:                                                # 循环遍历漏洞列表，v拿到每一条漏洞字典
+        sev = v["severity"]                                        # 从漏洞字典取出漏洞等级，赋值给sev变量
+        counts[sev] += 1                                           # 根据等级key，对应计数器数字+1
+    return counts                                                  # 返回统计完成的计数字典
+
+result = count_severity(vulns)                                    # 调用统计函数，拿到统计结果字典存入result
+for sev, cnt in result.items():                                   # 遍历结果字典，items()同时取出key(等级)和value(数量)
+    print(f"{sev} → {cnt}个")                                     # 格式化打印：漏洞等级 → 对应漏洞个数
