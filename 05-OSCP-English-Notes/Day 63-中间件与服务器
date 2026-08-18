@@ -1,0 +1,45 @@
+1. Apache
+Apache — Apache 服务器
+谐音助记：阿帕奇
+例句：Apache is the most widely used open‑source web server.
+单词拆分：
+open‑source 开源的；web server Web 服务器；widely used 广泛使用
+整句总结：老牌开源 Web 服务器，多用于 Linux 环境，常见配置漏洞、目录遍历。
+
+2. Nginx
+Nginx — Nginx 服务器
+谐音助记：恩金克斯
+例句：Nginx is known for high performance and is often used as a reverse proxy.
+单词拆分：
+high performance 高性能；reverse proxy 反向代理
+整句总结：高性能 Web / 反向代理服务器，常做负载均衡，容易出现配置错误、解析漏洞。
+
+3. Tomcat
+Tomcat — Tomcat（Java 应用服务器）
+谐音助记：汤姆凯特
+例句：Apache Tomcat runs Java servlets and JSP applications.
+单词拆分：
+Java servlets Java 小服务程序；JSP JAVA 服务器页面；application 应用
+整句总结：专门运行 Java Web 程序，经常遇到弱口令、后台上传、样例文件漏洞。
+
+4. IIS (Internet Information Services)
+IIS — 微软 IIS 服务器
+谐音助记：爱艾斯
+例句：IIS is Microsoft's web server, commonly deployed on Windows systems.
+单词拆分：
+Microsoft 微软；deploy 部署；Windows systems Windows 系统
+整句总结：Windows 平台自带 Web 服务，常见 IIS 短文件名、解析漏洞。
+
+5. misconfiguration
+misconfiguration — 错误配置
+谐音助记：米斯康菲格瑞深
+例句：A misconfiguration such as an exposed admin panel can lead to system compromise.
+单词拆分：
+exposed admin panel 暴露的管理后台；lead to 导致；system compromise 系统被攻陷
+整句总结：服务器、Web 框架配置不当，不属于代码漏洞，但是高频入侵入口。
+
+📝 练习6：判断题（T/F）
+Nginx is a Microsoft product. ( F )
+Tomcat runs Java applications. ( T )
+IIS is commonly on Windows. ( T )
+Misconfiguration is a common root cause of compromise. ( T )
