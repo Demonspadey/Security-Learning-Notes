@@ -1,0 +1,10 @@
+port_map = {22: "SSH", 80: "HTTP", 443: "HTTPS", 3306: "MySQL", 3389: "RDP"} #端口-服务名字典
+def check_port(port):
+    if port in port_map:          # 判断传入端口是不是字典的key
+        return port_map[port]     # key存在，取出对应value（服务名）返回
+    else:
+        return "未知"             # key不存在返回未知
+
+ports = [22, 80, 443, 3306, 3389, 8080] #要检测的端口列表
+for p in ports:                       #循环取出每一个端口赋值给p
+    print(f"端口{p} → {check_port(p)}") #调用函数打印结果
