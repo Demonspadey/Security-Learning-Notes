@@ -1,0 +1,40 @@
+1. sqlmap
+sqlmap — sqlmap（SQL 注入自动化工具）
+例句：Sqlmap automates the detection and exploitation of SQL injection vulnerabilities.
+单词拆分：
+automate 自动化；detection 检测；exploitation 漏洞利用；SQL injection vulnerabilities SQL 注入漏洞
+整句总结：主流自动化 SQL 注入工具，用来检测、利用注入点，拿库、表、数据。
+
+2. database enumeration
+database enumeration — 数据库枚举
+例句：Database enumeration involves extracting table names, columns, and data from the database.
+单词拆分：
+extract 提取；table names 表名；columns 列；database 数据库
+整句总结：注入成功后，依次获取库、表、字段、数据的信息收集过程。
+
+3. NoSQL
+NoSQL — NoSQL 数据库
+例句：NoSQL databases like MongoDB do not use traditional SQL and require different injection techniques.
+单词拆分：
+traditional SQL 传统 SQL；injection techniques 注入技术
+整句总结：非关系型数据库，语法和 MySQL 不同，注入手法区别于普通 SQLi。
+
+4. Redis
+Redis — Redis（内存数据库）
+例句：A misconfigured Redis instance can be exploited to write a webshell or gain RCE.
+单词拆分：
+misconfigured 配置错误；instance 实例；webshell Web 后门；gain RCE 获取远程代码执行
+整句总结：内存键值数据库，未授权访问是高危风险，可写文件实现 RCE。
+
+5. MongoDB
+MongoDB — MongoDB（文档数据库）
+例句：MongoDB injection often uses operators like $ne and $gt to bypass authentication.
+单词拆分：
+operator 操作符；bypass authentication 绕过认证
+整句总结：文档型 NoSQL 数据库，注入依靠特殊查询操作符实现登录绕过。
+
+📝 练习7：根据中文写英文
+数据库枚举 → ( database enumeration  )
+SQL 注入自动化工具 → ( sqlmap  )
+内存数据库 → ( Redis  )
+文档数据库 → ( MongoDB  )
