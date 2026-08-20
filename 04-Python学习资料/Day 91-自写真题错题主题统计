@@ -1,0 +1,15 @@
+wrong = {
+    "系统安全细节": ["第9题", "第13题", "第37题", "第49题"],
+    "密码学": ["第23题", "第71题", "第74题"],
+    "网络设备": ["第7题", "第60题"],
+    "数据安全": ["第11题"],
+    "网络安全": ["第36题"],
+}
+for r, p in wrong.items():
+    count = len(p)
+    print(f"{r} → {count}个错题")
+
+### 统计主题
+wrong_counts = {"系统安全细节": 4, "密码学": 3, "网络设备": 2, "数据安全": 2}
+top = max(wrong_counts, key=wrong_counts.get)
+print(f"最薄弱主题：{top}，错{wrong_counts[top]}题")
