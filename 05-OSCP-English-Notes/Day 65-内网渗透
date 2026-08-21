@@ -1,0 +1,45 @@
+# 1. internal network
+
+**internal network** — 内网
+例句：After compromising the edge server, the attacker moves into the internal network.
+单词拆分：
+compromise 攻陷；edge server 边缘服务器；internal network 内网
+整句总结：企业内部隔离网络，外网不能直接访问，渗透拿到边界机器后向内网进军。
+
+# 2. pivoting
+
+**pivoting** — 跳板渗透
+例句：Pivoting uses a compromised host to reach networks that are otherwise unreachable.
+单词拆分：
+compromised host 失陷主机；unreachable 不可访问的
+整句总结：以已经拿下的机器当跳板，访问原本访问不到的内网网段。
+
+# 3. proxychains
+
+**proxychains** — Proxychains（代理链工具）
+例句：Proxychains routes any tool's traffic through a SOCKS proxy for pivoting.
+单词拆分：
+route traffic 转发流量；SOCKS proxy SOCKS 代理；pivoting 跳板渗透
+整句总结：Kali 常用工具，让 Nmap、sqlmap 等工具流量走 SOCKS 代理，实现跳板访问内网。
+
+# 4. workgroup
+
+**workgroup** — 工作组
+例句：A workgroup is a simple peer‑to‑peer network without centralized domain control.
+单词拆分：
+peer‑to‑peer 对等；centralized 集中的；domain control 域管控
+整句总结：Windows 简单网络模式，每台机器账号独立，没有统一服务器管理。
+
+# 5. domain
+
+**domain** — 域
+例句：A domain provides centralized authentication and policy management for Windows networks.
+单词拆分：
+centralized authentication 集中认证；policy management 策略管理
+整句总结：Windows 域环境，由域控统一管理全部主机账号、权限、安全策略。
+
+📝 练习8：配对题（英→中）
+pivoting        A. 域      C
+proxychains     B. 工作组    D
+workgroup       C. 跳板渗透    B
+domain          D. 代理链工具    A
