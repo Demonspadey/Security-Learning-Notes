@@ -1,0 +1,17 @@
+log_lines = [                                      # 模拟SSH登录日志列表，每一个元素代表一条日志
+    "Failed password for root",                    
+    "Accepted password for root",               
+    "Failed password for admin",                 
+    "Failed password for root",                   
+    "Accepted password for user1",                 
+    "Failed password for root",                  
+]
+result = {"成功":0, "失败":0}                      # 初始化计数字典，成功、失败计数初始化为0
+for line in log_lines:                             # 循环遍历日志列表，line代表单条日志字符串
+    if "Accepted" in line:                         # 判断日志中是否包含Accepted（登录成功关键字）
+        result["成功"] += 1                        # 成功计数 +1
+    elif "Failed" in line:                         # 判断日志中是否包含Failed（登录失败关键字）
+        result["失败"] += 1                        # 失败计数 +1
+
+for k, v in result.items():                       # 遍历结果字典，k拿到key(成功/失败)，v拿到对应计数值
+    print(f"{k} → {v}次")                          # 格式化输出：类别 → 次数
