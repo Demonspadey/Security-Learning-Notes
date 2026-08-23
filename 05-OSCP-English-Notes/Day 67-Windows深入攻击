@@ -1,0 +1,46 @@
+# 1. Mimikatz
+
+**Mimikatz** — Mimikatz（凭据提取工具）
+例句：Mimikatz extracts plaintext passwords and hashes from memory on Windows systems.
+单词拆分：
+extract plaintext passwords 提取明文密码；hashes 哈希；memory 内存
+整句总结：Windows 经典凭据抓取工具，从内存导出密码、哈希，用于域内攻击。
+
+# 2. LSASS
+
+**LSASS** — 本地安全权威子系统
+例句：The LSASS process stores credentials in memory and is a prime target for dumping.
+单词拆分：
+process 进程；store credentials 存储凭据；prime target 主要目标；dump 转储
+整句总结：Windows 系统进程，内存存放登录凭据，Mimikatz 主要读取对象。
+
+# 3. NTLM
+
+**NTLM** — NTLM（Windows 认证协议）
+例句：NTLM hashes can be captured and relayed to gain access to other systems.
+单词拆分：
+capture 捕获；relay 中继；gain access 获取访问权限
+整句总结：Windows 旧版认证协议，支持哈希传递、NTLM 中继攻击，AD 兼容备用协议。
+
+# 4. SMB (Server Message Block)
+
+**SMB** — SMB 文件共享协议
+例句：SMB shares are a common target for lateral movement in Windows networks.
+单词拆分：
+SMB shares SMB 共享；lateral movement 横向移动；Windows networks Windows 网络
+整句总结：用于 Windows 文件、打印机共享，445 端口，是内网横向移动高频入口。
+
+# 5. PsExec
+
+**PsExec** — PsExec（远程执行工具）
+例句：PsExec allows administrators to execute processes remotely, often abused for lateral movement.
+单词拆分：
+execute processes 执行进程；remotely 远程；abuse 滥用
+整句总结：微软官方远程执行工具，攻击者经常利用它通过 SMB 在目标主机执行命令。
+
+📝 练习10：连线题（英→中）
+Mimikatz    A. 文件共享协议    B
+LSASS       B. 凭据提取工具    C
+NTLM        C. 本地安全权威    D
+SMB         D. 认证协议    A
+
