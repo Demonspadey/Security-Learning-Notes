@@ -1,0 +1,44 @@
+# 1. Active Directory
+
+**Active Directory** — 活动目录
+例句：Active Directory is the directory service that manages users and computers in a Windows domain.
+单词拆分：
+directory service 目录服务；manage users and computers 管理用户与计算机；Windows domain Windows 域
+整句总结：Windows 域环境核心目录服务，统一管控域内账号、主机、权限策略。
+
+# 2. Kerberos
+
+**Kerberos** — Kerberos 认证协议
+例句：Kerberos is the default authentication protocol in Active Directory.
+单词拆分：
+default authentication protocol 默认认证协议；Active Directory 活动目录
+整句总结：AD 域默认认证协议，依靠票据机制完成身份校验，黄金 / 白银票据攻击都基于该协议。
+
+# 3. golden ticket
+
+**golden ticket** — 黄金票据
+例句：A golden ticket forges a Kerberos TGT using the KRBTGT hash, granting domain‑wide access.
+单词拆分：
+forge 伪造；TGT 票据授予票据；KRBTGT hash KRBTGT 哈希；domain‑wide access 全域访问权限
+整句总结：利用 KRBTGT 哈希伪造 TGT 票据，拿到整个域的最高权限，属于域持久化手段。
+
+# 4. silver ticket
+
+**silver ticket** — 白银票据
+例句：A silver ticket forges a service ticket to access a specific service without contacting the KDC.
+单词拆分：
+service ticket 服务票据；specific service 特定服务；KDC 密钥分发中心
+整句总结：伪造 ST 服务票据，仅访问某一项指定服务，不需要和 KDC 服务器通信。
+
+# 5. BloodHound
+
+**BloodHound** — AD 攻击路径分析工具
+例句：BloodHound maps attack paths in Active Directory by analyzing relationships.
+单词拆分：
+map attack paths 绘制攻击路径；analyze relationships 分析权限关系
+整句总结：抓取 AD 域内实体关系，图形化展示可利用的提权、横向移动攻击链路。
+
+📝 练习9：选择题
+Which ticket grants domain-wide access?（ B ） A. silver B. golden C. TGT
+Which protocol is default in AD?（ B ） A. LDAP B. Kerberos C. NTLM
+BloodHound is used to（ B ） A. crack hashes B. map AD attack paths C. scan ports
