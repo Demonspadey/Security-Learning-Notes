@@ -1,0 +1,9 @@
+ip_list = ["192.168.1.100", "192.168.2.50", "192.168.1.200", "10.0.0.1"]
+result = []                          # 存放匹配网段的ip
+for ip in ip_list:
+    parts = ip.split(".")            # 将ip按小数点分割成列表
+    if parts[0] == "192" and parts[1] == "168" and parts[2] == "1":
+        result.append(ip)             # 符合条件，添加到结果列表
+print("=== 属于192.168.1.0/24网段的IP ===")
+for p in result:
+    print(f"{p} 属于该网段")
