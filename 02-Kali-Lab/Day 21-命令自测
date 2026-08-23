@@ -1,0 +1,35 @@
+给场景 → 写命令：
+1. 找出UID=0的隐藏账户（应急）
+2. 按CPU占用排序查看进程（应急）
+3. 查看正在监听的端口（网络）
+4. 扫描目标全端口+服务版本（信息收集）
+5. 查看SSH登录失败记录（应急）
+
+给命令 → 说场景：
+1. getcap -r / 2>/dev/null
+2. echo "内容" | base64 -d
+3. ufw status
+4. iptables -D INPUT -s IP -j DROP
+5. openssl x509 -in cert.pem -text -noout
+
+答案：
+1.【Linux】awk -F: '$3==0{print $1}' /etc/passwd
+   → 冒号分割，第3列(UID)为0的账户名（root权限但非root=后门账户）
+2.【Linux】ps aux --sort=-%cpu | head
+   → 按CPU占用倒序取前10（找最占资源的进程）
+3.【Linux】ss -tln（或 netstat -tln）
+   → 查看正在监听的TCP端口（-t TCP，-l 监听，-n 数字）
+4.【Linux】nmap -sV -p- 目标IP
+   → 全端口(-p-)扫描 + 服务版本(-sV)
+5.【Linux】grep "Failed password" /var/log/auth.log
+   → 筛选SSH登录失败记录
+给命令说场景：
+1.【Linux】getcap -r / 2>/dev/null → 查看capabilities（提权点）
+2.【Linux】echo -n "YWRtaW4=" | base64 -d → Base64解码，输出 admin（-d解码）
+3.【Linux】ufw status → 查看Ubuntu防火墙状态（ufw=Uncomplicated Firewall）
+4.【Linux】iptables -D INPUT -s IP -j DROP → 删除一条封禁规则（-D=delete删除）
+5.【Linux】openssl x509 -in cert.pem -text -noout → 查看证书内容
+   （-text=显示详细信息，-noout=不输出原始编码）
+```
+
+---
