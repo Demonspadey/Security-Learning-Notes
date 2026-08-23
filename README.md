@@ -4,7 +4,7 @@
 
 ## 📂仓库目录结构
 - **01‑Soft‑Exam‑Notes**：信息安全工程师教材同步复习笔记、真题错题整理
-- **02‑Kali‑Lab**：Kali Linux命令集、iptables、openssl、靶场实操记录
+- **02‑Kali‑Lab**：Kali Linux命令集、iptables、openssl、靶场实操记录、漏洞报告记录
 - **03‑Penetration‑Testing**：Web安全、漏洞复现、Upload‑labs/DVWA靶场、CISP‑PTE备考
 - **04‑Python学习资料**：Python基础语法、安全脚本编写练习
 - **05‑OSCP‑English‑Notes**：网安专业英语词汇、真题翻译
