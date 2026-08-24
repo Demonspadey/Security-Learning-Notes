@@ -1,0 +1,41 @@
+# 需求：口令安全存储——不存明文，存哈希；验证时比对哈希（呼应"口令不能明文存"考点）
+users = {"admin": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"}
+# ↑ 这串是 "password" 的SHA256哈希（真实系统就这么干，泄库也拿不到明文）
+
+def hash_pwd(pwd):
+    return hashlib.sha256(pwd.encode()).hexdigest()
+
+def login(username, password):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. 如果 username 不在 users 字典里 → 返回 "用户不存在"
+    #   2. 计算 password 的哈希 hash_pwd(password)
+    #   3. 和 users[username] 比对：一致返回 "登录成功"，否则 "密码错误"
+    #   写完步骤 → 对照模式卡"模式1 dict查表"翻译
+
+    # ✏️ 第二步：写代码（把上面步骤翻译成代码）
+    pass
+
+print(login("admin", "password"))   # 预期：登录成功
+print(login("admin", "wrong"))      # 预期：密码错误
+print(login("bob", "password"))     # 预期：用户不存在
+
+
+import hashlib  # 导入哈希算法库
+
+users = {"admin": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"}  # 用户字典：用户名:密码哈希值
+
+def hash_pwd(pwd):  # 定义计算密码哈希的函数，pwd为传入的密码
+    return hashlib.sha256(pwd.encode()).hexdigest()  # 密码转字节，计算sha256哈希，返回十六进制哈希字符串
+
+def login(username, password):  # 登录函数，参数：用户名、用户输入的密码
+    if username not in users:  # 判断用户名不在users字典的键中
+        return "用户不存在"  # 返回用户不存在
+    input_hash = hash_pwd(password)  # 将用户输入的密码计算哈希，保存到input_hash
+    if input_hash == users[username]:  # 输入密码的哈希 和 字典中该用户存储的哈希对比
+        return "登录成功"  # 哈希相等，返回登录成功
+    else:
+        return "密码错误"  # 哈希不相等，返回密码错误
+
+print(login("admin", "password"))   # 调用登录函数：用户名admin，密码password，打印返回结果
+print(login("admin", "wrong"))      # 调用登录函数：用户名admin，密码wrong，打印返回结果
+print(login("bob", "password"))     # 调用登录函数：用户名bob，密码password，打印返回结果
