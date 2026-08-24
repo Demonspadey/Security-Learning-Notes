@@ -1,0 +1,45 @@
+# 1. ROP (Return‑Oriented Programming)
+
+**ROP** — 返回导向编程
+例句：ROP chains reuse existing code fragments to bypass NX protection.
+单词拆分：
+ROP chains ROP 链；reuse existing code fragments 复用现有代码片段；bypass NX protection 绕过 NX 保护
+整句总结：利用程序内存里已有的 gadget 代码片段拼接成攻击链，用来绕过 DEP/NX 不可执行防护。
+
+# 2. heap spray
+
+**heap spray** — 堆喷射
+例句：Heap spraying fills the heap with shellcode to increase the chance of execution.
+单词拆分：
+heap 堆内存；fill … with shellcode 用 shellcode 填充；increase the chance of execution 提升执行概率
+整句总结：向堆内存大量填充 shellcode，内存溢出跳转时更大概率命中攻击代码。
+
+# 3. ASLR bypass
+
+**ASLR bypass** — 绕过地址空间布局随机化
+例句：An ASLR bypass uses information leaks to predict where code is loaded in memory.
+单词拆分：
+information leaks 信息泄露；predict 预测；loaded in memory 在内存中加载
+整句总结：依靠内存泄露拿到内存地址，破解 ASLR 随机化，获取 libc、模块的真实基地址。
+
+# 4. DEP/NX
+
+**DEP/NX** — 数据执行保护
+例句：DEP/NX marks memory pages as non‑executable to prevent running injected code.
+单词拆分：
+memory pages 内存页；non‑executable 不可执行；injected code 注入代码
+整句总结：内存防护机制，栈、堆内存标记为不可执行，直接阻止 shellcode 在栈堆运行；ROP/ret2libc 用来对抗它。
+
+# 5. ret2libc
+
+**ret2libc** — 返回 libc 攻击技术
+例句：Ret2libc redirects execution to libc functions to spawn a shell without injecting code.
+单词拆分：
+redirects execution 重定向执行流；libc functions libc 库函数；spawn a shell 生成 shell；without injecting code 不注入代码
+整句总结：溢出把返回地址劫持到 libc 库内 system 等函数，不注入 shellcode，是最简单的 ROP 雏形，绕过 NX。
+
+📝 练习11：判断正误（T/F）
+ROP bypasses NX by reusing code. ( T )
+ASLR randomizes memory addresses. ( T )
+DEP makes memory pages executable. ( F )
+Ret2libc injects external shellcode. ( F )
