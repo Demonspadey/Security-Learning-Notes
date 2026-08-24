@@ -1,0 +1,30 @@
+# 需求：模拟挑战-响应认证的核心——服务器验证客户端返回的响应
+# 原理：客户端拿"挑战数+共享密钥"一起哈希，服务器算同样的值比对
+#       能算出正确值 = 客户端持有共享密钥 = 认证通过
+
+def verify(challenge, response, secret):
+    # ✏️ 你写：
+    #   1. 计算 expected = hashlib.sha256((challenge + secret).encode()).hexdigest()
+    #   2. 返回 expected == response
+    pass
+
+challenge = "123456"   # 服务器发来的随机挑战数（模拟 Nb）
+secret = "s3cr3t"      # 共享密钥（模拟A和B事先约定）
+# 客户端算出的响应（模拟 A→B 的消息3）
+response = hashlib.sha256((challenge + secret).encode()).hexdigest()
+
+print("验证结果:", verify(challenge, response, secret))
+
+# 预期输出：验证结果: True
+
+import hashlib                          # 导入哈希模块
+def verify(challenge, response, secret):
+    # 服务器计算预期哈希
+    expected = hashlib.sha256((challenge + secret).encode()).hexdigest()
+    return expected == response         # 比对返回True/False
+
+challenge = "123456"
+secret = "s3cr3t"
+# 客户端计算响应哈希
+response = hashlib.sha256((challenge + secret).encode()).hexdigest()
+print(f"验证结果, {verify(challenge, response, secret)}")
