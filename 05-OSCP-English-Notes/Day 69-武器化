@@ -1,0 +1,45 @@
+# 1. exploit kit
+
+**exploit kit** — 漏洞利用工具包
+例句：An exploit kit automatically delivers exploits to vulnerable browsers visiting a page.
+单词拆分：
+automatically delivers exploits 自动投递漏洞利用；vulnerable browsers 存在漏洞的浏览器
+整句总结：集成多个漏洞 EXP 的工具包，针对访问网页的浏览器自动发起漏洞攻击。
+
+# 2. macro
+
+**macro** — 宏（恶意宏）
+例句：Attackers embed malicious macros in Office documents to deliver malware.
+单词拆分：
+embed malicious macros 嵌入恶意宏；Office documents Office 文档；deliver malware 投递恶意软件
+整句总结：Office 文档内置脚本，攻击者开启宏执行即可运行恶意代码，是常见钓鱼载体。
+
+# 3. phishing
+
+**phishing** — 钓鱼
+例句：Phishing emails trick users into clicking malicious links or opening infected attachments.
+单词拆分：
+trick users into 诱骗用户；malicious links 恶意链接；infected attachments 带毒附件
+整句总结：社会工程学攻击，伪造邮件、页面欺骗用户主动执行恶意操作。
+
+# 4. dropper
+
+**dropper** — 投放器
+例句：A dropper is a small program that downloads and installs the actual malware.
+单词拆分：
+small program 小程序；downloads and installs 下载并安装；actual malware 真正的恶意软件
+整句总结：本身无破坏能力，负责下载落地真正木马病毒，充当载体。
+
+# 5. obfuscation
+
+**obfuscation** — 混淆
+例句：Obfuscation disguises malicious code to evade signature‑based detection.
+单词拆分：
+disguises malicious code 伪装恶意代码；evade 逃避；signature‑based detection 基于特征的检测
+整句总结：对代码做变形处理，破坏杀毒软件的特征库匹配，实现免杀。
+
+📝 练习12：根据中文写英文
+钓鱼 → ( phishing  )
+混淆 → ( obfuscation  )
+投放器 → ( dropper  )
+恶意宏 → (  macro )
