@@ -1,0 +1,45 @@
+# 1. AV bypass
+
+**AV bypass** — 绕过杀毒软件
+例句：AV bypass techniques modify malware so that antivirus signatures no longer match.
+单词拆分：
+modify malware 修改恶意软件；antivirus signatures 杀毒特征；no longer match 不再匹配
+整句总结：修改恶意程序，破坏杀毒软件特征库匹配，实现绕过传统 AV。
+
+# 2. EDR bypass
+
+**EDR bypass** — 绕过端点检测响应
+例句：EDR bypass is more difficult than AV bypass because it monitors behavior, not just signatures.
+单词拆分：
+more difficult 难度更高；monitors behavior 监控行为；not just signatures 不只依赖特征
+整句总结：EDR 侧重行为分析，不单单靠特征，绕过难度远高于普通杀毒 AV。
+
+# 3. AMSI
+
+**AMSI** — 反恶意软件扫描接口
+例句：AMSI allows security products to inspect PowerShell and script content in real time.
+单词拆分：
+inspect 检查；PowerShell 脚本；script content 脚本内容；in real time 实时
+整句总结：Windows 接口，对 PowerShell 等脚本实时扫描，很多脚本类恶意代码会被 AMSI 拦截。
+
+# 4. evasion
+
+**evasion** — 规避
+例句：Evasion techniques aim to hide malicious activity from security monitoring.
+单词拆分：
+aim to 目标是；hide malicious activity 隐藏恶意行为；security monitoring 安全监控
+整句总结：通用术语，泛指一切躲避安全设备检测的手段（AV/EDR/ 防火墙都算 evasion）。
+
+# 5. logging
+
+**logging** — 日志记录
+例句：Attackers may disable logging or delete logs to cover their tracks.
+单词拆分：
+disable logging 禁用日志；delete logs 删除日志；cover their tracks 掩盖痕迹
+整句总结：攻击者入侵后常清除、关闭日志，消除入侵证据，是应急响应重点关注。
+
+📝 练习13：配对题（英→中）
+AV bypass     A. 实时扫描脚本接口    C
+EDR bypass    B. 规避    D
+AMSI          C. 绕过杀软    A
+evasion       D. 绕过端点检测    B
