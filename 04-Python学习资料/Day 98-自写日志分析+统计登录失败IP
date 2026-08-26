@@ -1,0 +1,49 @@
+# 需求：统计SSH登录失败IP次数Top（应急排查：找出谁在爆破你的服务器）
+# 模拟 auth.log 中的失败登录记录（真实场景读文件即可）
+log_lines = [
+    "Mar 1 02:12:31 server sshd[1234]: Failed password for root from 192.168.1.10 port 22",
+    "Mar 1 02:13:05 server sshd[1235]: Failed password for root from 10.0.0.5 port 22",
+    "Mar 1 02:15:44 server sshd[1236]: Failed password for admin from 192.168.1.10 port 22",
+    "Mar 1 02:20:11 server sshd[1237]: Failed password for root from 192.168.1.10 port 22",
+    "Mar 1 02:21:33 server sshd[1238]: Failed password for root from 172.16.0.8 port 22",
+]
+
+def count_failed_ip(lines):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. 建空字典 ip_count
+    #   2. 遍历 lines，只处理包含 "Failed password" 的行
+    #   3. 提取IP：先 split() 切词，用 parts.index("from") 找到from位置，IP就在它后面1位
+    #   4. 累加 ip_count[ip] = ip_count.get(ip, 0) + 1
+    #   5. 按次数倒序排序，打印 "IP: N次"
+    #   写完步骤 → 对照模式卡"模式1 dict累加" + "模式4 排序" 翻译
+
+    # ✏️ 第二步：写代码
+    pass
+
+count_failed_ip(log_lines)
+# 预期输出（倒序）：
+# 192.168.1.10: 3次
+# 10.0.0.5: 1次
+# 172.16.0.8: 1次
+```
+
+log_lines = [
+    "Mar 1 02:12:31 server sshd[1234]: Failed password for root from 192.168.1.10 port 22",
+    "Mar 1 02:13:05 server sshd[1235]: Failed password for root from 10.0.0.5 port 22",
+    "Mar 1 02:15:44 server sshd[1236]: Failed password for admin from 192.168.1.10 port 22",
+    "Mar 1 02:20:11 server sshd[1237]: Failed password for root from 192.168.1.10 port 22",
+    "Mar 1 02:21:33 server sshd[1238]: Failed password for root from 172.16.0.8 port 22",
+]
+def count_failed_ip(lines):
+    ip_count = {}
+    for line in lines:
+        if "Failed password" not in line:
+            continue
+        parts = line.split()
+        idx = parts.index("from")
+        ip = parts[idx+1]
+        ip_count[ip] = ip_count.get(ip, 0) +1
+    sorted_list = sorted(ip_count.items(), key=lambda x: x[1], reverse=True)
+    for ip, cnt in sorted_list:
+        print(f"{ip}: {cnt}次")
+count_failed_ip(log_lines)
