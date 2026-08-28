@@ -1,0 +1,31 @@
+1.encryption — 加密
+例句：Encryption transforms plaintext into ciphertext to protect data.
+单词拆分：transform plaintext 转换明文；into ciphertext 成为密文；protect data 保护数据
+整句总结：加密将明文转换为密文，以此保护数据。
+
+2.decryption — 解密
+例句：Decryption reverses the encryption process using the correct key.
+单词拆分：reverses the encryption process 逆转加密过程；using the correct key 使用正确密钥
+整句总结：解密使用正确密钥，把加密过程反向还原。
+
+3.plaintext — 明文
+例句：Block ciphers take a block of plaintext and a key, and output ciphertext.
+单词拆分：block ciphers 分组密码；take a block of plaintext 读取一块明文；output ciphertext 输出密文
+整句总结：分组密码接收明文分组与密钥，输出密文分组。
+
+4.ciphertext — 密文
+例句：The ciphertext looks like random data without the key.
+单词拆分：looks like random data 看起来是随机数据；without the key 没有密钥
+整句总结：在没有密钥的情况下，密文表现为无意义的随机数据。
+
+5.key — 密钥
+例句：Symmetric‑key cryptosystems use the same key for encryption and decryption.
+单词拆分：symmetric‑key cryptosystems 对称密钥密码系统；the same key 同一个密钥；encryption and decryption 加密和解密
+整句总结：对称密码系统使用同一把密钥完成加密和解密。
+
+📝 练习1：配对（英→中）
+encryption    A. 密文		( C )
+plaintext     B. 解密		( E )
+ciphertext    C. 加密		( A )
+decryption    D. 密钥		( B )
+key           E. 明文		( D )
