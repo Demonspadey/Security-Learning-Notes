@@ -1,0 +1,30 @@
+📝 综合练习（10题）
+1.What does IDOR stand for?（ A ）
+A. Insecure Direct Object Reference  B. Indirect Data Object Reference  C. Insecure Data Output Reference
+
+2.Which allows reading local files via XML entities?（ B ）
+A. XSS  B. XXE  C. SSRF
+
+3.RFI can lead to（ A ）
+A. Remote Code Execution  B. Denial of Service  C. Data Loss
+
+4.What is a golden ticket?（ B ）
+A. Forged service ticket  B. Forged TGT using KRBTGT hash  C. A type of certificate
+
+5.Mimikatz is used to（ A ）
+A. Extract credentials from memory  B. Scan ports  C. Crack WPA
+
+6.ROP is used to bypass（ B ）
+A. ASLR  B. NX/DEP  C. Stack canaries only
+
+7.AMSI inspects（ B ）
+A. Network traffic  B. Scripts and PowerShell content  C. Files on disk only
+
+8.A dropper is（ B ）
+A. A phishing email  B. A program that installs malware  C. A type of exploit
+
+9.Proxychains is used for（ B ）
+A. Port scanning  B. Routing tools through SOCKS proxy  C. Password cracking
+
+10.Sqlmap automates（ A ）
+A. SQL injection detection  B. Password cracking  C. Port scanning
