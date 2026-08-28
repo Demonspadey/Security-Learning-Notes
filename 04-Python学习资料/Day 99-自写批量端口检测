@@ -1,0 +1,31 @@
+# 需求：批量检测目标IP的常用端口是否开放（渗透/安服信息收集基础）
+import socket
+
+target = "192.168.255.100"
+ports = [22, 80, 443, 3306, 3389, 8080]   # SSH/HTTP/HTTPS/MySQL/RDP/代理
+
+def scan_port(host, port):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. 创建socket对象 s = socket.socket()
+    #   2. 设置超时 s.settimeout(1)  （1秒没回应就放弃）
+    #   3. 用 s.connect_ex((host, port)) 尝试连接（返回0=连接成功=端口开放）
+    #   4. 关闭socket，返回 result == 0
+    #   写完步骤 → 对照模式卡"模式7 函数+返回值" 翻译
+
+
+import socket                     # 导入socket网络模块，用于TCP连接扫描
+target = "192.168.255.100"           # 设置要扫描的目标IP地址
+ports = [22, 80, 443, 3306, 3389, 8080]  # 需要扫描的端口列表
+
+def scan_port(host, port):        # 定义扫描单个端口的函数，参数：目标主机、端口号
+    s = socket.socket()           # 创建TCP套接字对象（网络通信工具）
+    s.settimeout(1)               # 设置超时时间1秒，1秒无响应就不再等待，防止脚本卡死
+    res = s.connect_ex((host, port)) # 尝试TCP连接目标IP+端口；返回数字，0=连接成功(端口开放)
+    s.close()                      # 关闭套接字，释放系统资源
+    return res == 0                # 返回布尔值：0→True(端口开放)，非0→False(端口关闭)
+
+for p in ports:                   # 遍历端口列表，逐个端口检测
+    if scan_port(target, p):      # 调用函数扫描端口，判断返回True/False
+        print(f"{target}: {p} 开放")  # 函数返回True，打印端口开放
+    else:
+        print(f"{target}: {p} 关闭")  # 函数返回False，打印端口关闭
