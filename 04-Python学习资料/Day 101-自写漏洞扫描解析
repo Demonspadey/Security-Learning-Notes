@@ -1,0 +1,31 @@
+# 需求：解析漏扫报告，提取高危/严重漏洞（安服解读Nessus报告的核心技能）
+report = [
+    "Apache 2.4.49 - Path Traversal - CVSS 9.8 - HIGH",
+    "OpenSSH 7.2 - User Enumeration - CVSS 5.3 - MEDIUM",
+    "PHP 5.6 - Remote Code Execution - CVSS 9.8 - CRITICAL",
+    "MySQL 5.5 - Weak Password - CVSS 7.5 - HIGH",
+    "Nginx 1.14 - Information Disclosure - CVSS 4.3 - MEDIUM",
+]
+
+def get_high_vulns(lines):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. 遍历 lines 每一行
+    #   2. 只保留包含 "HIGH" 或 "CRITICAL" 的行（高危/严重）
+    #   3. 打印这些高危漏洞
+    #   写完步骤 → 对照模式卡"模式6 遍历+条件" 翻译
+
+
+report = [
+    "Apache 2.4.49 - Path Traversal - CVSS 9.8 - HIGH",
+    "OpenSSH 7.2 - User Enumeration - CVSS 5.3 - MEDIUM",
+    "PHP 5.6 - Remote Code Execution - CVSS 9.8 - CRITICAL",
+    "MySQL 5.5 - Weak Password - CVSS 7.5 - HIGH",
+    "Nginx 1.14 - Information Disclosure - CVSS 4.3 - MEDIUM",
+]
+def get_high_vulns(lines):
+    for r in lines:                          # 循环遍历每一条漏洞字符串，r代表单条漏洞
+        if "HIGH" in r or "CRITICAL" in r:   # 判断该行包含HIGH 或者 CRITICAL等级
+            print(r)                         # 符合条件就打印漏洞行
+
+print("=== 高危/严重漏洞 ===")
+get_high_vulns(report)
