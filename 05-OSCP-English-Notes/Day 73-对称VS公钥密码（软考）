@@ -1,0 +1,29 @@
+1.symmetric — 对称的
+例句：Symmetric cryptography uses the same key for both sides.
+单词拆分：symmetric cryptography 对称密码；the same key 同一个密钥；both sides 通信双方
+整句总结：对称密码算法通信双方使用同一把密钥。
+
+2.asymmetric — 非对称的（公钥）
+例句：Asymmetric cryptography uses a pair of mathematically related keys.
+单词拆分：asymmetric cryptography 非对称密码；a pair of keys 一对密钥；mathematically related 数学相关的
+整句总结：非对称密码使用一对存在数学关联的密钥。
+
+3.public key — 公钥
+例句：The public key may be freely distributed, while the private key must remain secret.
+单词拆分：public key 公钥；freely distributed 自由分发；remain secret 保持保密
+整句总结：公钥可以公开分发，私钥则必须严格保密。
+
+4.private key — 私钥
+例句：The private key is used for decryption and digital signatures.
+单词拆分：private key 私钥；used for decryption 用于解密；digital signatures 数字签名
+整句总结：私钥主要用来完成解密以及生成数字签名。
+
+5.secret key — 秘密密钥
+例句：Establishing a secret key over an insecure channel is a chicken‑and‑egg problem.
+单词拆分：establishing a secret key 建立秘密密钥；insecure channel 不安全信道；chicken‑and‑egg problem 先有鸡还是先有蛋的难题
+整句总结：在不安全信道协商对称密钥，是一个经典的两难问题。
+
+📝 练习2：判断正误
+公钥可以公开分发。        → T
+对称密码加解密用不同密钥。 → F（同一密钥）   
+私钥必须保密。            → T
