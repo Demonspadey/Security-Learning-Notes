@@ -1,0 +1,26 @@
+# 需求：批量检测URL是否可访问（安服巡检/资产梳理常用）
+import urllib.request
+
+urls = ["http://192.168.1.100", "http://192.168.1.101", "http://192.168.1.102"]
+
+def check_url(url):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. 用 urllib.request.urlopen(url, timeout=3) 尝试访问
+    #   2. 能打开返回 True
+    #   3. 异常（连不上/超时）返回 False
+    #   写完步骤 → 对照模式卡"模式5 判断包含" + try/except 翻译
+
+import urllib.request   # 导入python内置http请求库
+
+urls = ["https://www.baidu.com", "http://192.168.1.101","http://192.168.1.102"] # 需要批量检测的url列表
+
+def check_url(url):                     # 定义函数，参数url：待检测网址
+    try:                                # 尝试执行网络请求，捕获报错
+        urllib.request.urlopen(url, timeout=3)  # 请求url，3秒超时
+        return True                     # 请求无异常，返回True代表可访问
+    except:                             # 捕获所有网络异常（超时、连不上、拒绝连接）
+        return False                    # 出现异常返回False，不可访问
+
+for u in urls:                          # 遍历每一个url
+    # 三元表达式：check_url返回True输出可访问，False输出不可访问
+    print(f"{u} → {'可访问' if check_url(u) else '不可访问'}")
