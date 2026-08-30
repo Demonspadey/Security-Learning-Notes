@@ -1,0 +1,29 @@
+1.hash function — 哈希函数
+例句：A hash function takes input data and outputs a fixed‑length digest.
+单词拆分：hash function 哈希函数；takes input data 接收输入数据；fixed‑length digest 固定长度摘要
+整句总结：哈希函数接收任意输入数据，输出一段固定长度的摘要值。
+
+2.message digest — 消息摘要
+例句：The message digest is used to verify that data has not been tampered with.
+单词拆分：message digest 消息摘要；verify 验证；tampered with 被篡改
+整句总结：消息摘要用来校验数据是否遭到篡改。
+
+3.collision — 碰撞
+例句：For a good hash function, collisions are extremely difficult to find.
+单词拆分：good hash function 优秀哈希函数；collisions 碰撞；extremely difficult to find 极难找到
+整句总结：安全的哈希算法，想要构造出哈希碰撞十分困难。
+
+4.one‑way function — 单向函数
+例句：A one‑way function is easy to compute but hard to reverse.
+单词拆分：one‑way function 单向函数；easy to compute 易于计算；hard to reverse 难以逆向推导
+整句总结：单向函数正向计算简单，反向还原原始数据很困难。
+
+5.MAC (Message Authentication Code) — 消息认证码
+例句：A MAC uses a secret key to authenticate the hash value on receipt.
+单词拆分：secret key 秘密密钥；authenticate the hash value 认证哈希值；on receipt 在接收端
+整句总结：消息认证码借助密钥，让接收方可以校验哈希值的合法性。
+
+📝 练习3：翻译
+hash function → 哈希函数
+message digest → 消息摘要
+one-way function → 单向函数
