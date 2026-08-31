@@ -1,0 +1,30 @@
+1.block cipher — 分组密码
+例句：DES and AES are block cipher designs designated as standards.
+单词拆分：block cipher 分组密码；designated as standards 被指定为标准
+整句总结：DES、AES 属于分组密码，是业界标准加密算法。
+
+2.stream cipher — 流密码
+例句：A stream cipher generates a stream of key material combined with plaintext.
+单词拆分：stream cipher 流密码；key material 密钥素材；combined with plaintext 和明文结合
+整句总结：流密码产生密钥流，将密钥流和明文进行运算完成加密。
+
+3.mode of operation — 工作模式
+例句：Modes of operation determine how successive blocks are chained.
+单词拆分：modes of operation 工作模式；successive blocks 连续分组；are chained 进行链接
+整句总结：工作模式规定多个明文分组之间如何链接处理，ECB、CBC、CTR 属于工作模式。
+
+4.key schedule /subkey — 密钥编排 / 子密钥
+例句：DES derives subkeys from the master key during the key schedule.
+单词拆分：derives subkeys 派生子密钥；master key 主密钥；key schedule 密钥编排
+整句总结：密钥编排从原始主密钥生成一轮轮使用的子密钥，DES 会用到该机制。
+
+5.XOR (exclusive or) — 异或
+例句：Stream ciphers combine the key stream with plaintext using XOR.
+单词拆分：key stream 密钥流；plaintext 明文；using XOR 使用异或运算
+整句总结：异或是基础位运算，流密码依靠异或完成密钥流与明文的混合加密。
+
+📝 练习4：配对
+block cipher    A. 流密码      C
+stream cipher   B. 工作模式    A
+mode of operation  C. 分组密码    B
+XOR             D. 异或    D
