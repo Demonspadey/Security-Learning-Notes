@@ -1,0 +1,43 @@
+# 需求：分析SSH登录失败日志，统计暴力破解来源IP Top 5（安服应急响应日常）
+# 样本日志（真实auth.log格式，"Failed password"=暴力破解特征）
+log_text = """Jul 23 09:33:41 humen sshd[5423]: Failed password for humen from 192.168.107.130 port 40231 ssh2
+Jul 23 09:33:43 humen sshd[5425]: Failed password for humen from 192.168.107.130 port 37223 ssh2
+Jul 23 09:33:47 humen sshd[5429]: Failed password for humen from 192.168.107.131 port 41365 ssh2
+Jul 23 09:33:49 humen sshd[5431]: Failed password for humen from 192.168.107.132 port 45627 ssh2
+Jul 23 09:33:53 humen sshd[5433]: Failed password for humen from 192.168.107.130 port 45149 ssh2
+Jul 23 09:34:01 humen sshd[5436]: Accepted password for humen from 192.168.107.133 port 45671 ssh2"""
+
+def count_fail_ips(log_text):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. 逐行处理（splitlines）
+    #   2. 只保留包含 "Failed password" 的行
+    #   3. 从该行用 split 取出 "from" 后面的词（来源IP）
+    #   4. 用字典计数（get默认0，不存在就+1）
+    #   5. 按次数倒序排序，取前5名打印
+    #   写完步骤 → 对照模式卡"模式6 遍历+条件" + 字典计数 翻译
+
+
+log_text = """Jul 23 09:33:41 humen sshd[5423]: Failed password for humen from 192.168.107.130 port 40231 ssh2
+Jul 23 09:33:43 humen sshd[5425]: Failed password for humen from 192.168.107.130 port 37223 ssh2
+Jul 23 09:33:47 humen sshd[5429]: Failed password for humen from 192.168.107.131 port 41365 ssh2
+Jul 23 09:33:49 humen sshd[5431]: Failed password for humen from 192.168.107.132 port 45627 ssh2
+Jul 23 09:33:53 humen sshd[5433]: Failed password for humen from 192.168.107.130 port 45149 ssh2
+Jul 23 09:34:01 humen sshd[5436]: Accepted password for humen from 192.168.107.133 port 45671 ssh2"""
+
+def count_fail_ips(log_text):                # 定义函数：统计SSH登录失败IP，参数log_text为原始ssh日志大字符串
+    counts = {}                               # 初始化空字典，key存IP，value存该IP爆破失败次数
+    for line in log_text.splitlines():        # splitlines() 将大字符串按换行切割，循环读取每一行日志
+        if "Failed password" in line:         # 筛选条件：只处理密码登录失败的日志行（暴力破解特征）
+            parts = line.split()              # 将一行日志按空格切割，得到单词列表
+            idx = parts.index("from")         # 在列表中找到单词"from"对应的下标位置
+            ip = parts[idx+1]                 # from的下一个元素，就是攻击源IP地址
+            counts[ip] = counts.get(ip, 0) +1 # 字典get计数：IP不存在默认0，再+1；存在就在原有数值+1
+    # sorted排序：按字典value(失败次数)倒序，reverse=True降序；切片[:5]取前5条
+    top5_list=sorted(counts.items(), key=lambda x:x[1], reverse=True)[:5]
+    return top5_list                          # 返回统计完成的top5列表
+
+if __name__ == "__main__":                   # 脚本直接运行时才执行下面代码；被import导入时不执行
+    top5 = count_fail_ips(log_text)           # 调用函数拿到top5攻击IP结果
+    print("\n===暴力破解最多IP===")
+    for p, cnt in top5:                       # 循环解包，p是IP，cnt是失败次数
+        print(f"{p} → {cnt}次")
