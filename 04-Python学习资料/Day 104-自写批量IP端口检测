@@ -1,0 +1,32 @@
+# 需求：检测一批IP的常见端口是否开放（安服资产梳理/巡检常用）
+import socket
+
+ips = ["192.168.1.10", "192.168.1.11", "192.168.1.12"]
+ports = [22, 80, 443]
+
+def check_port(ip, port):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. 创建 socket.socket() 对象
+    #   2. 设置连接超时2秒
+    #   3. 用 connect_ex((ip, port)) 尝试连接，返回值==0 说明端口开放
+    #   4. 无论成功失败都要关闭连接
+    #   写完步骤 → 对照模式卡"模式6 遍历+条件" + socket 翻译
+
+
+import socket                     # 导入socket网络编程库，用于TCP端口探测
+ips = ["192.168.1.100", "192.168.1.101", "192.168.1.102"]  # 需要扫描的IP资产列表
+ports = [22, 80, 443]            # 需要探测的端口列表：ssh、http、https
+
+def check_port(ip, port):         # 定义端口检测函数；参数ip：目标IP，port：目标端口
+    s = socket.socket()           # 创建TCP套接字对象（注意必须带括号()）
+    s.settimeout(2)               # 设置连接超时2秒，避免脚本长时间卡死等待
+    res = s.connect_ex((ip, port))# connect_ex尝试TCP连接；返回0=端口开放，非0=关闭；不会抛出异常
+    s.close()                     # 关闭socket，释放系统资源
+    return res == 0               # 返回布尔值：True端口开放，False端口关闭
+
+for ip in ips:                    # 【外层循环】逐个取出每一个IP地址
+    for port in ports:            # 【内层嵌套循环】对当前IP，遍历全部待检测端口
+        if check_port(ip, port):  # 调用函数探测端口状态
+            print(f"{ip}:{port} 开放")   # 条件成立打印端口开放
+        else:
+            print(f"{ip}:{port} 关闭")   # 条件不成立打印端口关闭
