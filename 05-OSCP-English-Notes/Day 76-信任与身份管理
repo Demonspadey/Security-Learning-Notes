@@ -1,0 +1,29 @@
+1.trust — 信任
+例句：Trust is a subjective belief in the reliability of an entity.
+单词拆分：subjective belief 主观信念；reliability of an entity 实体的可靠性
+整句总结：信任指对某个实体可靠性所持有的主观信念。
+
+2.trusted entity — 可信实体
+例句：A trusted entity is assumed to function according to policy.
+单词拆分：assumed to function 被假定运行；according to policy 按照策略
+整句总结：可信实体被默认会依照安全策略执行工作。
+
+3.identity management (IdM) — 身份管理
+例句：Identity management recognizes and verifies identities in online environments.
+单词拆分：recognizes and verifies 识别并验证；online environments 在线环境
+整句总结：身份管理用于网络环境下对身份进行识别与核验。
+
+4.weakest link — 最薄弱环节
+例句：Overall security is only as strong as the least reliable trusted component.
+单词拆分：overall security 整体安全；least reliable trusted component 最不可靠可信组件
+整句总结：整体安全强度取决于系统内部最不可靠的组件，即木桶原理。
+
+5.authentication — 认证
+例句：Authentication verifies that a user is who they claim to be.
+单词拆分：verifies 验证；who they claim to be 其所声称的身份
+整句总结：认证用于校验用户确实为自己宣称的身份。
+
+📝 练习5：填空（用 trust / authentication / weakest link / IdM / trusted）
+___ 验证用户身份 → authentication
+安全强度取决于最弱的一环 → weakest link
+在线环境中的身份识别 →  IDM
