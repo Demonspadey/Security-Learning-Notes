@@ -1,0 +1,31 @@
+# 需求：把安全检查结果生成一份报告文件（安服交付报告的基础款）
+# 检查结果列表：[(风险等级, 漏洞描述, 数量)]
+results = [
+    ("高危", "Apache 2.4.49 路径遍历", 3),
+    ("中危", "OpenSSH 用户枚举", 5),
+    ("低危", "信息泄露", 8),
+]
+
+def write_report(results):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. 用 open("check_report.txt", "w", encoding="utf-8") 创建/打开文件
+    #   2. 遍历 results，写入 f"{等级} | {描述} | 数量：{数量}"
+    #   3. 关闭文件，打印 "报告已生成：check_report.txt"
+    #   写完步骤 → 对照模式卡"模式6 遍历+条件" + 文件写入 翻译
+
+
+results = [  # 漏洞结果列表，每个元组格式：(风险等级, 漏洞描述, 漏洞统计数量)
+    ("高危", "Apache 2.4.49 路径遍历", 3),
+    ("中危", "OpenSSH 用户枚举", 5),
+    ("低危", "信息泄露", 8),
+]
+
+def write_report(results):                     # 定义生成报告函数，results接收漏洞结果列表
+    # 以覆盖写入模式w打开check_report.txt，utf‑8编码避免中文乱码；with语句结束自动关闭文件，f为文件操作对象
+    with open("check_report.txt", "w", encoding="utf-8") as f:
+        for level, desc, count in results:      # 循环遍历列表，元组解包：level风险等级，desc漏洞描述，count漏洞数量
+            # f-string拼接文本，写入文件；\n 换行符，使每条漏洞单独占一行
+            f.write(f"{level} | {desc} | 数量：{count}\n")
+    print("报告已生成：check_report.txt")        # 在控制台打印提示信息
+
+write_report(results)                           # 调用函数，执行生成报告
