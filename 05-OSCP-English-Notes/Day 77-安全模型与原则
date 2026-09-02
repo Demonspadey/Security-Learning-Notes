@@ -1,0 +1,30 @@
+1.defense‑in‑depth — 纵深防御
+例句：The defense‑in‑depth security model provides a framework for layered controls.
+单词拆分：security model 安全模型；provides a framework 提供框架；layered controls 分层控制
+整句总结：纵深防御安全模型为分层安全控制措施提供框架。
+
+2.least privilege — 最小权限
+例句：The principle of least privilege means users only get the minimum access needed.
+单词拆分：principle 原则；minimum access needed 所需最小访问权限
+整句总结：最小权限原则，用户仅分配完成工作必需的最小访问权限。
+
+3.authorized — 已授权的
+例句：Access control ensures only authorized users can access resources.
+单词拆分：access control 访问控制；authorized users 已授权用户；access resources 访问资源
+整句总结：访问控制保障只有获得授权的用户才可以访问资源。
+
+4.audit — 审计
+例句：Security audit is the process of regularly reviewing security measures.
+单词拆分：security audit 安全审计；regularly reviewing 定期审查；security measures 安全措施
+整句总结：安全审计是对安全措施开展定期审查的过程。
+
+5.perimeter — 边界 / 周界
+例句：The firewall sits at the perimeter between the internal and external network.
+单词拆分：firewall 防火墙；internal and external network 内部与外部网络
+整句总结：防火墙部署在内网与外网相交的网络边界位置。
+
+📝 练习6：配对
+defense-in-depth   A. 最小权限    C
+least privilege    B. 审计        A
+authorized         C. 纵深防御    D
+audit              D. 已授权的    B
