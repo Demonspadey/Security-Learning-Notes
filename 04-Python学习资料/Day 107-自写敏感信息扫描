@@ -1,0 +1,34 @@
+# 需求：扫描指定目录下的文件，查找是否包含敏感关键词（如password/api_key/secret）
+#       （安服信息泄露排查：客户代码/配置文件可能硬编码密码）
+import os
+
+target_dir = "./scan"        # 要扫描的目录（可换）
+keywords = ["password", "api_key", "secret", "token"]
+
+def scan_files(path, keywords):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. 用 os.walk 遍历目录下所有文件
+    #   2. 逐个打开文件读取内容
+    #   3. 检查内容里是否含 keywords 中的词
+    #   4. 命中的打印 "文件路径 → 命中: 关键词"
+    #   写完步骤 → 对照模式卡"模式6 遍历+条件" + os.walk 翻译
+
+
+import os                                 # 导入操作系统文件处理模块
+target_dir = r"D:\软考信息安全工程师"      # 扫描目标目录，r原始字符串，防止Windows反斜杠转义报错
+keywords = ["password", "api_key", "secret", "token"] # 敏感关键词列表
+
+def scan_files(path, keywords):           # 定义扫描函数；path待扫描目录，keywords敏感词列表
+    for root, dirs, files in os.walk(path): # os.walk递归遍历目录；root当前文件夹完整路径，dirs子目录列表，files当前目录文件名列表
+        for filename in files:             # 遍历当前目录下每一个文件（仅文件名，不含路径）
+            full_path = os.path.join(root, filename) # 拼接文件夹路径+文件名，得到文件完整路径，自动适配系统分隔符
+            try:
+                with open(full_path, "r", encoding="utf-8") as f: # r只读模式打开文件，utf‑8防止中文乱码；with执行完自动关闭文件
+                    content = f.read()    # 一次性读取文件全部文本内容
+                for kw in keywords:       # 循环每一个敏感关键词
+                    if kw in content:     # 判断文件内容是否包含该关键词（区分大小写）
+                        print(f"{full_path} → 命中: {kw}") # 打印完整文件路径以及命中的敏感词
+            except Exception:             # 捕获异常：二进制文件、编码错误、权限不足
+                continue                  # 出现异常直接跳过该文件，继续扫描下一个，脚本不会崩溃
+
+scan_files(target_dir, keywords)          # 调用扫描函数，启动敏感信息扫描
