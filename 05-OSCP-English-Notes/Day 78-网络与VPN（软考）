@@ -1,0 +1,30 @@
+1.VPN — 虚拟专用网
+例句：A VPN is a private network that uses a public network to connect remote sites.
+单词拆分：private network 专用网络；public network 公共网络；connect remote sites 连接远程站点
+整句总结：VPN 借助公共网络实现远程站点之间的专用网络连接。
+
+2.firewall — 防火墙
+例句：A firewall filters traffic based on rules at the network boundary.
+单词拆分：filters traffic 过滤流量；based on rules 基于规则；network boundary 网络边界
+整句总结：防火墙在网络边界依据安全规则对网络流量进行过滤。
+
+3.IDS (Intrusion Detection System) — 入侵检测系统
+例句：An IDS monitors network traffic and alerts on suspicious activity.
+单词拆分：monitors network traffic 监控网络流量；alerts 告警；suspicious activity 可疑活动
+整句总结：IDS 监控网络流量，发现可疑行为时产生安全告警。
+
+4.DMZ — 隔离区（非军事区）
+例句：Public‑facing servers are placed in the DMZ to isolate them from the internal network.
+单词拆分：public‑facing servers 对外服务器；isolate from 与… 隔离；internal network 内部网络
+整句总结：对外提供服务的服务器部署在 DMZ，实现与内网相互隔离。
+
+5.packet — 数据包
+例句：Packet filtering firewalls inspect source, destination, and protocol of each packet.
+单词拆分：packet filtering 包过滤；inspect 检查；source 源；destination 目的；protocol 协议
+整句总结：包过滤防火墙检查每一个数据包的源、目的以及协议信息。
+
+📝 练习7：选词填空（VPN / firewall / IDS / DMZ / packet）
+连接远程站点的专用网络 →VPN
+监控流量并告警 → IDS
+放置对外服务器的隔离区 → DMZ
+按规则过滤流量的设备 → firewall
