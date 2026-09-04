@@ -1,0 +1,30 @@
+1.scan — 扫描
+例句：Nmap scans a target to discover open ports and services.
+单词拆分：scans a target 扫描目标；discover open ports 发现开放端口；services 服务
+整句总结：Nmap 对目标进行扫描，用来探测开放端口与运行的服务。
+
+2.port — 端口
+例句：Port 22 is commonly used for SSH remote access.
+单词拆分：commonly used 通常使用；SSH remote access SSH 远程访问
+整句总结：22 端口是 SSH 远程访问服务的常用端口。
+
+3.service — 服务
+例句：Service version identification helps find vulnerable software.
+单词拆分：version identification 版本识别；helps find 有助于发现；vulnerable software 易受攻击软件
+整句总结：识别服务版本，可以帮助找到存在漏洞的软件。
+
+4.banner — 横幅（服务指纹）
+例句：The server banner reveals the software name and version.
+单词拆分：server banner 服务器横幅；reveals 泄露；software name 软件名称；version 版本
+整句总结：服务器 banner 信息会暴露出软件名称以及版本号。
+
+5.enumeration — 枚举
+例句：Enumeration gathers usernames, shares, and services from the target.
+单词拆分：gathers 收集；usernames 用户名；shares 共享；services 服务；target 目标
+整句总结：枚举操作从目标主机收集用户名、共享、服务等各类信息。
+
+📝 练习8：配对
+scan         A. 服务    B
+port         B. 扫描    D
+service      C. 枚举    A
+enumeration  D. 端口    C
