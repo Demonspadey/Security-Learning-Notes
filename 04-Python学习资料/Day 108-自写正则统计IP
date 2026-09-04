@@ -1,0 +1,36 @@
+# 需求：从一段SSH日志文本中提取所有IP地址，统计每个IP出现次数（安服日志分析）
+# 提示：用 re 模块的 findall，IP的pattern可写 r"\d+\.\d+\.\d+\.\d+"
+import re
+
+log_text = """Jul 23 09:33:41 humen sshd[5423]: Failed password for humen from 192.168.107.130 port 40231 ssh2
+Jul 23 09:33:43 humen sshd[5425]: Failed password for humen from 192.168.107.131 port 37223 ssh2
+Jul 23 09:33:47 humen sshd[5429]: Failed password for humen from 192.168.107.130 port 41365 ssh2
+Jul 23 09:33:49 humen sshd[5431]: Accepted password for humen from 192.168.107.132 port 45627 ssh2"""
+
+def count_ips(text):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. 用 re.findall(pattern, text) 找出所有IP，返回列表
+    #   2. 遍历IP列表，用字典统计每个IP出现次数
+    #   3. 打印 "IP → 次数"
+    #   写完步骤 → 对照模式卡"模式6 遍历+条件" + re.findall 翻译
+
+
+import re                                   # 导入正则表达式模块re
+log_text = """Jul 23 09:33:41 humen sshd[5423]: Failed password for humen from 192.168.107.130 port 40231 ssh2
+Jul 23 09:33:43 humen sshd[5425]: Failed password for humen from 192.168.107.131 port 37223 ssh2
+Jul 23 09:33:47 humen sshd[5429]: Failed password for humen from 192.168.107.130 port 41365 ssh2
+Jul 23 09:33:49 humen sshd[5431]: Accepted password for humen from 192.168.107.132 port 45627 ssh2"""
+
+def count_ips(text):                        # 定义统计IP函数，text参数传入SSH日志字符串
+    pattern = r"\d+\.\d+\.\d+\.\d+"         # 正则匹配规则pattern，用来匹配IPv4地址；r原始字符串，\d+代表多位数，\.转义匹配小数点
+    ip_list = re.findall(pattern, text)     # re.findall：按照pattern规则扫描text，提取全部匹配IP，返回IP列表赋值给ip_list
+    ip_counts = {}                          # 定义空字典，key存放IP，value存放该IP出现次数
+    for ip in ip_list:                      # 循环遍历提取出来的每一个IP
+        if ip in ip_counts:                 # 判断：该IP已经作为字典key存在
+            ip_counts[ip] += 1             # 已存在，计数加1
+        else:
+            ip_counts[ip] = 1              # 第一次出现，计数值初始化为1
+    for ip, cnt in ip_counts.items():       # .items()遍历字典，同时取出字典的key(ip)和value(计数cnt)
+        print(f"{ip} → {cnt} 次")           # 格式化打印输出IP和对应出现次数
+
+count_ips(log_text)                         # 调用count_ips函数，传入日志文本，执行IP统计
