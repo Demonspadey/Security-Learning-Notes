@@ -1,0 +1,28 @@
+```
+# 需求：批量检测URL的HTTP状态码（安服网站巡检/健康检查基础款）
+# 先装 requests：pip install requests
+import requests
+
+urls = ["http://192.168.1.100", "http://192.168.1.100/login", "http://192.168.1.100/admin"]
+
+def check_url(url):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. requests.get(url, timeout=3) 发请求
+    #   2. 取返回的 .status_code（200正常/403禁止/404不存在/500服务器错）
+    #   3. 打印 f"{url} → {状态码}"
+    #   4. 异常（连不上）打印 f"{url} → 无法访问"
+    #   写完步骤 → 对照模式卡"模式6 遍历+条件" + requests 翻译
+
+
+import requests                              # 导入requests第三方HTTP请求库
+urls = ["http://192.168.100.100", "http://192.168.100.100/login", "http://192.168.100.100/admin"] # 需要检测的url列表
+
+def check_url(url):                          # 定义检测url状态的函数，形参url接收待检测网址
+    try:                                     # try：尝试执行正常请求逻辑
+        r = requests.get(url, timeout=3)     # 对url发送GET请求，timeout=3 设置3秒超时，响应对象赋值给变量r
+        print(f"{url} → {r.status_code}")    # 格式化打印url以及HTTP响应状态码
+    except Exception:                         # 捕获全部异常：超时、连不上、DNS错误都会进到这里
+        print(f"{url} → 无法访问")
+
+for u in urls:                               # for循环遍历urls列表，逐个取出url赋值给u
+    check_url(u)                             # 调用check_url函数，传入u，执行检测
