@@ -1,0 +1,29 @@
+1.exploit — 漏洞利用程序
+例句：An exploit takes advantage of a vulnerability to gain access.
+单词拆分：takes advantage of 利用；vulnerability 漏洞；gain access 获取访问权限
+整句总结：exploit 依靠系统漏洞，以此拿到目标的访问权限。
+
+2.vulnerability — 漏洞 / 脆弱性
+例句：Patching known vulnerabilities reduces the attack surface.
+单词拆分：Patching 修补；known vulnerabilities 已知漏洞；reduces 减少；attack surface 攻击面
+整句总结：修补已经公开的漏洞，能够缩小系统的攻击面。
+
+3.payload — 攻击载荷
+例句：The payload executes on the target after the exploit succeeds.
+单词拆分：payload 载荷；executes 执行；target 目标；exploit succeeds 漏洞利用成功
+整句总结：漏洞利用成功之后，payload 会在目标主机上执行。
+
+4.shell/reverse shell — Shell / 反弹 Shell
+例句：A reverse shell connects back to the attacker's machine.
+单词拆分：reverse shell 反弹 shell；connects back 回连；attacker's machine 攻击者主机
+整句总结：反弹 shell 会主动回连攻击者的机器，给到交互命令行。
+
+5.PoC (Proof of Concept) — 概念验证
+例句：The PoC demonstrates that the vulnerability can be exploited.
+单词拆分：demonstrates 证明；vulnerability 漏洞；can be exploited 可以被利用
+整句总结：PoC 用来证实某个漏洞具备可被利用的条件。
+
+📝 练习9：判断
+exploit 是攻击载荷 → F （payload才是攻击载荷）
+reverse shell 是目标反向连回攻击机 → T
+PoC 用于证明漏洞可被利用 → T
