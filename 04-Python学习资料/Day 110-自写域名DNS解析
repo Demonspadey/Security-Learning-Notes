@@ -1,0 +1,23 @@
+# 需求：批量解析域名对应的IP地址（安服威胁情报/资产排查基础款）
+import socket
+
+domains = ["www.baidu.com", "www.qq.com", "www.taobao.com"]
+
+def resolve(domain):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. 用 socket.gethostbyname(domain) 解析域名得到IP
+    #   2. 打印 f"{domain} → {IP}"
+    #   3. 解析失败（异常）打印 f"{domain} → 无法解析"
+    #   写完步骤 → 对照模式卡"模式6 遍历+条件" + socket 翻译
+
+
+import socket                              # 导入socket网络库，提供域名解析能力
+domains = ["www.baidu.com", "www.qq.com", "www.taobao.com"] #待解析域名列表
+def resolve(domain):                       # 定义域名解析函数，domain传入待解析域名
+    try:                                   # 尝试域名解析
+        ip = socket.gethostbyname(domain)  # 通过域名获取A记录对应的IPv4地址
+        print(f"{domain} → {ip}")          # 格式化输出域名和解析出来的IP
+    except Exception:                      # 捕获解析失败异常：域名不存在、DNS故障
+        print(f"{domain} → 无法解析")
+for d in domains:                          # 循环遍历每一个域名
+    resolve(d)                             # 调用解析函数
