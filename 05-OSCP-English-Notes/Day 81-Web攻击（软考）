@@ -1,0 +1,30 @@
+1.injection — 注入
+例句：SQL injection inserts malicious SQL into a query to bypass authentication.
+单词拆分：inserts 插入；malicious SQL 恶意 SQL；query 查询；bypass authentication 绕过认证
+整句总结：注入攻击将恶意语句插入查询语句，实现绕过认证等恶意行为。
+
+2.XSS (Cross‑Site Scripting) — 跨站脚本
+例句：XSS injects malicious scripts into web pages viewed by other users.
+单词拆分：injects 注入；malicious scripts 恶意脚本；web pages 网页；viewed by other users 被其他用户浏览
+整句总结：XSS 向网页注入恶意脚本，影响访问该页面的其他用户。
+
+3.CSRF (Cross‑Site Request Forgery) — 跨站请求伪造
+例句：CSRF tricks a logged‑in user into sending an unintended request.
+单词拆分：tricks 诱骗；logged‑in user 已登录用户；sending 发送；unintended request 非本意请求
+整句总结：CSRF 欺骗已登录用户，在用户不知情的情况下发起请求。
+
+4.upload — 文件上传
+例句：An unrestricted file upload allows attackers to upload a web shell.
+单词拆分：unrestricted 无限制的；attackers 攻击者；upload 上传；web shell 网页木马
+整句总结：无校验的文件上传漏洞，可让攻击者上传 WebShell 控制服务器。
+
+5.traversal — 目录遍历
+例句：Path traversal uses ../to escape the web root directory.
+单词拆分：Path traversal 目录遍历；uses 使用；escape 逃逸；web root directory web 根目录
+整句总结：目录遍历利用../ 符号跳出网站根目录，读取服务器其他文件。
+
+📝 练习10：配对
+SQL injection   A. 跨站请求伪造    C
+XSS             B. 目录遍历    D
+CSRF            C. 注入    A
+traversal       D. 跨站脚本    B
