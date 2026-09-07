@@ -1,0 +1,30 @@
+1.DDoS — 分布式拒绝服务
+例句：A DDoS attack floods the target with traffic from many machines.
+单词拆分：floods 淹没；target 目标；traffic 流量；many machines 多台机器
+整句总结：DDoS 利用大量主机产生流量，耗尽目标资源造成拒绝服务。
+
+2.MITM (Man‑in‑the‑Middle) — 中间人攻击
+例句：A MITM attack intercepts and relays communication between two parties.
+单词拆分：intercepts 拦截；relays 转发；communication 通信；two parties 通信双方
+整句总结：中间人攻击拦截转发双方通信，窃听或者篡改传输的数据。
+
+3.spoofing — 欺骗（伪造源地址）
+例句：IP spoofing forges the source address to hide the attacker's identity.
+单词拆分：forges 伪造；source address 源地址；hide 隐藏；attacker's identity 攻击者身份
+整句总结：欺骗攻击伪造地址等信息，掩盖攻击者真实身份。
+
+4.phishing — 钓鱼
+例句：Phishing uses fake websites to steal credentials.
+单词拆分：fake websites 伪造网站；steal 窃取；credentials 凭据
+整句总结：钓鱼通过伪造站点诱骗用户，盗取账号密码等凭证。
+
+5.botnet — 僵尸网络
+例句：A botnet is a network of infected machines controlled by an attacker.
+单词拆分：infected machines 被感染主机；controlled 被控制；attacker 攻击者
+整句总结：僵尸网络由攻击者管控的大量中毒主机组成，常用于 DDoS 等攻击。
+
+📝 练习11：翻译
+DDoS → 分布式拒绝服务
+MITM → 中间人攻击
+spoofing → 欺骗
+phishing → 钓鱼
