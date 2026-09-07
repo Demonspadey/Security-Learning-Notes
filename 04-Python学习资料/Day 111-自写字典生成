@@ -1,0 +1,22 @@
+# 需求：基于常见弱口令生成变体字典（安服测试基础款，配合hydra/漏扫用）
+common = ["123456", "admin", "password", "root", "test", "qwerty"]
+
+def gen_dict(words):
+    # 🔴 第一步：写步骤（中文，不写代码）
+    #   1. 遍历 words 每个基础口令
+    #   2. 对每个基础口令，拼接常见后缀（年份/符号/数字）生成变体
+    #      例如 admin → admin123, admin@123, admin2023
+    #   3. 把每个基础口令和变体都打印出来（或存列表）
+    #   写完步骤 → 对照模式卡"模式6 遍历+条件"（两层for）翻译
+
+
+common = ["123456", "admin", "password", "root", "test", "qwerty"] #基础弱口令列表
+
+def gen_dict(words):                          #接收基础口令列表
+    suffix_list = ["", "123", "@123", "2023", "2024", "2025", "2026", "!@#"] #常见后缀，""代表原口令本身
+    for w in words:                            #第一层for：取出每一个原始口令
+        for suf in suffix_list:                #第二层for：取出每一个后缀
+            new_pwd = w + suf                  #字符串拼接，生成口令变体
+            print(new_pwd)                     #打印生成后的密码
+
+gen_dict(common)                               #调用函数，生成字典
