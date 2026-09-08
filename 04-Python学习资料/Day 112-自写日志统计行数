@@ -1,0 +1,23 @@
+目标：练"读文件 + 逐行遍历 + if判断 + f-string打印"。
+        全是模式卡里的老朋友，不引入任何新语法。
+  需求：读取 auth.log，把包含 Failed 的行带行号打印出来。
+  输出例：[12] Failed password for root from 192.168.1.1
+
+  📌 本次用到的老朋友（忘了就翻模式卡）：
+    · with open("auth.log","r",encoding="utf-8") as f:  → 打开文件，f是文件对象(模式7)
+    · for line in f:      → 一行行读，line=当前行字符串(模式2)
+    · "Failed" in line    → 判断line含不含Failed(模式5)
+    · line.strip()        → 去掉行尾换行符
+    · print(f"[{line_no}] {line.strip()}")   → f-string格式化打印
+
+
+
+log = r"D:\_agent_tmp\logs.txt"
+def scan_failed():
+    line_no = 0                          
+    with open(log, "r", encoding="utf-8") as f:
+        for line in f:                  
+            line_no = line_no + 1       
+            if "Failed" in line:       
+                print(f"[{line_no}] {line.strip()}") 
+scan_failed()
