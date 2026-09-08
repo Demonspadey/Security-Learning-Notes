@@ -1,0 +1,29 @@
+1.WAF (Web Application Firewall) — Web 应用防火墙
+例句：A WAF blocks SQL injection and XSS at the application layer.
+单词拆分：blocks 拦截；SQL injection SQL 注入；XSS 跨站脚本；application layer 应用层
+整句总结：WAF 工作在应用层，防护 Web 类注入、XSS 等 Web 攻击。
+
+2.patch — 补丁
+例句：Applying security patches closes known vulnerabilities.
+单词拆分：Applying 部署 / 应用；security patches 安全补丁；closes 封堵；known vulnerabilities 已知漏洞
+整句总结：安装安全补丁，修补系统已经公开的安全漏洞。
+
+3.hardening — 加固
+例句：Hardening disables unnecessary services and tightens permissions.
+单词拆分：disables 禁用；unnecessary services 非必要服务；tightens 收紧；permissions 权限
+整句总结：安全加固关闭无用服务、收紧权限，缩小系统攻击面。
+
+4.baseline — 基线
+例句：A security baseline defines the minimum secure configuration.
+单词拆分：security baseline 安全基线；defines 定义；minimum 最低；secure configuration 安全配置
+整句总结：安全基线规定系统必须满足的最低安全配置标准。
+
+5.mitigation — 缓解措施
+例句：Mitigation reduces the impact of an attack even if it cannot be prevented.
+单词拆分：reduces 降低；impact 影响；attack 攻击；cannot be prevented 无法被阻止
+整句总结：缓解措施不能完全阻止攻击，但可以降低攻击带来的危害。
+
+📝 练习12：判断
+WAF 工作在网络层 → F
+hardening 是加固系统 → T
+baseline 是最低安全配置 → T
