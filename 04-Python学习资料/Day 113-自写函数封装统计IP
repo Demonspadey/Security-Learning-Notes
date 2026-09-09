@@ -1,0 +1,21 @@
+目标：练"dict计数 + 取位置 + TopN"，全熟区模式，不碰新语法。
+  需求：统计 auth.log 里 Failed password 的源IP次数，输出 Top5。
+  输出例：
+    192.168.100.100: 25
+    10.0.0.8: 13
+
+
+def count_fail_ips(file_path):
+    fail_count = {}
+    with open(file_path, "r", encoding="utf-8") as f:
+        for line in f:
+            if "Failed password" in line:
+                parts = line.split()
+                idx = parts.index("from")
+                ip = parts[idx+1]
+                fail_count[ip] = fail_count.get(ip,0)+1
+    top5 = sorted(fail_count.items(), key=lambda x: x[1], reverse=True)[:5]
+    return top5
+result = count_fail_ips(r"D:\_agent_tmp\logs.txt")
+for ip,cnt in result:
+    print(f"{ip}: {cnt}")
