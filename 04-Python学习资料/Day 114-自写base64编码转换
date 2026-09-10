@@ -1,0 +1,15 @@
+ 目标：练 base64 模块 + str/bytes 转换（🔴半新小抄，看懂了再填）
+  场景：应急响应时发现一串可疑base64，解码看是不是攻击指令。
+  预期：decode("YWRtaW46MTIzNDU2") → "admin:123456"
+        encode("admin:123456") → "YWRtaW46MTIzNDU2"
+
+
+import base64
+def b64_decode(s):
+    raw = base64.b64decode(s)
+    return raw.decode("utf-8")
+def b64_encode(s):
+    raw = s.encode("utf-8")
+    return base64.b64decode(raw).decode("utf-8")
+secret = "YWRtaW46MTIzNDU2"
+print(b64_decode(secret))
