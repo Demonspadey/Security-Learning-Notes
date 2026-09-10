@@ -1,0 +1,13 @@
+阅读短文，完成填空：
+Network security is a critical component of any organization's IT infrastructure.
+The (1) security model provides a framework for implementing security controls.
+Access control mechanisms ensure that only (2) users can access specific resources.
+The principle of (3) privilege means users should only have the minimum level of access.
+Security (4) is the process of regularly reviewing security measures.
+A (5) is a private network that uses a public network to connect remote sites.
+
+（1）A. physical  B. defense-in-depth  C. perimeter  D. boundary      B
+（2）A. all  B. authorized  C. external  D. remote    B
+（3）A. maximum  B. least  C. shared  D. elevated    B
+（4）A. audit  B. bypass  C. design  D. coding    A
+（5）A. firewall  B. VPN  C. IDS  D. DMZ    B
