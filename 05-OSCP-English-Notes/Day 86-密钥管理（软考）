@@ -1,0 +1,31 @@
+1.key distribution — 密钥分发
+例句：Key distribution is the hardest problem in symmetric cryptography.
+单词拆分：key distribution 密钥分发；hardest problem 最难的问题；symmetric cryptography 对称密码
+整句总结：密钥分发是对称密码体系里最困难的问题。
+
+2.session key — 会话密钥
+例句：A session key is a temporary key used for one communication session.
+单词拆分：session key 会话密钥；temporary key 临时密钥；communication session 通信会话
+整句总结：会话密钥是单次通信会话使用的临时密钥。
+
+3.key exchange — 密钥交换
+例句：Diffie-Hellman key exchange lets two parties agree on a shared key.
+单词拆分：key exchange 密钥交换；two parties 双方；agree on 协商达成；shared key 共享密钥
+整句总结：Diffie-Hellman 密钥交换可让通信双方协商得到共享密钥。
+真题：2020 英文题（key exchange protocol）
+
+4.shared secret — 共享秘密
+例句：The two sides derive a shared secret that only they know.
+单词拆分：two sides 双方；derive 推导生成；shared secret 共享秘密
+整句总结：通信双方生成一份仅双方知晓的共享秘密。
+
+5.computationally infeasible — 计算上不可行
+例句：Computing the private key from the public key is computationally infeasible.
+单词拆分：computing the private key 计算私钥；public key 公钥；computationally infeasible 计算上不可行
+整句总结：由公钥推导出私钥在计算层面是不可行的。
+
+📝 练习1：配对（英→中）
+1. key distribution   A. 会话密钥    ( B )
+2. session key        B. 密钥分发    ( A )
+3. key exchange       C. 计算上不可行 ( D )
+4. computationally infeasible  D. 密钥交换 ( C )
