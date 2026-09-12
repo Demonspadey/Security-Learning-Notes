@@ -1,0 +1,19 @@
+目标：练"读文件→筛选→写文件"，全熟区（模式7+模式5+模式6）
+  场景：安服把漏扫报告里的高危项挑出来，单独存一份。
+  需求：读 scan_result.txt，把含"高危"的行写入 high_risk.txt。
+  输入例（scan_result.txt）：
+    高危 SQL注入 http://x.com/a?id=1
+    中危 目录遍历 http://x.com/b
+    高危 弱口令 admin/123456
+
+
+def filter_high_risk(src, dst):
+    result = []
+    with open(src, "r", encoding="utf-8")as f:
+        for line in f:
+            if "高危" in line:
+                result.append(line)
+    with open(dst , "w", encoding="utf-8")as f:
+        for line in result:
+            f.write(line)
+filter_high_risk(r"D:\_agent_tmp\scan_result.txt", r"D:\_agent_tmp\high_risk.txt")
