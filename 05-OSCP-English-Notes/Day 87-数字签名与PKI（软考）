@@ -1,0 +1,29 @@
+1.digital signature — 数字签名
+例句：A digital signature proves the message came from the signer.
+单词拆分：digital signature 数字签名；proves 证明；message 消息；signer 签名者
+整句总结：数字签名用来证明消息来源于签名者。
+
+2.certificate — 数字证书
+例句：A digital certificate binds a public key to an identity.
+单词拆分：digital certificate 数字证书；binds A to B 将 A 与 B 绑定；public key 公钥；identity 身份
+整句总结：数字证书将公钥和实体身份进行绑定。
+
+3.Certificate Authority (CA) — 证书颁发机构
+例句：The CA signs the certificate to vouch for the owner's public key.
+单词拆分：CA 证书颁发机构；signs the certificate 给证书签名；vouch for 担保；owner 持有者
+整句总结：CA 对证书签名，担保证书持有者所持有的公钥。
+
+4.non-repudiation — 不可否认性
+例句：Digital signatures provide non-repudiation of the sender.
+单词拆分：digital signatures 数字签名；provide 提供；non-repudiation 不可否认性；sender 发送方
+整句总结：数字签名能够提供发送方的不可否认性。
+
+5.verify — 验证
+例句：The receiver uses the sender's public key to verify the signature.
+单词拆分：receiver 接收方；sender's public key 发送方公钥；verify the signature 验证签名
+整句总结：接收方使用发送者的公钥对签名进行验证。
+
+📝 练习2：判断正误
+1. 数字签名能提供不可否认性。       → ( T )
+2. 数字证书用私钥绑定身份。         → ( F )
+3. 验证签名用发送方的公钥。         → ( T )
