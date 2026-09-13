@@ -1,0 +1,29 @@
+1.malware — 恶意软件
+例句：Malware is any software designed to cause harm.
+单词拆分：software designed 设计的软件；cause harm 造成危害
+整句总结：恶意软件指所有旨在造成破坏的软件。
+
+2.virus — 病毒
+例句：A virus attaches itself to a host file and spreads when it runs.
+单词拆分：attaches to 依附；host file 宿主文件；spreads 传播
+整句总结：病毒依附宿主文件，文件运行时进行传播。
+
+3.worm — 蠕虫
+例句：A worm spreads on its own without a host file.
+单词拆分：spreads on its own 自我传播；without 不需要；host file 宿主文件
+整句总结：蠕虫不需要宿主文件，可以独立自我复制传播。
+
+4.trojan — 木马
+例句：A trojan disguises itself as legitimate software.
+单词拆分：disguises as 伪装成；legitimate software 合法软件
+整句总结：木马伪装成正常软件，诱骗用户执行。
+
+5.ransomware — 勒索软件
+例句：Ransomware encrypts files and demands payment for the key.
+单词拆分：encrypts files 加密文件；demands payment 索要赎金；key 密钥
+整句总结：勒索软件加密受害者文件，索要赎金才提供解密密钥。
+
+📝 练习3：选词填空（virus / worm / ransomware / trojan / malware）
+1. 无需宿主自我传播 → ____worm
+2. 伪装成正常软件 → ____trojan
+3. 加密文件索要赎金 → ____ransomware
