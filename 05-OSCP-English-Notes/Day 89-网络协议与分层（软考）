@@ -1,0 +1,30 @@
+1.protocol — 协议
+例句：A protocol defines the rules for how data is exchanged.
+单词拆分：defines the rules 定义规则；data is exchanged 数据交换
+整句总结：协议规定数据交互的通信规则。
+
+2.OSI model — OSI 模型（开放系统互连）
+例句：The OSI model divides networking into seven layers.
+单词拆分：divides into 划分为；networking 网络；seven layers 七层
+整句总结：OSI 模型将网络通信分为七个层级。
+
+3.layer — 层
+例句：TCP operates at the transport layer.
+单词拆分：operates at 工作在；transport layer 传输层
+整句总结：TCP 协议运行在传输层。
+
+4.TCP/IP — 传输控制协议 / 网际协议
+例句：TCP/IP is the fundamental protocol suite of the Internet.
+单词拆分：fundamental 基础的；protocol suite 协议族；Internet 互联网
+整句总结：TCP/IP 是互联网的基础协议集合。
+
+5.encapsulation — 封装
+例句：Each layer adds a header to the data, a process called encapsulation.
+单词拆分：each layer 每一层；adds a header 添加报头；process 过程
+整句总结：每层给数据添加头部信息，该过程就是封装。
+
+📝 练习4：翻译
+1. protocol → ____协议
+2. OSI model → ____OSI模型
+3. encapsulation → ____封装
+4. layer → ____层
