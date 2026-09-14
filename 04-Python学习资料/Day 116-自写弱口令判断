@@ -1,0 +1,31 @@
+ 目标：练 any() 判断 + 计分逻辑（🟡半熟小抄，看过再填）
+  场景：入职后做弱口令巡检，批量判断口令强度。
+  规则：长度≥8 / 含大写 / 含小写 / 含数字 / 含符号 → 每满足1项得1分
+        得分≤2=弱，3-4=中，5=强
+
+  📌 小抄（any() 用法，模式卡模式5）：
+    · any(c.isupper() for c in pwd) → pwd里"存在某个字符是大写"吗？
+    · islower() / isdigit() / isalnum()（字母或数字）同样用法
+    · 判断符号：not c.isalnum()（既不是字母也不是数字）
+
+def check_strength(pwd):
+    score = 0
+    if len(pwd) >= 8:
+        score += 1
+    if any(c.isupper() for c in pwd):     
+        score += 1
+    if any(c.islower() for c in pwd):
+        score += 1
+    if any(c.isdigit() for c in pwd):
+        score += 1
+    if any(not c.isalnum() for c in pwd):
+        score += 1  
+    if score <= 2:
+        return "弱"
+    elif 3<= score <=4: 
+        return "中"
+    else:
+        return "强"
+pwds =["abc12345", "Abc12345", "Abc@1234"]
+for p in pwds:
+    print(f"{p} → {check_strength(p)}")
