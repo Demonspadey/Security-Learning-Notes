@@ -1,0 +1,32 @@
+ 目标：练"取列 + 类型转换 + 分类计数"（🟡半熟，先看小抄）
+  场景：安服做账号基线核查，找出UID=0的账户、统计用户数。
+  需求：读 passwd 格式文件，输出 UID=0 的账户名，统计系统用户/普通用户数。
+
+  📌 小抄：
+    · passwd一行：用户名:密码占位:UID:GID:说明:家目录:shell
+    · line.strip().split(":") → 按冒号切成列表
+      索引：parts[0]=用户名  parts[1]=x  parts[2]=UID（第3列）
+    · int("1000") → 字符串转整数；不转的话 "0" != 0，比较会出错
+    · 分类：UID=0超级用户 / UID 1-999系统用户 / UID>=1000普通用户
+
+
+def find_root_users(path):
+    """找出UID=0账户，并统计系统用户/普通用户数量"""
+    root_users=[]
+    sys_count = 0
+    normal_count = 0
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            parts = line.strip().split(":")
+            name = parts[0]
+            uid = int(parts[2])
+            if uid == 0:
+                root_users.append(name)
+            elif uid < 1000:
+                sys_count += 1
+            else:
+                normal_count += 1
+    return root_users, sys_count, normal_count
+roots, sys_n, normal_n = find_root_users(r"D:\gongju\Vs_work\test001\自写脚本\passwd_copy.txt")
+print("UID=0账户", roots)
+print(f"系统用户{sys_n}个， 普通用户{normal_n}个")
