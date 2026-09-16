@@ -1,0 +1,49 @@
+目标：练"嵌套字典遍历 + 字符串拼接"（🟡半熟，先看小抄）
+  场景：把访问控制矩阵转成"能力表"（以主体为中心），
+        这就是白天案例里"能力表/ACL/矩阵"三种方法的程序化表达。
+
+  📌 小抄：
+    · matrix.items() → 遍历字典，拿到 (键, 值) 对（模式2）
+    · " ".join(items) → 把列表元素用空格拼成一个字符串
+    · 变量命名：subject=主体、obj=客体、perm=权限
+
+  ✏️ 填空（3处 ⬜）：
+matrix = {                       # 访问控制矩阵：{主体: {客体: 权限}}
+    "alice": {"file1": "rw", "file2": "r"},
+    "bob":   {"file1": "r"},
+}
+
+def to_capability_table(matrix):
+    """矩阵 → 能力表（以主体为中心）"""
+    cap = {}
+    for subject, objs in matrix.items():      # 模式2 遍历
+        items = []
+        for obj, perm in objs.items():
+            # ⬜ 填：拼成 "file1:rw" 这种形式，加进 items
+            pass
+        # ⬜ 填：cap[subject] = 用空格把 items 拼成一个字符串
+    return # ⬜ 填：返回 cap
+
+for s, perms in to_capability_table(matrix).items():
+    print(s, "→", perms)
+
+  预期输出：
+    alice → file1:rw file2:r
+    bob → file1:r
+
+
+matrix = {
+    "alice": {"file1": "rw", "file2": "r"},
+    "bob":   {"file1": "r"},
+}
+def to_capability_table(matrix):
+    """矩阵 → 能力表（以主体为中心）"""
+    cap = {}
+    for subject, objs in matrix.items():
+        items = []
+        for obj, perm in objs.items():
+            items.append(f"{obj}:{perm}")
+        cap[subject] = " ".join(items)
+    return cap
+for s, perms in to_capability_table(matrix).items():
+    print(s, "→", perms)
