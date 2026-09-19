@@ -1,0 +1,32 @@
+场景：安服做资产核查/渗透前踩点，扫描目标常开端口。
+  需求：写一个端口扫描器，扫 127.0.0.1 的 [22,80,443,3306,3389]，
+        输出开放的端口。
+
+  📌 小抄（socket 三件套，用过但不熟就看这里）：
+    · import socket                → 导入网络套接字模块
+    · s = socket.socket()          → 创建socket对象
+    · s.settimeout(1)              → 超时1秒（不设会卡很久）
+    · s.connect((ip, port))        → 尝试连接；连不上会"抛异常"
+    · try: ... except: ...         → 出错时走except，防止程序崩溃
+    · s.close()                    → 关闭连接
+    ⚠️ connect 的参数是【元组】——两层括号 s.connect((ip, port))
+
+
+import socket
+def scan_port(ip, port):
+    s = socket.socket()
+    s.settimeout(1)
+    try:
+        s.connect((ip, port))
+        return True
+    except:
+        return False
+    finally:
+        s.close()
+def scan_ports(ip, ports):
+    open_ports =[]
+    for port in ports:
+        if scan_port(ip, port):
+            open_ports.append(port)
+    return open_ports
+print(scan_ports("127.0.0.1", [22,80,81,443,3306,3389]))
