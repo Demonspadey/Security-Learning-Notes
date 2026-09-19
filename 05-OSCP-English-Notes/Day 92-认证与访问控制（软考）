@@ -1,0 +1,29 @@
+1.authentication — 认证（验你是谁）
+例句：Authentication verifies who you are.
+单词拆分：verifies who you are 验证你是谁
+整句总结：认证用于核验使用者的身份。
+
+2.authorization — 授权（能干什么）
+例句：Authorization decides what an authenticated user may do.
+单词拆分：authenticated user 已认证用户；may do 可以执行操作
+整句总结：授权决定通过认证后的用户拥有哪些操作权限。
+
+3.credential — 凭据
+例句：A username and password are a common credential.
+单词拆分：username and password 用户名和密码；common 常见的
+整句总结：凭据是用于身份核验的凭证，账号密码属于典型凭据。
+
+4.access control — 访问控制
+例句：Access control limits who can reach which resource.
+单词拆分：limits 限制；reach resource 访问资源
+整句总结：访问控制用来限制主体能够访问的资源。
+
+5.privilege — 权限 / 特权
+例句：Least privilege gives users only the rights they need.
+单词拆分：least privilege 最小权限；rights they need 所需权限
+整句总结：最小权限原则仅分配用户完成工作必需的权限。
+
+📝 练习7：判断（认证 vs 授权）
+1. 验证"你是谁" → 认证 / 授权  ( 认证 )
+2. 决定"你能做什么" → 认证 / 授权  ( 授权 )
+3. 最小权限原则属于 → 认证 / 授权  ( 授权 )
