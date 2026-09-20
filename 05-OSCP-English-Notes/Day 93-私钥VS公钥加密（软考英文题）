@@ -1,0 +1,15 @@
+【2022 真题原文】阅读填空：
+Private-key encryption assumes complete secrecy of all cryptographic keys, 
+whereas public-key requires secrecy for only the private key. In the private-key setting, 
+the communicating parties must share the (71) key. In the public-key setting, 
+the (72) key can be sent over a public channel. Private-key encryption schemes use the (73) key for both encryption and 
+decryption, whereas public-key encryption schemes use (74) keys. A single instance of a (75) encryption scheme enables 
+multiple senders to communicate privately with a single receiver.
+
+(71) A. main  B. same  C. public  D. secret         
+(72) A. stream  B. different  C. public  D. secret
+(73) A. different  B. same  C. public  D. private
+(74) A. different  B. same  C. public  D. private
+(75) A. private-key  B. public-key  C. stream  D. Hash
+
+📝 作答：(71)__D (72)__C (73)__B(74)__A (75)__B
