@@ -1,0 +1,31 @@
+ 目标：练"取列 + dict计数"（🟢熟区，直接填）
+  场景：安服巡检，统计网站访问日志里的HTTP状态码分布
+        （看有没有大量404/500异常）。
+  需求：读 access.log，统计每个状态码出现次数并打印。
+
+  📌 小抄：
+    · access.log 每行形如（⚠️不同日志格式列数不同，索引会变！）：
+      带时区: 192.168.1.1 - - [10/Oct/2023:13:55:36 +0800] "GET /a.php HTTP/1.1" 404 1234
+              → split后状态码是第9列 parts[8]
+      无时区: 192.168.1.1 - - [10/Oct/2023] "GET /a.php HTTP/1.1" 404 1234
+              → split后状态码是第8列 parts[7]
+    · ⭐最稳写法：parts[-2]（倒数第二列）——日志末尾固定是"状态码 字节数"，
+      前面多几列都不影响（用户2026/9/18实测：自己的日志是 parts[7]）
+    · 调试技巧：不确定就先 print(parts) 看一行切出来长啥样
+    · len(parts) < 8 → 非标准行，跳过防报错
+
+测试的时候发现索引只能[7]。
+
+def count_status(path):
+    status_count={}
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            parts = line.split()
+            if len(parts) < 9:
+                continue
+            code = parts[7]
+            status_count[code] = status_count.get(code, 0) + 1
+    for code, cnt in status_count.items():
+        print(f"{code}: {cnt}")
+    return status_count
+count_status(r"d:\gongju\Vs_work\test001\自写脚本\access.log")
