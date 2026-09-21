@@ -1,0 +1,17 @@
+There are different ways to perform IP based DoS Attacks. The most common IP based DoS attack is that an attacker 
+sends an extensive amount of connection establishment (71) (e.g. TCP SYN requests) to establish hanging connections. 
+Such a way, the attacker can consume the network resources which should be available for legitimate users. In other (72),
+the attacker inserts a large amount of (73) packets to the data plane by spoofing all or part of the header fields with
+random values. These incoming packets will trigger table-misses and send lots of packet-in flow request messages to the 
+network controller to saturate the controller resources. In some cases, an (74) who gains access to DPS can artificially 
+generate lots of random packet-in flow request messages to saturate the control channel. Moreover, the lack of diversity 
+among DPSs fuels the fast propagation of such attacks. ... DoS/DDoS attack on a single core element will not terminate 
+the entire operation of a backhaul device (75) the network.
+
+(71) A. information  B. message  C. request  D. date
+(72) A. hands  B. methods  C. cases  D. sections
+(73) A. bad  B. new  C. cases  D. fake
+(74) A. editor  B. attacker  C. administrator  D. or
+(75) A. in  B. to  C. of  D. or
+
+📝 作答：(71)__C (72)__C (73)__D (74)_B_ (75)__A
