@@ -1,0 +1,35 @@
+场景：应急排查——对比"上周账号快照"和"本周账号快照"，
+        找出这段时间**新增的账户**（攻击者常留后门账号）。
+  需求：读两份快照（每行 用户名:UID），输出新增的用户名。
+
+  📌 小抄（set 集合，新知识）：
+    · users = set()            → 创建空集合（自动去重）
+    · users.add("alice")       → 往集合里加一个元素
+    · new - old                → 集合差集 = 在new里但不在old里的元素
+    · set 与 list 区别：set无序、不重复，适合做"比对/去重"
+
+
+def find_new_users(old_file, new_file):
+    """对比两份账号快照，返回新增的账户名（集合）"""
+    old_users = set()
+    with open(old_file, "r", encoding="utf-8") as f:
+        for line in f:
+            name = line.strip().split(":")[0]     # 取第1列=用户名
+            old_users.add(name)
+    new_users = set()
+    with open(new_file, "r", encoding="utf-8") as f:
+        for line in f:
+            name = line.strip().split(":")[0]
+            new_users.add(name)
+    return new_users-old_users
+def find_new_uid0(path):
+    """找UID=0的账户（后门账号最爱用的UID）"""
+    result = []
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            parts = line.strip().split(":")
+            if parts[2] == "0":
+                result.append(parts[0])
+    return result
+print("新增账户:", find_new_users(r"d:\gongju\Vs_work\test001\自写脚本\users_old.txt",r"d:\gongju\Vs_work\test001\自写脚本\users_new.txt"))
+print("UID=0账户:", find_new_uid0(r"d:\gongju\Vs_work\test001\自写脚本\users_new.txt"))
