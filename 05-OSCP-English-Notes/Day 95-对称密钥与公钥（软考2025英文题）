@@ -1,0 +1,16 @@
+Symmetric-key cryptosystems use the (71) key for encryption and decryption of a message. A significant disadvantage
+of symmetric ciphers is the key management necessary to use them securely. Each distinct pair of communicating parties
+must share a different key. The difficulty of securely establishing a secret (72) between two communicating parties,
+when a secure channel doesn't already exist, presents a chicken-and-egg problem. ... A public key system is so constructed 
+that calculation of one key (the private key) is computationally infeasible (73) the other (the public key). In public-key
+cryptosystems, the (74) key may be freely distributed, while its paired private key must remain secret. In 1978,
+Ronald Rivest, Adi Shamir, and Len Adleman invented (75), another public-key system.
+
+(71) A. public  B. different  C. same  D. private
+(72) A. plaintext  B. stream  C. key  D. ciphertext
+(73) A. in  B. of  C. from  D. to
+(74) A. asymmetric  B. private  C. public  D. symmetric
+(75) A. AES  B. DES  C. RSA  D. IDEA
+
+📝 作答：(71)__C (72)__C (73)__C (74)__C (75)__C
+
