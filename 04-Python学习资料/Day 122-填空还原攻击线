@@ -1,0 +1,31 @@
+场景：应急响应——把日志按时间排序，还原攻击时间线。
+  需求：读日志文件（行首形如 "Sep  7 10:23:45 ..."），按时间从早到晚输出。
+
+  📌 小抄：
+    · 英文月份字母序 ≠ 时间序（Apr 会排在 Jan 前面），必须先转数字
+    · month_map["Sep"] → "09"   用字典把月份缩写映射成数字
+    · "7".zfill(2) → "07"       补零成两位，字符串排序才正确
+    · sorted(列表, key=函数名) → 按"函数返回值"排序
+      （注意：key=函数名，不要写括号）
+
+month_map = {"Jan":"01","Feb":"02","Mar":"03","Apr":"04","May":"05","Jun":"06",
+             "Jul":"07","Aug":"08","Sep":"09","Oct":"10","Nov":"11","Dec":"12"}
+
+def time_key(line):
+    """把 'Sep  7 10:23:45 ...' 转成可排序的 '09-07 10:23:45'"""
+    parts = line.split()
+    month = month_map[parts[0]]
+    day =  parts[1].zfill(2)
+    return f"{month}-{day} {parts[2]}"
+
+def sort_log(path):
+    """读日志并按时间排序返回"""
+    lines = []
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                lines.append(line.strip())
+    return sorted(lines, key=time_key)
+
+for line in sort_log(r"d:\gongju\Vs_work\test001\自写脚本\auth.log.txt")[:10]:
+    print(line)
