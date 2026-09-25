@@ -1,0 +1,13 @@
+Network security is a critical component of any organization's IT infrastructure. The (71) security model 
+provides a framework for implementing security controls. Access control mechanisms ensure that only (72) users 
+can access specific resources. The principle of (73) privilege means users should only have the minimum level of 
+access needed to perform their job functions. Security (74) is the process of regularly reviewing and updating 
+security measures. A (75) is a private network that uses a public network to connect remote sites or users together.
+
+(71) A. physical  B. defense-in-depth  C. perimeter  D. boundary
+(72) A. all  B. authorized  C. external  D. remote
+(73) A. maximum  B. least  C. shared  D. elevated
+(74) A. audit  B. bypass  C. design  D. coding
+(75) A. firewall  B. VPN  C. IDS  D. DMZ
+
+📝 作答：(71)__B (72)__B (73)__B (74)__A (75)__B
