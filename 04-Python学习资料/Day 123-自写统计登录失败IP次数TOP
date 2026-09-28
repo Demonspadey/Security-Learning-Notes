@@ -1,0 +1,32 @@
+需求：
+    读 auth.log，统计**每个IP的登录失败次数**，
+    输出失败次数 ≥ 5 的可疑IP（按次数从多到少）。
+
+  数据行示例：
+    Jul 23 09:33:43 humen sshd[5423]: Failed password for humen from 192.168.107.130 port 40231 ssh2
+
+  期望输出示例：
+    192.168.107.130  失败 8 次
+    10.0.0.8         失败 5 次
+
+  思路提示（只给思路，代码你自己写）：
+    1. 建一个空字典放"IP→次数"
+    2. 打开文件，逐行读
+    3. 只处理含 "Failed password" 的行
+    4. 从这行里取出IP（"from"后面那个）
+    5. 用字典累加计数
+    6. 遍历字典，把次数 ≥5 的打印出来
+
+count = {}
+log = r"d:\gongju\Vs_work\test001\自写脚本\auth.log.txt"
+with open(log, "r", encoding="utf-8") as f:
+    for line in f:
+        if "Failed password" in line:
+            parts = line.split()
+            idx = parts.index("from")
+            ip = parts[idx+1]
+            count[ip] = count.get(ip,0) +1
+top = sorted(count.items(), key = lambda x: x[1], reverse=True)
+for ip, cnt in top:
+    if cnt >= 5:
+        print(f"{ip} 失败 → {cnt}次")
