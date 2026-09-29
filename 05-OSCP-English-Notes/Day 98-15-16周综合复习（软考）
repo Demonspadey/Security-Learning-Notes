@@ -1,0 +1,19 @@
+一、选词填空（每题1分）
+1. ___encryption transforms plaintext into ciphertext.        (encryption / decryption)
+2. A ___symmetric uses the same key for encryption and decryption. (symmetric / asymmetric)
+3. The ___private key must remain secret.                 (public / private)
+4. A ___worm spreads without a host file.              (virus / worm)
+5. ___Authentication verifies who you are.                       (Authentication / Authorization)
+6. ___Authorization decides what you can do.                    (Authentication / Authorization)
+7. The firewall sits at the network ___perimeter.           (perimeter / payload)
+8. A ___certificate binds a public key to an identity.        (certificate / cipher)
+
+二、判断正误（每题1分）
+9.  对称加密用不同密钥加解密。           ( F )
+10. 数字签名提供不可否认性。             ( T )
+11. 公钥可以自由分发。                   ( T )
+12. WAF 工作在网络层。                   ( F )
+
+三、连词/介词（每题1分）
+13. Computing the private key from the public key is computationally infeasible __from_ the public key.  (from / in)
+14. Access control ensures only authorized users can access ___to specific resources.  (to / of)
