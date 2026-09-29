@@ -1,0 +1,38 @@
+需求：
+    读一个密码字典文件 passwords.txt（每行一个口令），完成：
+      1. 去掉重复的口令
+      2. 去掉空行
+      3. 按"口令长度"从短到长排序
+      4. 把结果写入 new_dict.txt（每行一个，不保留空行）
+
+  输入示例（passwords.txt）：
+    123456
+    admin
+    123456
+    password
+    admin
+    （空行）
+
+  期望输出（new_dict.txt）：
+    admin
+    123456
+    password
+
+  思路提示（代码自己写）：
+    1. 用 with open 读文件，逐行 strip() 后收集到一个列表（跳过空字符串）
+    2. 用 set 去重，再转回 list
+    3. 用 sorted(列表, key=len) 按长度排序
+    4. 用 with open("new_dict.txt","w") 逐行写入，每行末尾加 "\n"
+
+def clean_dict():
+    pwd_set = set()
+    with open(r"d:\gongju\Vs_work\test001\自写脚本\passwords.txt", "r", encoding="utf-8") as f:
+        for line in f:
+            pwd = line.strip()
+            if pwd:
+                pwd_set.add(pwd)
+    pwd_list = sorted(pwd_set, key=len)
+    with open(r"d:\gongju\Vs_work\test001\自写脚本\new_dict.txt", "w", encoding="utf-8") as f:
+        for pwd in pwd_list:
+            f.write(pwd + "\n")
+clean_dict()
