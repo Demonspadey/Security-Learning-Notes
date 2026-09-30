@@ -1,0 +1,30 @@
+1. cloud computing — 云计算
+例句：Cloud computing provides on-demand computing resources over the network.
+单词拆分：on-demand computing resources 按需计算资源；over the network 通过网络
+整句总结：云计算通过网络按需提供计算资源。
+
+2. virtualization — 虚拟化
+例句：Virtualization allows multiple virtual machines to run on one physical host.
+单词拆分：multiple virtual machines 多台虚拟机；physical host 物理主机
+整句总结：虚拟化允许多台虚拟机运行在一台物理主机上。
+
+3. multi-tenant — 多租户（的）
+例句：In a multi-tenant environment, data from different tenants must be isolated.
+单词拆分：multi-tenant environment 多租户环境；isolated 隔离的
+整句总结：在多租户环境中，不同租户的数据必须相互隔离。
+
+4. IaaS / PaaS / SaaS — 基础设施 / 平台 / 软件即服务
+例句：SaaS delivers applications, while IaaS delivers infrastructure.
+单词拆分：delivers applications 交付应用；delivers infrastructure 交付基础设施
+整句总结：SaaS 交付应用程序，IaaS 交付底层基础设施。
+
+5. container — 容器
+例句：Containers package an application with its dependencies.
+单词拆分：package 打包；application dependencies 应用依赖
+整句总结：容器把应用程序和它的依赖一起打包。
+
+📝 练习1：配对（英→中）
+1. virtualization  A. 多租户   ( B )
+2. multi-tenant    B. 虚拟化   ( A )
+3. container       C. 容器     ( C )
+4. cloud computing D. 云计算   ( D )
