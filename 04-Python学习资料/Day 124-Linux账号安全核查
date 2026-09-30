@@ -1,0 +1,36 @@
+ Linux 账号安全核查 —— 读 /etc/passwd，揪出两类异常账号：
+    ① UID=0 但不是 root  → 八成是后门账号
+    ② shell 是 bash      → 能登录的账号
+  👉 就是今天案例题第(6)问"排查后门账号"的代码版，
+     也是等保"主机安全基线核查"的固定动作。入职后天天用得上。
+
+【先补骨架：Python 脚本永远是这4步】（看懂4步，代码就不晕了）
+  ① 准备   results = []                   # 先想清楚结果往哪存
+  ② 读     with open("文件") as f:         # 打开文件
+              for line in f:                # 一行一行读
+  ③ 挑     if 条件: results.append(值)     # 符合条件就存起来
+  ④ 出     for x in results: print(x)      # 遍历打印
+  ★ 所有"读文件 → 挑数据 → 输出"的脚本都是这个骨架换零件。
+    你今天做的事，就是把这个骨架填满。
+
+high_risk = []
+can_login = []
+with open(r"d:\gongju\Vs_work\test001\自写脚本\password.txt", "r", encoding="utf-8") as f:
+    for line in f:
+        line = line.strip()
+        if line == "":
+            continue
+        parts = line.split(":")
+        name = parts[0]
+        uid = parts[2]
+        shell = parts[6]
+        if uid == "0" and name != "root":
+            high_risk.append(name)
+        if shell.endswith("bash"):
+            can_login.append(name)
+print(" === 疑似后门账户 (UID=0,但不是root账户) ===")
+for n in high_risk:
+    print(" ", n)
+print(" === 可登录账户 ===")
+for n in can_login:
+    print(" ", n)
