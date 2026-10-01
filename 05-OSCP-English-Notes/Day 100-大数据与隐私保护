@@ -1,0 +1,29 @@
+1.big data — 大数据
+例句：Big data refers to data sets too large for traditional tools.
+单词拆分：data sets 数据集；traditional tools 传统工具
+整句总结：大数据是传统工具无法处理的超大数据集。
+
+2.data mining — 数据挖掘
+例句：Data mining extracts patterns from large data sets.
+单词拆分：extracts patterns 提取模式；large data sets 大数据集
+整句总结：数据挖掘从海量数据里挖掘规律。
+
+3.anonymity/anonymization — 匿名 / 匿名化
+例句：Anonymization removes identifiers so individuals cannot be identified.
+单词拆分：removes identifiers 删除标识；individuals 个人
+整句总结：匿名化清除身份标识，无法定位到具体个人。
+
+4.privacy — 隐私
+例句：Privacy protection requires both technical and legal measures.
+单词拆分：privacy protection 隐私保护；technical and legal measures 技术与法律手段
+整句总结：隐私保护需要技术和法律措施共同实现。
+
+5.desensitization — 脱敏
+例句：Data desensitization masks sensitive fields before sharing.
+单词拆分：masks sensitive fields 遮蔽敏感字段；before sharing 在共享之前
+整句总结：数据脱敏在数据对外共享前掩盖敏感信息。
+
+📝 练习2：判断正误
+1. Anonymization removes identifiers.        → ( T )
+2. Data mining needs no large data sets.     → ( F )
+3. Desensitization protects sensitive data.  → ( T )
