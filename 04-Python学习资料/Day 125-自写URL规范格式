@@ -1,0 +1,25 @@
+批量资产梳理前的"URL 规范化"：
+  你从各种地方收集到一堆目标地址，格式乱七八糟——
+    有的带 http://、有的带 https://、有的啥都没有、有的前后有空格。
+  做批量测试前，先统一格式，否则后面 requests 访问会直接报错。
+  👉 这是资产收集 → 批量探活之间的标准动作，入职做资产梳理必用。
+
+【4步骨架复习】（和Day19是同一个骨架，只是零件换了）
+  ① 准备   urls = [ ... ]        # 这次数据不来自文件，直接列出来
+  ② 读     for u in urls:        # 遍历每个URL
+  ③ 挑     if 条件: 加工         # 不符合格式的就加工
+  ④ 出     print(结果)           # 打印
+
+def fix_url(url):
+    url = url.strip()
+    if not url.startswith("http://") and not url.startswith("https://"):
+        url = "https://" + url
+    return url
+urls = [
+    "www.test.com",
+    "http://a.com",
+    "https://b.com",
+    " 192.168.1.1:8080 ",
+]
+for u in urls:
+    print(fix_url(u))
