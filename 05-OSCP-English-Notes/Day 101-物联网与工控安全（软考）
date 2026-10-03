@@ -1,0 +1,29 @@
+1.IoT (Internet of Things) — 物联网
+例句：IoT devices are often resource-constrained and hard to patch.
+单词拆分：IoT devices 物联网设备；resource-constrained 资源受限；patch 打补丁
+整句总结：物联网设备资源有限，修补漏洞比较困难。
+
+2.sensor — 传感器
+例句：Wireless sensor networks collect environmental data.
+单词拆分：wireless sensor networks 无线传感器网络；collect 采集；environmental data 环境数据
+整句总结：传感器网络用来采集环境相关的数据。
+
+3.SCADA — 数据采集与监控系统
+例句：SCADA systems monitor and control industrial processes.
+单词拆分：monitor 监控；control 控制；industrial processes 工业流程
+整句总结：SCADA 用于监控、管控工业生产过程。
+
+4.embedded system — 嵌入式系统
+例句：Embedded systems have limited computing power.
+单词拆分：embedded system 嵌入式系统；limited 有限的；computing power 计算能力
+整句总结：嵌入式系统的计算资源是受限的。
+
+5.industrial control system (ICS) — 工业控制系统
+例句：ICS security differs from IT security in availability priority.
+单词拆分：differs from 不同于；availability 可用性；priority 优先级
+整句总结：工控安全和普通 IT 安全不一样，可用性是首要目标。
+
+📝 练习3：选词填空（IoT / SCADA / sensor / embedded）
+1. 采集环境数据的器件 → ____sensor
+2. 监控工业过程的系统 → ____SCADA
+3. 资源受限、难打补丁的设备群 → ____IOT
