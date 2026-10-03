@@ -1,0 +1,38 @@
+  # SQL注入痕迹筛查：从访问日志里找出可疑请求
+    keywords = ["union", "sleep(", "' or ", "--", "1=1"]
+
+    可疑 = []
+
+    with open(r"d:\gongju\Vs_work\test001\自写脚本\access_sqli.log",
+              "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line == "":
+                continue
+
+            low = line.lower()
+
+            # ★这里你自己写（第1处）：
+            #   判断 low 里是否含 keywords 中任意一个关键字，
+            #   如果含，就把 line（原始行）追加到 可疑 列表里
+            #   提示：用 or 把5个条件连起来，或者想别的办法也行
+
+
+    # ★这里你自己写（第2处）：
+    #   先打印一行统计：共发现 X 条可疑请求
+    #   再把 可疑 列表里的每一行打印出来
+    #   提示：统计用 len()，遍历打印用 for
+
+keywords = ["union", "sleep(", "' or ", "--", "1=1"]
+可疑 = []
+with open(r"d:\gongju\Vs_work\test001\自写脚本\access_sqli.log","r", encoding="utf-8") as f:
+    for line in f:
+        line = line.strip()
+        if line == "":
+            continue
+        low = line.lower()
+        if "union" in low or "sleep(" in low or "' or" in low or "--" in low or "1=1" in low:
+            可疑.append(line)
+print(f"共发现{len(可疑)}条可疑请求")
+for p in 可疑:
+    print(p)
