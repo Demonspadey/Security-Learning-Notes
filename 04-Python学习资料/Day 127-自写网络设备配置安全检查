@@ -1,0 +1,67 @@
+需求：
+    读设备配置文件 sw_config.txt，找出两类不安全配置：
+      ① 明文口令：行里含 "password"
+      ② 不安全协议/服务：行里含 "telnet" 或 "community"
+         （"community" 就是 SNMP 团体名配置行）
+    分别存进两个列表，最后分别打印并统计条数。
+
+  期望输出格式：
+    === 明文口令（3 处）===
+      set authentication password simple huawei@123
+      ...
+    === 不安全协议/服务（2 处）===
+      telnet server enable
+      ...
+
+  测试数据：在 D:\gongju\Vs_work\test001\自写脚本\ 下新建 sw_config.txt，
+  **原样复制**下面这10行：
+
+    sysname SW1
+    telnet server enable
+    user-interface vty 0 4
+     authentication-mode password
+     set authentication password simple huawei@123
+    snmp-agent community read public
+    snmp-agent sys-info version v2c
+    aaa
+     local-user admin password cipher %^%#xxxx%^%#
+    ssh server enable
+
+  ⚠️ 自检要点（预期结果：①命中3条、②命中2条，必须正好对上）：
+     · 第 1行 sysname SW1      → 不能被匹配（不含任何关键字）
+     · 第 2行 telnet server    → 含 "telnet"        → 命中 ②
+     · 第 3行 user-interface   → 不能被匹配
+     · 第 4行 ...mode password → 含 "password"      → 命中 ①
+     · 第 5行 ...password simple → 含 "password"   → 命中 ①
+     · 第 6行 ...community read public → 含 "community" → 命中 ②
+     · 第 7行 version v2c      → 不能被匹配
+     · 第 8行 aaa              → 不能被匹配
+     · 第 9行 ...password cipher → 含 "password"    → 命中 ①
+     · 第10行 ssh server enable → 不能被匹配（"ssh" 不含 "telnet"）
+
+  思路提示（只给思路，代码自己写）：
+    1. 先建【两个空列表】
+    2. 套起手式：open + for line in f + strip + 跳空行
+    3. low = line.lower()
+    4. if 含口令关键字 → append 到列表①
+    5. if 含协议关键字 → append 到列表②
+    6. 收尾：分别统计 len() 并 for 循环打印
+
+plain_pwd = []
+unsafe_proto = []
+with open(r"d:\gongju\Vs_work\test001\自写脚本\sw_config.txt", "r", encoding="utf-8") as f:
+    for line in f:
+        line = line.strip()
+        if line == "":
+            continue
+        low = line.lower()
+        if "password" in low:
+            plain_pwd.append(line)
+        if "telnet" in low or "community" in low:
+            unsafe_proto.append(line)
+print(f"=== 明文口令({len(plain_pwd)}处) ===")
+for p in plain_pwd:
+    print(p)
+print(f"=== 不安全协议({len(unsafe_proto)}处) ===")
+for s in unsafe_proto:
+    print(s)
