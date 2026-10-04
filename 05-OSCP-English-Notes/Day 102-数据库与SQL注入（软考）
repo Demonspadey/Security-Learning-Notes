@@ -1,0 +1,30 @@
+1.database — 数据库
+例句：The database stores user credentials and business data.
+单词拆分：user credentials 用户凭据；business data 业务数据
+整句总结：数据库用来存放用户凭证与业务相关数据。
+
+2.query — 查询
+例句：A malicious query can bypass authentication.
+单词拆分：malicious 恶意的；bypass authentication 绕过认证
+整句总结：查询是对数据库发起的数据请求，恶意查询可绕过身份验证。
+
+3.SQL injection — SQL 注入
+例句：SQL injection inserts malicious SQL into a query.
+单词拆分：inserts...into 插入；malicious SQL 恶意 SQL 语句
+整句总结：SQL 注入攻击将恶意 SQL 代码放进查询语句执行。
+
+4.privilege — 权限
+例句：Database accounts should follow the least privilege principle.
+单词拆分：database accounts 数据库账号；least privilege 最小权限
+整句总结：数据库账号权限需要遵守最小权限原则。
+
+5.backup — 备份
+例句：Regular backups ensure data can be restored after an incident.
+单词拆分：regular backups 定期备份；be restored 被恢复
+整句总结：定期备份能够在安全事件发生后恢复数据。
+
+📝 练习4：翻译
+1. SQL injection → ____SQL注入
+2. query → ____查询
+3. backup → ____备份
+4. privilege → ____权限
