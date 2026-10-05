@@ -1,0 +1,54 @@
+ 需求：
+    读 access_web.log，完成两件事：
+      1. 统计并打印"独立IP数"
+      2. 打印访问次数最多的前3个IP（Top3），格式：IP → 次数
+
+  期望输出：
+    独立IP数: 4
+    === 访问最多的 Top3 ===
+    192.168.1.10 → 4 次
+    10.0.0.5 → 3 次
+    172.16.8.9 → 2 次
+
+  测试数据：在 D:\gongju\Vs_work\test001\自写脚本\ 下新建 access_web.log，
+  **原样复制**下面这10行：
+
+    192.168.1.10 - - [03/Oct/2026:10:01:01] "GET /index.html HTTP/1.1" 200 1024
+    10.0.0.5 - - [03/Oct/2026:10:01:05] "GET /login.php HTTP/1.1" 200 2048
+    192.168.1.10 - - [03/Oct/2026:10:01:12] "POST /search.php HTTP/1.1" 200 4096
+    172.16.8.9 - - [03/Oct/2026:10:02:20] "GET /admin.php HTTP/1.1" 403 256
+    192.168.1.10 - - [03/Oct/2026:10:02:45] "GET /style.css HTTP/1.1" 200 512
+    10.0.0.5 - - [03/Oct/2026:10:03:10] "GET /index.html HTTP/1.1" 200 1024
+    203.0.113.7 - - [03/Oct/2026:10:03:55] "GET /news.php?id=1 HTTP/1.1" 400 0
+    192.168.1.10 - - [03/Oct/2026:10:04:30] "GET /about.html HTTP/1.1" 200 3072
+    10.0.0.5 - - [03/Oct/2026:10:05:02] "GET /contact.php HTTP/1.1" 200 1280
+    172.16.8.9 - - [03/Oct/2026:10:05:40] "GET /logo.png HTTP/1.1" 200 8192
+
+  ⚠️ 自检要点（结果必须正好对上，不对就是哪里写错了）：
+     · 独立IP数 = 4（192.168.1.10 / 10.0.0.5 / 172.16.8.9 / 203.0.113.7）
+     · Top3 无并列：4次 / 3次 / 2次，顺序唯一
+
+  思路提示（只给思路，代码自己写）：
+    1. 建两个容器：一个 set 存IP（去重用），一个 dict 存次数
+       （也可以只用一个 dict，最后用 len(字典) 拿独立IP数——那是加分写法）
+    2. 套起手式：open + for line in f + strip + 跳空行
+    3. parts = line.split()  → ip = parts[0]
+    4. set 的 add、dict 的 get 累加
+    5. 收尾：print 独立IP数 + 排序取Top3后 for 循环打印
+
+ip_count = {}
+ip_set = set()
+with open(r"d:\gongju\Vs_work\test001\自写脚本\access_web.log", "r", encoding="utf-8") as f:
+    for line in f:
+        line = line.strip()
+        if line == "":
+            continue
+        parts = line.split()
+        ip = parts[0]
+        ip_set.add(ip)
+        ip_count[ip] = ip_count.get(ip, 0) + 1
+top3 = sorted(ip_count.items(), key=lambda x: x[1], reverse=True)[:3]
+print(f"独立IP数: {len(ip_set)}")
+print(f"=== 访问最多的 top3 ===")
+for ip, cnt in top3:
+    print(f"{ip} → {cnt}次")
