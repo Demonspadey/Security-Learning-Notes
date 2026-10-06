@@ -1,0 +1,45 @@
+需求：
+    读 phones.txt（每行一个手机号），把每个手机号中间4位替换成 ****，
+    打印脱敏后的结果，并在最后统计一共处理了几条。
+
+  期望输出：
+    138****5678
+    159****1111
+    186****5678
+    177****2222
+    133****5432
+    199****2222
+    共处理 6 条
+
+  测试数据：在 D:\gongju\Vs_work\test001\自写脚本\ 下新建 phones.txt，
+  **原样复制**下面这6行：
+    13812345678
+    15900001111
+    18612345678
+    17700002222
+    13398765432
+    19911112222
+
+  ⚠️ 自检：第2行是 15900001111 →
+     前3位 159 + **** + 后4位 1111 = 159****1111（不是 1590****111 这种）
+
+  思路提示（只给思路，代码自己写）：
+    1. 建一个计数器变量 = 0
+    2. 套起手式：open + for line in f + strip + 跳空行
+    3. 用切片拼出脱敏结果：phone[:3] + "****" + phone[-4:]
+    4. print 出来，计数器 +1
+    5. 循环结束后 print 总数（用 f-string）
+
+
+def mask_phone():
+    count = 0
+    with open(r"d:\gongju\Vs_work\test001\自写脚本\phones.txt", "r", encoding="utf-8") as f:
+        for line in f:
+            phone = line.strip()
+            if phone == "":
+                continue
+            mask_phone = phone[:3] + "****" + phone[-4:]
+            print(mask_phone)
+            count += 1
+        print(f"共处理{count}条")
+mask_phone()
