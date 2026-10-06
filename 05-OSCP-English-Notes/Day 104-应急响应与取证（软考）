@@ -1,0 +1,30 @@
+1.incident — 安全事件
+例句：An incident response plan defines roles and steps.
+单词拆分：incident response plan 应急响应预案；defines roles and steps 定义角色和步骤
+整句总结：安全事件的应急响应预案规定处置角色与操作步骤。
+
+2.containment — 抑制 / 遏制
+例句：The first step is containment to stop the spread.
+单词拆分：first step 第一步；stop the spread 阻止扩散
+整句总结：遏制是应急处置第一步，用来阻止威胁继续扩散。
+
+3.forensics — 取证
+例句：Digital forensics collects evidence from compromised hosts.
+单词拆分：digital forensics 数字取证；compromised hosts 被攻陷主机
+整句总结：数字取证在受入侵主机上采集相关证据。
+
+4.evidence — 证据
+例句：Evidence must be preserved to remain admissible.
+单词拆分：preserved 保存；admissible 可采纳的、有效的
+整句总结：证据需要妥善保存，才能具备法律效力。
+
+5.recovery — 恢复
+例句：Recovery restores systems and data from backups.
+单词拆分：restores 还原；backups 备份
+整句总结：恢复操作依靠备份文件还原系统与数据。
+
+
+📝 练习6：选词填空（incident / containment / forensics / recovery）
+1. 阻止事件扩散的动作 → ____containment
+2. 从被攻陷主机提取证据 → ____forensics
+3. 用备份还原业务 → ____recovery
