@@ -1,0 +1,68 @@
+需求：
+    读 AndroidManifest.xml，找出所有声明权限的行（含 uses-permission），
+    完成两件事：
+      ① 打印全部权限名，并统计总数
+      ② 单独列出"高危权限"并统计数量
+    高危判定关键词：SMS、LOCATION、CONTACTS、CAMERA
+
+  期望输出：
+    === 全部权限（4 项）===
+      android.permission.INTERNET
+      android.permission.READ_SMS
+      android.permission.ACCESS_FINE_LOCATION
+      android.permission.CAMERA
+    === 高危权限（3 项）===
+      android.permission.READ_SMS
+      android.permission.ACCESS_FINE_LOCATION
+      android.permission.CAMERA
+
+  测试数据：在 D:\gongju\Vs_work\test001\自写脚本\ 下新建
+  AndroidManifest.xml，**原样复制**下面这9行：
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.demo.app">
+        <uses-permission android:name="android.permission.INTERNET" />
+        <uses-permission android:name="android.permission.READ_SMS" />
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        <uses-permission android:name="android.permission.CAMERA" />
+        <application android:label="Demo" />
+    </manifest>
+
+  ⚠️ 自检要点（结果必须正好对上，我已验算）：
+     · 全部权限 = 4 项（INTERNET / READ_SMS / ACCESS_FINE_LOCATION / CAMERA）
+     · 高危权限 = 3 项（READ_SMS / ACCESS_FINE_LOCATION / CAMERA）
+       ★ INTERNET 不算高危
+     · 第1/2/3/8/9行（xml、manifest、package、application、/manifest）
+       都必须**不被匹配**
+
+  思路提示（只给思路，代码自己写）：
+    1. 建两个空列表 + 套起手式（open/for line/strip/跳空行）
+    2. if "uses-permission" in line:
+    3.     name = line.split('"')[1]        ← 取引号里的权限名
+    4.     加进"全部权限"列表
+    5.     if 含 SMS 或 LOCATION 或 CONTACTS 或 CAMERA → 加进"高危"列表
+    6. 收尾：两组分别 print 标题(带 len) + for 循环打印
+
+# 不熟练
+all_perms = []
+risk_perms = []
+with open(r"d:\gongju\Vs_work\test001\自写脚本\AndroidManifest.xml", "r", encoding="utf-8") as f:
+    for line in f:
+        line = line.strip()
+        if line == "":
+            continue
+        if "uses-permission" not in line:
+            continue
+        parts = line.split('"')
+        if len(parts) >= 2:
+            name = parts[1]
+            all_perms.append(name)
+        if "SMS" in line or "LOCATION" in line or "CONTACTS" in line or "CAMERA" in line:
+            risk_perms.append(name)
+print(f"=== 全部权限({len(all_perms)}项) ===")
+for p in all_perms:
+    print(f"{p}")
+print(f"=== 高危权限({len(risk_perms)}项) ===")
+for d in risk_perms:
+    print(f"{d}")
