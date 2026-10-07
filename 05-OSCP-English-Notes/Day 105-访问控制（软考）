@@ -1,0 +1,29 @@
+1.access control — 访问控制
+例句：Access control limits who can reach which resource.
+单词拆分：limits 限制；reach resource 访问资源
+整句总结：访问控制用来限制谁能访问哪些资源。
+
+2.subject/object — 主体 / 客体
+例句：The subject requests access; the object is the resource.
+单词拆分：requests access 请求访问；resource 资源
+整句总结：主体发起访问请求，客体是被访问的资源。
+
+3.authorization — 授权
+例句：Authorization decides what an authenticated user may do.
+单词拆分：authenticated user 已认证用户；may do 可以执行操作
+整句总结：授权决定通过认证后的用户拥有哪些操作权限。
+
+4.discretionary access control (DAC) — 自主访问控制
+例句：In DAC, the resource owner sets the permissions.
+单词拆分：resource owner 资源所有者；permissions 权限
+整句总结：DAC 模式下，由资源所有者自行设置权限。
+
+5.least privilege — 最小权限
+例句：Least privilege grants only the rights needed for the job.
+单词拆分：grants 授予；needed for the job 工作所需的
+整句总结：最小权限原则仅分配完成工作必需的权限。
+
+📝 练习7：判断
+1. Subject 是发起访问的一方。            → ( T )
+2. DAC 由系统统一强制设定权限。          → ( F )
+3. Least privilege 属于授权范畴。        → ( T )
