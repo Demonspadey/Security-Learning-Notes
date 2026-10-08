@@ -1,0 +1,57 @@
+需求：
+    读 scan_report.txt（每行一条漏洞，行首形如 [高危]/[中危]/[低危]），
+    统计三个等级各出现在多少行，最后输出摘要。
+
+  期望输出：
+    === 漏洞等级统计 ===
+    高危: 5 行
+    中危: 3 行
+    低危: 4 行
+    共 12 条
+
+  测试数据：在 D:\gongju\Vs_work\test001\自写脚本\ 下新建 scan_report.txt，
+  **原样复制**下面这12行：
+
+    [高危] SQL注入漏洞 - http://test.com/login.php
+    [高危] 未授权访问 - http://test.com/admin
+    [中危] 目录遍历 - http://test.com/download
+    [低危] 信息泄露 - Server版本号暴露
+    [高危] 弱口令 - admin/123456
+    [中危] 缺少HTTP安全响应头
+    [低危] 使用了不安全的TLS版本
+    [高危] 文件上传漏洞
+    [中危] 敏感文件可访问 - /.git/config
+    [低危] Cookie未设置HttpOnly
+    [高危] 命令执行漏洞
+    [低危] 目录列表可浏览
+
+  ⚠️ 自检要点（我已验算，必须正好对上）：
+     高危 = 5 行 ／ 中危 = 3 行 ／ 低危 = 4 行 ／ 共 12 条
+     ⚠️ 注意"高危"和"低危"都含"危"字——
+        如果你用 "危" 做关键词会全错；必须用完整词 "高危"/"中危"/"低危"
+
+  思路提示（只给思路，代码自己写）：
+    1. levels = ["高危", "中危", "低危"]  建关键字列表
+    2. count = {}                          空的计数字典
+    3. 套起手式
+    4. for level in levels:  if level in line:  count[level] = count.get(level,0)+1
+    5. 收尾：for 循环打印每个等级的次数（用 f-string）
+    6. 最后打印总数（提示：把三个次数加起来，或者另设一个总计数器）
+
+
+levels = ["高危", "中危", "低危"]
+count = {}
+with open(r"d:\gongju\Vs_work\test001\自写脚本\scan_report.txt", "r", encoding="utf-8") as f:
+    for line in f:
+        line = line.strip()
+        if line == "":
+            continue
+        for level in levels:
+            if level in line:
+                count[level] = count.get(level, 0) + 1
+top = sorted(count.items(), key=lambda x : x[1], reverse=True)
+print("=== 漏洞等级统计 ===")
+for p , cnt in top:
+    print(f"{p}: {cnt}行")
+total = sum(count.values())
+print(f"共 {total}条")
