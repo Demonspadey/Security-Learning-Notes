@@ -1,0 +1,20 @@
+Trust is typically interpreted as a subjective belief in the reliability, honesty and
+security of an entity on which we depend (71) our welfare. ... A security solution always
+assumes certain entities function according to specific policies. To trust is precisely to
+make this sort of assumptions, hence, a trusted entity is the same as an entity that is
+assumed to function according to policy. ... when a trusted (72) fails, then the systems and
+applications that depend on it can (73) be considered secure. ... the overall security can
+only be as strong as the least reliable or least secure of all the trusted components. ...
+Identity management (denoted IdM hereafter) is about recognizing and verifying the
+correctness of identities in online environment. Trust management becomes a component of
+(74) whenever different parties rely on each other for identity provision and authentication.
+... The establishment of initial (75) usually takes place in the physical world, and the
+subsequent propagation of trust happens online.
+
+(71) A. with   B. on   C. of   D. for
+(72) A. entity  B. person  C. component  D. thing
+(73) A. No longer  B. never  C. always  D. often
+(74) A. SP  B. IdM  C. Internet  D. entity
+(75) A. trust  B. cost  C. IdM  D. solution
+
+📝 作答：(71)__B (72)__C (73)__ B(74)__B (75)__A
