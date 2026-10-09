@@ -1,0 +1,58 @@
+ 需求：
+    读 access_web.log（你 Day23 建过的那个，直接复用），
+    把分析摘要写入 report.txt，格式如下：
+
+    === Web日志分析摘要 ===
+    总请求数: 10
+    独立IP数: 4
+    --- 状态码分布 ---
+    200: 8 次
+    403: 1 次
+    400: 1 次
+
+  提示（只给思路）：
+    1. IP 用 set 去重（Day23）；状态码用字典计数（Day17）
+    2. 状态码怎么取？先把一行拆开看：
+         192.168.1.10 - - [03/Oct/2026:10:01:01] "GET /index.html HTTP/1.1" 200 1024
+          ↓split()后                        ↓下标
+         0:192.168.1.10  1:-  2:-  3:[03/Oct/...]  4:"GET  5:/index.html
+         6:HTTP/1.1"     7:200   8:1024
+       → **状态码是 parts[7]**（第8个字段），parts[8] 是响应大小，别搞混
+       ⚠️ 例外：若日志时间戳带时区（如 [03/Oct/2026:10:01:01 +0800]），
+          时间戳会占两个字段，状态码就要改成 parts[8]
+          → 所以先 print(parts) 看一眼，别硬套下标（Day12 你踩过这坑）
+    3. 总请求数 = 行数计数器
+    4. 用 with open(...,"w") 分几行写进 report.txt
+
+
+status_count = {}
+ip_set = set()
+req_total = 0
+with open(r"d:\gongju\Vs_work\test001\自写脚本\access_web.log", "r", encoding="utf-8") as f:
+    for line in f:
+        line = line.strip()
+        if line == "":
+            continue
+        parts = line.split()
+        if len(parts) < 8:
+            continue
+        req_total += 1
+        code = parts[7]
+        status_count[code] = status_count.get(code, 0) + 1
+        ip = parts[0]
+        ip_set.add(ip)
+top = sorted(status_count.items(), key=lambda x : x[1], reverse=True)
+print("=== Web日志分析摘要 ===")
+print(f"总请求数: {req_total}")
+print(f"独立IP数: {len(ip_set)}")
+print("=== 状态码分布 ===")
+for code, cnt in top:
+    print(f"{code}: {cnt} 次")
+
+with open(r"d:\gongju\Vs_work\test001\自写脚本\report.txt", "w", encoding="utf-8") as fw:
+    fw.write("=== Web日志分析摘要 ===\n")
+    fw.write(f"总请求数: {req_total}\n")
+    fw.write(f"独立IP数: {len(ip_set)}\n")
+    fw.write("--- 状态码分布 ---\n")
+    for code, cnt in top:
+        fw.write(f"{code}: {cnt} 次\n")
