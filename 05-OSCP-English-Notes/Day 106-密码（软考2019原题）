@@ -1,0 +1,19 @@
+A block cipher is, in a sense, a modern embodiment of Alberti's polyalphabetic cipher:
+block ciphers take as input a block of (71) and a key, and output a block of ciphertext of
+the same size. ... Several have been developed ... They are the mode of operations. The Data
+Encryption Standard (DES) and the Advanced Encryption Standard (AES) are (72) designs which
+have been designated cryptography standards by the US government. ... Stream ciphers, in
+contrast to the "block" type, create an arbitrarily long stream of key material, which is
+combined (73) the plaintext bit-by-bit or character-by-character ... In a stream cipher, the
+output (74) is created based on an internal state which changes as the cipher operates. ...
+Cryptographic hash functions (often called message digest functions) ... output a short fixed
+length hash, and do so as a one-way function. For good ones, (75) (two plaintexts which
+produce the same hash) are extremely difficult to find.
+
+(71) A. plaintext  B. ciphertext  C. data  D. hash
+(72) A. stream cipher  B. hash function  C. MAC  D. Block cipher
+(73) A. of  B. for  C. with  D. in
+(74) A. hash  B. stream  C. ciphertext  D. plaintext
+(75) A. collisions  B. image  C. preimage  D. solution
+
+📝 作答：(71)__A (72)__D (73)__C (74)__B (75)__A
